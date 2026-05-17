@@ -9,15 +9,11 @@
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="container nav-inner">
     <a class="brand" href="index.html">
       <img src="assets/img/logo.png" alt="Logo" class="logo-img">
-      <div>
-        <strong>Ali Signature Construction LLC</strong>
-        <small>Delaware • Residential & Commercial</small>
-      </div>
+      <div><strong>Ali Signature Construction LLC</strong><small>Delaware • Residential & Commercial</small></div>
     </a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
@@ -27,6 +23,7 @@
       <a href="team.html">Team</a>
       <a href="process.html">Process</a>
       <a href="contact.html">Contact</a>
+      <a href="portal.html" class="portal-link">Client Portal</a>
     </div>
     <div class="nav-cta">
       <a class="btn ghost" href="projects.html">View Work</a>
@@ -38,6 +35,11 @@
 <!-- HERO -->
 <header class="hero">
   <div class="hero-slider">
+    <!--
+      ADD YOUR HERO PHOTOS HERE
+      Replace project1.jpg, project2.jpg etc. with your own images
+      Add or remove <div class="slide"> entries as needed
+    -->
     <div class="slide active" style="background-image:url('assets/img/project1.jpg')"></div>
     <div class="slide" style="background-image:url('assets/img/project2.jpg')"></div>
     <div class="slide" style="background-image:url('assets/img/project3.jpg')"></div>
@@ -51,8 +53,15 @@
     <p>Professional construction services built on quality craftsmanship, clear communication, and reliable delivery.</p>
     <div class="hero-actions">
       <a class="btn primary" href="contact.html">Request a Free Estimate</a>
-      <a class="btn ghost" href="projects.html">View Our Work</a>
+      <a class="btn ghost"   href="projects.html">View Our Work</a>
     </div>
+  </div>
+  <div class="hero-dots">
+    <button class="hero-dot active" data-index="0" aria-label="Slide 1"></button>
+    <button class="hero-dot" data-index="1" aria-label="Slide 2"></button>
+    <button class="hero-dot" data-index="2" aria-label="Slide 3"></button>
+    <button class="hero-dot" data-index="3" aria-label="Slide 4"></button>
+    <button class="hero-dot" data-index="4" aria-label="Slide 5"></button>
   </div>
 </header>
 
@@ -62,36 +71,71 @@
     <div class="about-inner">
       <div>
         <p class="about-label">About the Company</p>
-        <h2>Built on Craft, Delivered with Integrity</h2>
+        <h2>Built on Craft,<br>Delivered with Integrity</h2>
         <p>Ali Signature Construction LLC is a Delaware-based residential and commercial construction company committed to quality craftsmanship, transparency, and reliable project delivery.</p>
-        <p>We specialize in renovations, roofing, flooring, drywall, painting, and full project management. Every project is owner-managed to ensure quality control and clear communication from start to finish.</p>
+        <p>We specialize in renovations, roofing, flooring, drywall, painting, and full project management. Every project is owner-managed to ensure quality control and clear communication.</p>
         <div class="about-stats">
-          <div class="stat">
-            <div class="stat-number">100%</div>
-            <div class="stat-label">Owner-Managed</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">DE</div>
-            <div class="stat-label">Delaware Based</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">6+</div>
-            <div class="stat-label">Core Services</div>
-          </div>
-          <div class="stat">
-            <div class="stat-number">Fast</div>
-            <div class="stat-label">Cash Closings</div>
-          </div>
+          <div class="stat"><div class="stat-number">100%</div><div class="stat-label">Owner-Managed</div></div>
+          <div class="stat"><div class="stat-number">DE</div><div class="stat-label">Delaware Based</div></div>
+          <div class="stat"><div class="stat-number">6+</div><div class="stat-label">Core Services</div></div>
+          <div class="stat"><div class="stat-number">Fast</div><div class="stat-label">Cash Closings</div></div>
         </div>
       </div>
       <div class="about-visual">
+        <!--
+          ABOUT SECTION PHOTO
+          Replace about.jpg with your own photo
+        -->
         <div class="about-visual-box">
-          <img src="assets/img/project1.jpg" alt="Construction project" />
+          <img src="assets/img/about.jpg" alt="Construction work" />
         </div>
-        <div class="about-badge">
-          Licensed Trade<br>Partners On-Call
-        </div>
+        <div class="about-badge">Licensed Trade<br>Partners On-Call</div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO STRIP -->
+<section class="photo-strip">
+  <div class="container">
+    <p class="photo-strip-label">Our Work</p>
+    <h2>Recent Projects</h2>
+    <!--
+    ════════════════════════════════════
+    ADD YOUR PROJECT PHOTOS HERE
+    Replace the src="" values with your
+    own image paths. Add more
+    .strip-photo divs as needed.
+    ════════════════════════════════════
+    -->
+    <div class="photo-strip-grid">
+
+      <div class="strip-photo">
+        <img src="assets/img/project1.jpg" alt="Project photo" />
+        <div class="strip-photo-overlay"><span>Kitchen Remodel</span></div>
+      </div>
+
+      <div class="strip-photo">
+        <img src="assets/img/project2.jpg" alt="Project photo" />
+        <div class="strip-photo-overlay"><span>Roof Replacement</span></div>
+      </div>
+
+      <div class="strip-photo">
+        <img src="assets/img/project3.jpg" alt="Project photo" />
+        <div class="strip-photo-overlay"><span>Flooring</span></div>
+      </div>
+
+      <div class="strip-photo">
+        <img src="assets/img/project4.jpg" alt="Project photo" />
+        <div class="strip-photo-overlay"><span>Bathroom Remodel</span></div>
+      </div>
+
+      <!-- ADD MORE PHOTOS: copy a .strip-photo block and change the src and label -->
+
+    </div>
+
+    <div style="margin-top:1.75rem;">
+      <a class="btn ghost" href="projects.html">See All Projects →</a>
     </div>
   </div>
 </section>
@@ -144,7 +188,7 @@
     <div class="investor-inner">
       <div>
         <p class="investor-label">Real Estate Investment</p>
-        <h2>We Buy Houses — Cash Offers in Any Condition</h2>
+        <h2>We Buy Houses —<br>Cash Offers in Any Condition</h2>
         <p>We purchase residential properties throughout Delaware, no matter the condition. Skip the hassle of repairs, showings, or waiting months to close.</p>
         <p>Fire damage, water damage, vacant homes, inherited properties, unfinished renovations, foreclosure situations — we handle it all.</p>
         <div class="investor-buttons">
@@ -155,38 +199,25 @@
       <div class="investor-features">
         <div class="inv-feat">
           <div class="inv-feat-icon">⚡</div>
-          <div class="inv-feat-text">
-            <strong>Fast Cash Closings</strong>
-            <span>Close in days, not months. No bank delays.</span>
-          </div>
+          <div class="inv-feat-text"><strong>Fast Cash Closings</strong><span>Close in days, not months. No bank delays.</span></div>
         </div>
         <div class="inv-feat">
           <div class="inv-feat-icon">🏚️</div>
-          <div class="inv-feat-text">
-            <strong>Any Condition</strong>
-            <span>Fire damage, flooding, foreclosure — all welcome.</span>
-          </div>
+          <div class="inv-feat-text"><strong>Any Condition</strong><span>Fire damage, flooding, foreclosure — all welcome.</span></div>
         </div>
         <div class="inv-feat">
           <div class="inv-feat-icon">✅</div>
-          <div class="inv-feat-text">
-            <strong>No Hassle Process</strong>
-            <span>No commissions, no repairs, no showings.</span>
-          </div>
+          <div class="inv-feat-text"><strong>No Hassle Process</strong><span>No commissions, no repairs, no showings.</span></div>
         </div>
         <div class="inv-feat">
           <div class="inv-feat-icon">📍</div>
-          <div class="inv-feat-text">
-            <strong>Statewide Delaware</strong>
-            <span>We buy properties anywhere in Delaware.</span>
-          </div>
+          <div class="inv-feat-text"><strong>Statewide Delaware</strong><span>We buy properties anywhere in Delaware.</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container footer-grid">
     <div>
@@ -194,11 +225,11 @@
         <img src="assets/img/logo.png" alt="Logo">
         <strong>Ali Signature Construction LLC</strong>
       </div>
-      <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved. &nbsp;·&nbsp; Delaware Residential & Commercial</small>
+      <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved. · Delaware Residential & Commercial</small>
     </div>
     <div style="text-align:right;">
       <small>
-        <a href="contact.html">Contact & Estimate</a><br>
+        <a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a><br>
         <a href="tel:3022578521" style="color:var(--mid);margin-top:.25rem;display:block;">(302) 257-8521</a>
       </small>
     </div>
@@ -206,8 +237,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
