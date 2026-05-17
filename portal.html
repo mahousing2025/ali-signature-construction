@@ -191,6 +191,61 @@
     .msg-err { font-size:.82rem; color:#e08080; margin-top:.5rem; }
     .divider { height:1px; background:var(--border); margin:1.25rem 0; }
 
+
+    /* CHECKLIST */
+    .checklist-category { margin-bottom:1.5rem; }
+    .checklist-cat-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:.65rem; padding-bottom:.4rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .checklist-cat-progress { font-size:.7rem; color:var(--mid); font-weight:400; }
+    .checklist-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.85rem 1rem; margin-bottom:.45rem; transition:border-color .2s,background .2s; }
+    .checklist-item.done { border-color:rgba(110,200,122,.35); background:rgba(110,200,122,.05); }
+    .checklist-item-top { display:flex; align-items:center; gap:.85rem; }
+    .checklist-checkbox { width:20px; height:20px; border-radius:4px; border:2px solid var(--border); background:var(--card); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .checklist-checkbox.checked { background:var(--green); border-color:var(--green); }
+    .checklist-checkbox.checked::after { content:"✓"; color:#000; font-size:.75rem; font-weight:700; }
+    .checklist-item-info { flex:1; min-width:0; }
+    .checklist-item-name { font-size:.92rem; font-weight:600; color:var(--white); }
+    .checklist-item-sub  { font-size:.76rem; color:var(--mid); margin-top:.1rem; }
+    .checklist-item.done .checklist-item-name { color:var(--green); }
+    .checklist-notes { margin-top:.65rem; padding-top:.65rem; border-top:1px solid var(--border); }
+    .checklist-notes input { background:var(--card); border:1px solid var(--border); border-radius:5px; color:var(--light); font-size:.82rem; padding:.42rem .75rem; width:100%; transition:border-color .2s; }
+    .checklist-notes input:focus { outline:none; border-color:var(--accent); }
+    .checklist-notes input::placeholder { color:var(--muted); }
+    /* CLIENT CHECKLIST VIEW */
+    .client-checklist-category { margin-bottom:1.5rem; }
+    .client-checklist-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:.65rem; padding-bottom:.4rem; border-bottom:1px solid var(--border); }
+    .client-checklist-item { display:flex; align-items:flex-start; gap:.85rem; padding:.75rem 1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:.4rem; }
+    .client-checklist-item.done { border-color:rgba(110,200,122,.35); background:rgba(110,200,122,.05); }
+    .client-check-icon { font-size:1rem; flex-shrink:0; margin-top:.05rem; }
+    .client-item-name { font-size:.88rem; font-weight:600; color:var(--white); }
+    .client-item-name.done { color:var(--green); }
+    .client-item-note { font-size:.78rem; color:var(--mid); margin-top:.15rem; }
+
+    /* CHECKLIST */
+    .checklist-category { margin-bottom:1.5rem; }
+    .checklist-cat-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:.65rem; padding-bottom:.4rem; border-bottom:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; }
+    .checklist-cat-progress { font-size:.7rem; color:var(--mid); font-weight:400; }
+    .checklist-item { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.85rem 1rem; margin-bottom:.45rem; transition:border-color .2s,background .2s; }
+    .checklist-item.done { border-color:rgba(110,200,122,.35); background:rgba(110,200,122,.05); }
+    .checklist-item-top { display:flex; align-items:center; gap:.85rem; }
+    .checklist-checkbox { width:20px; height:20px; border-radius:4px; border:2px solid var(--border); background:var(--card); cursor:pointer; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+    .checklist-checkbox.checked { background:var(--green); border-color:var(--green); }
+    .checklist-checkbox.checked::after { content:"checkmark"; color:#000; font-size:.75rem; font-weight:700; }
+    .checklist-item-info { flex:1; min-width:0; }
+    .checklist-item-name { font-size:.92rem; font-weight:600; color:var(--white); }
+    .checklist-item-sub  { font-size:.76rem; color:var(--mid); margin-top:.1rem; }
+    .checklist-item.done .checklist-item-name { color:var(--green); }
+    .checklist-notes { margin-top:.65rem; padding-top:.65rem; border-top:1px solid var(--border); }
+    .checklist-notes input { background:var(--card); border:1px solid var(--border); border-radius:5px; color:var(--light); font-size:.82rem; padding:.42rem .75rem; width:100%; transition:border-color .2s; }
+    .checklist-notes input:focus { outline:none; border-color:var(--accent); }
+    .client-checklist-category { margin-bottom:1.5rem; }
+    .client-checklist-title { font-size:.72rem; font-weight:700; text-transform:uppercase; letter-spacing:.1em; color:var(--accent); margin-bottom:.65rem; padding-bottom:.4rem; border-bottom:1px solid var(--border); }
+    .client-checklist-item { display:flex; align-items:flex-start; gap:.85rem; padding:.75rem 1rem; background:var(--surface); border:1px solid var(--border); border-radius:8px; margin-bottom:.4rem; }
+    .client-checklist-item.done { border-color:rgba(110,200,122,.35); background:rgba(110,200,122,.05); }
+    .client-check-icon { font-size:1rem; flex-shrink:0; margin-top:.05rem; }
+    .client-item-name { font-size:.88rem; font-weight:600; color:var(--white); }
+    .client-item-name.done { color:var(--green); }
+    .client-item-note { font-size:.78rem; color:var(--mid); margin-top:.15rem; }
+
     @media(max-width:680px) {
       .grid2,.grid3 { grid-template-columns:1fr; }
       .summary-grid { grid-template-columns:1fr 1fr; }
@@ -341,13 +396,13 @@
 
           <div class="dtab-panel active" id="t-progress">
             <div class="panel">
-              <div class="panel-label">Update Progress</div>
-              <div class="prog-ctrl">
-                <input type="range" min="0" max="100" value="0" id="progSlider"
-                  oninput="previewProgress(this.value)" onchange="saveProgress(this.value)" />
-                <span class="prog-val" id="progVal">0%</span>
+              <div class="panel-label">Construction Checklist</div>
+              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.25rem;">Check off each item as completed. Add notes for the client. Progress updates automatically.</p>
+              <div id="checklistContainer"></div>
+              <div style="margin-top:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap;">
+                <button class="btn-p" style="margin-top:0;" onclick="saveChecklist()">Save Checklist</button>
+                <span id="checklistMsg" style="font-size:.82rem;color:var(--green);"></span>
               </div>
-              <p style="font-size:.78rem;color:var(--mid);margin-top:.5rem;">Drag to update — saves automatically.</p>
             </div>
           </div>
 
@@ -420,10 +475,14 @@
         <!-- CLIENT VIEW -->
         <div id="clientView" style="display:none;">
           <div class="dtabs">
-            <button class="dtab active" onclick="switchTab('ct-expenses',this)">Expenses</button>
+            <button class="dtab active" onclick="switchTab('ct-checklist',this)">Project Status</button>
+            <button class="dtab" onclick="switchTab('ct-expenses',this)">Expenses</button>
             <button class="dtab" onclick="switchTab('ct-photos',this)">Photos</button>
           </div>
-          <div class="dtab-panel active" id="ct-expenses">
+          <div class="dtab-panel active" id="ct-checklist">
+            <div id="clientChecklistGrid"></div>
+          </div>
+          <div class="dtab-panel" id="ct-expenses">
             <div id="clientExpList"></div>
             <div class="exp-total">Total: <strong id="clientExpTotal">$0.00</strong></div>
           </div>
@@ -679,6 +738,7 @@ window.openProject = async pid => {
     document.getElementById("eDesc").value        = p.description||"";
     document.getElementById("eStatus").value      = p.status||"active";
     switchTab("t-progress", document.querySelector(".dtab"));
+    loadChecklist();
     loadExpenses();
     loadPhotos("adminPhotoGrid", true);
   } else {
@@ -914,6 +974,182 @@ window.removeClient = async id => {
   await deleteDoc(doc(db,"clients",id));
   loadClients();
 };
+
+
+/* ══ CONSTRUCTION CHECKLIST ══ */
+const CHECKLIST_TEMPLATE = [
+  { category: 'Site & Permits', items: [
+    { id:'permits',        name:'Permits & Approvals',      sub:'Building permits pulled and approved' },
+    { id:'site_prep',      name:'Site Preparation',         sub:'Cleanup, demo, debris removal' },
+  ]},
+  { category: 'Structural / Framing', items: [
+    { id:'foundation',     name:'Foundation Work',          sub:'Footings, slab, or crawlspace' },
+    { id:'framing',        name:'Framing',                  sub:'Wall, floor, and roof framing' },
+    { id:'sheathing',      name:'Sheathing / Decking',      sub:'OSB or plywood installed' },
+    { id:'structural_ins', name:'Structural Inspection',    sub:'Framing inspection passed' },
+  ]},
+  { category: 'Roofing & Exterior', items: [
+    { id:'roof_tear',      name:'Roof Tear-Off',            sub:'Old roofing removed' },
+    { id:'roof_install',   name:'Roof Installation',        sub:'New shingles, membrane, or metal' },
+    { id:'flashing',       name:'Flashing & Gutters',       sub:'Flashing, drip edge, gutters' },
+    { id:'siding',         name:'Siding / Exterior Wrap',   sub:'House wrap and siding installed' },
+    { id:'windows',        name:'Windows',                  sub:'Windows installed and sealed' },
+    { id:'doors_ext',      name:'Exterior Doors',           sub:'Entry and exterior doors hung' },
+    { id:'exterior_paint', name:'Exterior Paint / Finish',  sub:'Paint, stucco, or finish coat' },
+  ]},
+  { category: 'Rough-In Trades', items: [
+    { id:'plumbing_rough', name:'Plumbing Rough-In',        sub:'Supply and drain lines installed' },
+    { id:'electric_rough', name:'Electrical Rough-In',      sub:'Wiring, panel, boxes installed' },
+    { id:'hvac_rough',     name:'HVAC Rough-In',            sub:'Ducts, lines, and units installed' },
+    { id:'rough_inspect',  name:'Rough-In Inspections',     sub:'All trade inspections passed' },
+  ]},
+  { category: 'Insulation', items: [
+    { id:'insulation',     name:'Insulation',               sub:'Walls, attic, and crawlspace' },
+    { id:'insul_inspect',  name:'Insulation Inspection',    sub:'Inspection passed' },
+  ]},
+  { category: 'Drywall', items: [
+    { id:'drywall_hang',   name:'Drywall Hanging',          sub:'Drywall sheets hung' },
+    { id:'drywall_tape',   name:'Taping & Mudding',         sub:'Tape, mud, and finish coats' },
+    { id:'drywall_sand',   name:'Sanding & Priming',        sub:'Smooth finish, primer coat' },
+  ]},
+  { category: 'Flooring', items: [
+    { id:'subfloor',       name:'Subfloor Prep',            sub:'Leveling, patching, underlayment' },
+    { id:'tile',           name:'Tile Installation',        sub:'Tile flooring and grouting' },
+    { id:'hardwood',       name:'Hardwood / LVP Flooring',  sub:'Wood or LVP planks installed' },
+    { id:'carpet',         name:'Carpet',                   sub:'Carpet installation' },
+    { id:'floor_trim',     name:'Floor Transitions & Trim', sub:'Transition strips and base trim' },
+  ]},
+  { category: 'Kitchen', items: [
+    { id:'kitchen_cab',    name:'Kitchen Cabinets',         sub:'Upper and lower cabinets installed' },
+    { id:'countertops',    name:'Countertops',              sub:'Stone, laminate, or butcher block' },
+    { id:'kitchen_back',   name:'Backsplash',               sub:'Tile or panel backsplash' },
+    { id:'kitchen_sink',   name:'Kitchen Sink & Faucet',    sub:'Sink, faucet, and disposal' },
+    { id:'kitchen_app',    name:'Appliances',               sub:'Stove, fridge, dishwasher, microwave' },
+  ]},
+  { category: 'Bathrooms', items: [
+    { id:'bath_tile',      name:'Bathroom Tile',            sub:'Floor and shower/tub tile' },
+    { id:'bath_vanity',    name:'Vanity & Sink',            sub:'Vanity, sink, and faucet installed' },
+    { id:'bath_toilet',    name:'Toilet',                   sub:'Toilet installed and operational' },
+    { id:'bath_shower',    name:'Shower / Tub',             sub:'Shower or tub installed' },
+    { id:'bath_mirror',    name:'Mirror & Accessories',     sub:'Mirror, towel bars, toilet paper holder' },
+  ]},
+  { category: 'Interior Finishes', items: [
+    { id:'int_doors',      name:'Interior Doors',           sub:'All interior doors hung' },
+    { id:'trim_base',      name:'Trim & Baseboards',        sub:'Window/door casings and baseboards' },
+    { id:'paint_int',      name:'Interior Painting',        sub:'All rooms painted' },
+    { id:'closets',        name:'Closet Shelving',          sub:'Shelves, rods, and organizers' },
+  ]},
+  { category: 'Mechanical Finishes', items: [
+    { id:'plumbing_fin',   name:'Plumbing Finish',          sub:'Fixtures, valves, and connections' },
+    { id:'electric_fin',   name:'Electrical Finish',        sub:'Outlets, switches, fixtures installed' },
+    { id:'hvac_fin',       name:'HVAC Finish',              sub:'Vents, thermostats, startup' },
+  ]},
+  { category: 'Final Steps', items: [
+    { id:'cleaning',       name:'Final Cleaning',           sub:'Deep clean of entire space' },
+    { id:'punch_list',     name:'Punch List Completion',    sub:'All final items corrected' },
+    { id:'final_inspect',  name:'Final Inspection',         sub:'Certificate of occupancy or sign-off' },
+    { id:'client_walk',    name:'Client Walkthrough',       sub:'Owner walkthrough and approval' },
+    { id:'project_done',   name:'Project Complete',         sub:'Keys and handoff to client' },
+  ]},
+];
+
+let checklistData = {};
+
+function renderAdminChecklist() {
+  const container = document.getElementById('checklistContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  CHECKLIST_TEMPLATE.forEach(cat => {
+    const catDiv = document.createElement('div');
+    catDiv.className = 'checklist-category';
+    const catDone = cat.items.filter(i => checklistData[i.id]?.done).length;
+    catDiv.innerHTML = '<div class="checklist-cat-title">' + cat.category + '<span class="checklist-cat-progress">' + catDone + '/' + cat.items.length + '</span></div>';
+    cat.items.forEach(item => {
+      const state = checklistData[item.id] || { done: false, note: '' };
+      const itemDiv = document.createElement('div');
+      itemDiv.className = 'checklist-item' + (state.done ? ' done' : '');
+      itemDiv.id = 'cl-item-' + item.id;
+      itemDiv.innerHTML =
+        '<div class="checklist-item-top">' +
+          '<div class="checklist-checkbox ' + (state.done ? 'checked' : '') + '" onclick="toggleChecklistItem(\'' + item.id + '\')" id="cb-' + item.id + '"></div>' +
+          '<div class="checklist-item-info">' +
+            '<div class="checklist-item-name">' + item.name + '</div>' +
+            '<div class="checklist-item-sub">' + item.sub + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div class="checklist-notes">' +
+          '<input type="text" id="note-' + item.id + '" placeholder="Add a note for the client (optional)" value="' + (state.note || '') + '">' +
+        '</div>';
+      catDiv.appendChild(itemDiv);
+    });
+    container.appendChild(catDiv);
+  });
+}
+
+function renderClientChecklist(container) {
+  if (!container) return;
+  container.innerHTML = '';
+  CHECKLIST_TEMPLATE.forEach(cat => {
+    const catDiv = document.createElement('div');
+    catDiv.className = 'client-checklist-category';
+    catDiv.innerHTML = '<div class="client-checklist-title">' + cat.category + '</div>';
+    cat.items.forEach(item => {
+      const state = checklistData[item.id] || { done: false, note: '' };
+      const div = document.createElement('div');
+      div.className = 'client-checklist-item' + (state.done ? ' done' : '');
+      div.innerHTML =
+        '<div class="client-check-icon">' + (state.done ? '✅' : '⬜') + '</div>' +
+        '<div>' +
+          '<div class="client-item-name' + (state.done ? ' done' : '') + '">' + item.name + '</div>' +
+          (state.note ? '<div class="client-item-note">📝 ' + state.note + '</div>' : '') +
+        '</div>';
+      catDiv.appendChild(div);
+    });
+    container.appendChild(catDiv);
+  });
+}
+
+window.toggleChecklistItem = function(id) {
+  if (!checklistData[id]) checklistData[id] = { done: false, note: '' };
+  checklistData[id].done = !checklistData[id].done;
+  const itemDiv = document.getElementById('cl-item-' + id);
+  const cb = document.getElementById('cb-' + id);
+  if (itemDiv) itemDiv.className = 'checklist-item' + (checklistData[id].done ? ' done' : '');
+  if (cb) cb.className = 'checklist-checkbox' + (checklistData[id].done ? ' checked' : '');
+};
+
+window.saveChecklist = async function() {
+  const msg = document.getElementById('checklistMsg');
+  msg.textContent = 'Saving...';
+  CHECKLIST_TEMPLATE.forEach(cat => cat.items.forEach(item => {
+    const noteEl = document.getElementById('note-' + item.id);
+    if (noteEl) {
+      if (!checklistData[item.id]) checklistData[item.id] = { done: false, note: '' };
+      checklistData[item.id].note = noteEl.value.trim();
+    }
+  }));
+  let total = 0, done = 0;
+  CHECKLIST_TEMPLATE.forEach(cat => cat.items.forEach(item => { total++; if (checklistData[item.id]?.done) done++; }));
+  const progress = Math.round((done / total) * 100);
+  await updateDoc(doc(db, 'projects', currentPid), { checklist: checklistData, progress });
+  setProgressUI(progress);
+  document.getElementById('summaryProgress').textContent = progress + '%';
+  msg.textContent = 'Saved! Progress: ' + progress + '%';
+  setTimeout(() => { msg.textContent = ''; }, 3000);
+};
+
+async function loadChecklist() {
+  const snap = await getDoc(doc(db, 'projects', currentPid));
+  checklistData = snap.data().checklist || {};
+  renderAdminChecklist();
+}
+
+async function loadClientChecklistView() {
+  const snap = await getDoc(doc(db, 'projects', currentPid));
+  checklistData = snap.data().checklist || {};
+  const container = document.getElementById('clientChecklistGrid');
+  if (container) renderClientChecklist(container);
+}
 
 /* ══ UI HELPERS ══ */
 window.showSection = (id, btn) => {
