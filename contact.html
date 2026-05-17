@@ -13,10 +13,7 @@
   <div class="container nav-inner">
     <a class="brand" href="index.html">
       <img src="assets/img/logo.png" alt="Logo" class="logo-img">
-      <div>
-        <strong>Ali Signature Construction LLC</strong>
-        <small>Delaware • Residential & Commercial</small>
-      </div>
+      <div><strong>Ali Signature Construction LLC</strong><small>Delaware • Residential & Commercial</small></div>
     </a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
@@ -26,6 +23,7 @@
       <a href="team.html">Team</a>
       <a href="process.html">Process</a>
       <a href="contact.html" class="active">Contact</a>
+      <a href="portal.html" class="portal-link">Client Portal</a>
     </div>
     <div class="nav-cta">
       <a class="btn ghost" href="projects.html">View Work</a>
@@ -37,7 +35,7 @@
 <header class="page-head">
   <div class="container">
     <h1>Contact</h1>
-    <p>Send your project details and we'll respond with next steps — usually within 24 hours.</p>
+    <p>Send your project details and we'll respond within 24 hours. No account needed.</p>
   </div>
 </header>
 
@@ -45,80 +43,94 @@
   <div class="container">
     <div class="contact-grid">
 
-      <!-- Left: Info -->
       <div>
         <div class="contact-info-card">
           <div class="contact-info-head">
             <h3>Get in Touch</h3>
-            <p>Ready to start? Reach out any way that's easiest for you.</p>
+            <p>Reach out any way that works for you.</p>
           </div>
           <div class="contact-info-body">
             <div class="contact-item">
               <div class="contact-icon">📍</div>
-              <div>
-                <strong>Service Area</strong>
-                <span>Delaware & nearby areas</span>
-              </div>
+              <div><strong>Service Area</strong><span>Delaware &amp; nearby areas</span></div>
             </div>
             <div class="contact-item">
               <div class="contact-icon">📞</div>
-              <div>
-                <strong>Phone</strong>
-                <a href="tel:3022578521">(302) 257-8521</a>
-              </div>
+              <div><strong>Phone</strong><a href="tel:3022578521">(302) 257-8521</a></div>
             </div>
             <div class="contact-item">
               <div class="contact-icon">✉️</div>
-              <div>
-                <strong>Email</strong>
-                <a href="mailto:your-email@example.com">your-email@example.com</a>
-              </div>
+              <div><strong>Email</strong><a href="mailto:info@alisignatureconstruction.com">info@alisignatureconstruction.com</a></div>
             </div>
             <div class="contact-item">
               <div class="contact-icon">🕐</div>
-              <div>
-                <strong>Response Time</strong>
-                <span>Within 24 hours</span>
-              </div>
+              <div><strong>Response Time</strong><span>Within 24 hours</span></div>
             </div>
           </div>
         </div>
-
         <div class="contact-tip">
-          💡 <strong>Speed up your estimate:</strong> Include photos, measurements, and a short description of the project when you reach out. The more detail, the faster we can give you an accurate quote.
+          💡 <strong>Tip:</strong> Include photos, measurements, and a description to get a faster, more accurate estimate.
         </div>
       </div>
 
-      <!-- Right: Form -->
       <div class="form-card">
         <h3>Request a Free Estimate</h3>
+
+        <div id="successMsg" style="display:none;background:rgba(100,200,120,.1);border:1px solid rgba(100,200,120,.3);border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1rem;">
+          <div style="font-size:2.5rem;margin-bottom:.5rem;">✅</div>
+          <strong style="color:#6ec87a;display:block;font-size:1.1rem;margin-bottom:.35rem;">Message Sent!</strong>
+          <span style="font-size:.9rem;color:var(--light);">We received your request and will be in touch within 24 hours.</span>
+        </div>
+        <div id="errorMsg" style="display:none;background:rgba(209,79,79,.1);border:1px solid rgba(209,79,79,.3);border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.85rem;color:#e08080;">
+          Something went wrong. Please email us at <a href="mailto:info@alisignatureconstruction.com" style="color:var(--accent);">info@alisignatureconstruction.com</a>
+        </div>
+
+        <!--
+        ════════════════════════════════════════════
+        FORMSPREE SETUP (5 min, free, no backend):
+        1. Go to https://formspree.io → Sign Up
+        2. New Form → name "Estimate Requests"
+        3. Settings → Notification Email →
+           info@alisignatureconstruction.com
+        4. Copy Form ID (e.g. xpzvwrqk)
+        5. Open assets/js/main.js → find
+           FORMSPREE_ID and replace YOUR_FORM_ID
+        ════════════════════════════════════════════
+        -->
         <form class="form" id="contactForm">
           <div class="form-row">
             <div class="field">
-              <label for="name">Full Name</label>
-              <input class="input" id="name" type="text" placeholder="John Smith" required />
+              <label for="fname">Full Name *</label>
+              <input class="input" id="fname" name="name" type="text" placeholder="John Smith" required />
             </div>
             <div class="field">
-              <label for="phone">Phone Number</label>
-              <input class="input" id="phone" type="tel" placeholder="(302) 000-0000" />
+              <label for="fphone">Phone Number</label>
+              <input class="input" id="fphone" name="phone" type="tel" placeholder="(302) 000-0000" />
             </div>
           </div>
           <div class="field">
-            <label for="email">Email Address</label>
-            <input class="input" id="email" type="email" placeholder="you@example.com" />
+            <label for="femail">Email Address</label>
+            <input class="input" id="femail" name="email" type="email" placeholder="you@example.com" />
           </div>
           <div class="field">
-            <label for="service">Type of Service</label>
-            <input class="input" id="service" placeholder="e.g. Roofing, Kitchen Remodel, Full Renovation" />
+            <label for="faddress">Property Address</label>
+            <input class="input" id="faddress" name="address" type="text" placeholder="123 Main St, Wilmington, DE" />
           </div>
           <div class="field">
-            <label for="message">Project Details</label>
-            <textarea class="input" id="message" placeholder="Tell us about the project — location, scope, timeline, any photos you can share..." required></textarea>
+            <label for="fservice">Type of Service</label>
+            <input class="input" id="fservice" name="service" type="text" placeholder="e.g. Roofing, Kitchen Remodel, Full Renovation" />
+          </div>
+          <div class="field">
+            <label for="fmessage">Project Details *</label>
+            <textarea class="input" id="fmessage" name="message" placeholder="Tell us about the project — scope, timeline, budget range…" required></textarea>
           </div>
           <div class="form-submit">
-            <button class="btn primary" type="submit">Send Message</button>
+            <button class="btn primary" type="submit" id="submitBtn">
+              <span id="submitText">Send Message</span>
+              <span id="submitSpinner" style="display:none;">Sending…</span>
+            </button>
           </div>
-          <p class="form-note">This form opens your email client to send the message (static site).</p>
+          <p class="form-note">We never share your info. Replies go to your email.</p>
         </form>
       </div>
 
@@ -136,17 +148,12 @@
       <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
     </div>
     <div style="text-align:right;">
-      <small>
-        <a href="contact.html">Contact & Estimate</a><br>
-        <a href="tel:3022578521" style="color:var(--mid);margin-top:.25rem;display:block;">(302) 257-8521</a>
-      </small>
+      <small><a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a></small>
     </div>
   </div>
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
