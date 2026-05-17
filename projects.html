@@ -12,27 +12,24 @@
 <nav>
   <div class="container nav-inner">
     <a class="brand" href="index.html">
-        <img src="assets/img/logo.png" alt="Logo" class="logo-img">
-      <span>
-        Ali Signature Construction LLC
+      <img src="assets/img/logo.png" alt="Logo" class="logo-img">
+      <div>
+        <strong>Ali Signature Construction LLC</strong>
         <small>Delaware • Residential & Commercial</small>
-      </span>
+      </div>
     </a>
-
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
-
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
       <a href="services.html">Services</a>
-      <a href="projects.html">Projects</a>
+      <a href="projects.html" class="active">Projects</a>
       <a href="team.html">Team</a>
       <a href="process.html">Process</a>
       <a href="contact.html">Contact</a>
     </div>
-
     <div class="nav-cta">
       <a class="btn ghost" href="services.html">Services</a>
-      <a class="btn primary" href="contact.html">Get a Free Estimate</a>
+      <a class="btn primary" href="contact.html">Free Estimate</a>
     </div>
   </div>
 </nav>
@@ -40,8 +37,7 @@
 <header class="page-head">
   <div class="container">
     <h1>Projects & Gallery</h1>
-    <p>Examples of our work. Replace these images with your own before/after photos anytime.</p>
-
+    <p>Examples of our completed work. Replace these images with your own before/after photos at any time.</p>
     <div class="filters">
       <button class="pill active" data-filter="all">All</button>
       <button class="pill" data-filter="renovation">Renovations</button>
@@ -55,48 +51,52 @@
 
 <section class="section">
   <div class="container">
-    <div class="grid">
+    <div class="projects-grid" id="projectsGrid">
 
-      <div class="card project col-4" data-cat="renovation,interior">
-        <img src="assets/img/project1.jpg" alt="Project 1">
+      <div class="project" data-cat="renovation interior">
+        <img src="assets/img/project1.jpg" alt="Kitchen Refresh">
         <div class="overlay">
           <h3>Kitchen Refresh</h3>
-          <div class="meta">Interior • Renovation</div>
+          <div class="meta">Interior · Renovation</div>
         </div>
       </div>
 
-      <div class="card project col-4" data-cat="roofing,exterior">
-        <img src="assets/img/project2.jpg" alt="Project 2">
+      <div class="project" data-cat="roofing exterior">
+        <img src="assets/img/project2.jpg" alt="Roof Replacement">
         <div class="overlay">
           <h3>Roof Replacement</h3>
-          <div class="meta">Exterior • Roofing</div>
+          <div class="meta">Exterior · Roofing</div>
         </div>
       </div>
 
-      <div class="card project col-4" data-cat="flooring,interior">
-        <img src="assets/img/project3.jpg" alt="Project 3">
+      <div class="project project-cta-card" data-cat="all">
+        <h3>Want yours featured here?</h3>
+        <p>Send your project photos — we'll build a clean before/after gallery.</p>
+        <a class="btn primary" href="contact.html">Request an Estimate</a>
+      </div>
+
+      <div class="project" data-cat="flooring interior">
+        <img src="assets/img/project3.jpg" alt="Flooring Upgrade">
         <div class="overlay">
           <h3>Flooring Upgrade</h3>
-          <div class="meta">Interior • Flooring</div>
+          <div class="meta">Interior · Flooring</div>
         </div>
       </div>
 
-      <div class="card project col-4" data-cat="renovation,interior">
-        <img src="assets/img/project4.jpg" alt="Project 4">
+      <div class="project" data-cat="renovation interior">
+        <img src="assets/img/project4.jpg" alt="Bathroom Remodel">
         <div class="overlay">
           <h3>Bathroom Remodel</h3>
-          <div class="meta">Interior • Renovation</div>
+          <div class="meta">Interior · Renovation</div>
         </div>
       </div>
 
-      <div class="card pad col-8" data-cat="all">
-        <h3>Want yours featured here?</h3>
-        <p class="lead" style="margin-top:.2rem;">
-          Send your project photos and we’ll build a clean before/after gallery.
-        </p>
-        <div class="hr"></div>
-        <a class="btn primary" href="contact.html">Request an Estimate</a>
-        <a class="btn" href="services.html" style="margin-left:.5rem;">See Services</a>
+      <div class="project" data-cat="exterior renovation">
+        <img src="assets/img/project5.jpg" alt="Exterior Upgrade">
+        <div class="overlay">
+          <h3>Exterior Upgrade</h3>
+          <div class="meta">Exterior · Renovation</div>
+        </div>
       </div>
 
     </div>
@@ -106,16 +106,16 @@
 <footer class="footer">
   <div class="container footer-grid">
     <div>
-      <div class="brand" style="margin-bottom:.5rem;">
-        <span class="logo"><img src="assets/img/logo.svg" alt="Logo"></span>
-        <span>Ali Signature Construction LLC</span>
+      <div class="footer-brand">
+        <img src="assets/img/logo.png" alt="Logo">
+        <strong>Ali Signature Construction LLC</strong>
       </div>
       <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
     </div>
-    <div>
+    <div style="text-align:right;">
       <small>
-        📍 Delaware • Residential & Commercial<br/>
-        <a href="contact.html">Contact & Estimate</a>
+        <a href="contact.html">Contact & Estimate</a><br>
+        <a href="tel:3022578521" style="color:var(--mid);margin-top:.25rem;display:block;">(302) 257-8521</a>
       </small>
     </div>
   </div>
@@ -124,6 +124,19 @@
 <script src="assets/js/main.js"></script>
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
+
+  // Filter logic
+  document.querySelectorAll('.pill').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const f = btn.dataset.filter;
+      document.querySelectorAll('#projectsGrid .project').forEach(card => {
+        const cats = card.dataset.cat || 'all';
+        card.style.display = (f === 'all' || cats.includes(f)) ? '' : 'none';
+      });
+    });
+  });
 </script>
 </body>
 </html>
