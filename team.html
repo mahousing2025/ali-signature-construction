@@ -13,10 +13,7 @@
   <div class="container nav-inner">
     <a class="brand" href="index.html">
       <img src="assets/img/logo.png" alt="Logo" class="logo-img">
-      <div>
-        <strong>Ali Signature Construction LLC</strong>
-        <small>Delaware • Residential & Commercial</small>
-      </div>
+      <div><strong>Ali Signature Construction LLC</strong><small>Delaware • Residential & Commercial</small></div>
     </a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
@@ -26,6 +23,7 @@
       <a href="team.html" class="active">Team</a>
       <a href="process.html">Process</a>
       <a href="contact.html">Contact</a>
+      <a href="portal.html" class="portal-link">Client Portal</a>
     </div>
     <div class="nav-cta">
       <a class="btn ghost" href="projects.html">View Work</a>
@@ -37,47 +35,99 @@
 <header class="page-head">
   <div class="container">
     <h1>Team</h1>
-    <p>Owner-led execution with clear accountability. When licensed trade work is required, we coordinate trusted, insured partners.</p>
+    <p>Owner-led execution with clear accountability. Trusted licensed partners for every specialized trade.</p>
   </div>
 </header>
 
 <section class="section">
   <div class="container">
 
-    <!-- Owner card -->
-    <div class="team-card" style="margin-bottom:1.5rem;">
+    <!-- ── OWNER CARD ── -->
+    <div class="team-card">
       <div class="team-card-head">
-        <div class="team-avatar">👷</div>
+        <div class="team-avatar">
+          <!--
+            OWNER PHOTO
+            Replace with: <img src="assets/img/owner.jpg" alt="Mohamed Abdullah Ali">
+            Or leave the emoji as a placeholder
+          -->
+          👷
+        </div>
         <div>
-          <h2 class="team-name">Mohamed Abdullah Ali</h2>
-          <p class="team-role">Owner & Managing Member</p>
+          <div class="team-name">Mohamed Abdullah Ali</div>
+          <div class="team-role">Owner &amp; Managing Member</div>
         </div>
-        <div style="margin-left:auto;">
-          <a href="contact.html" class="btn primary">Work With Me</a>
-        </div>
+        <a href="contact.html" class="btn primary" style="margin-left:auto;">Work With Me</a>
       </div>
       <div class="team-card-body">
         <div class="team-block">
           <h4>Responsibilities</h4>
           <ul class="team-list">
-            <li>Estimates & scope development</li>
-            <li>Contracts & project scheduling</li>
-            <li>Site supervision & quality control</li>
-            <li>Materials & vendor coordination</li>
+            <li>Estimates &amp; scope development</li>
+            <li>Contracts &amp; project scheduling</li>
+            <li>Site supervision &amp; quality control</li>
+            <li>Materials &amp; vendor coordination</li>
             <li>Client communication</li>
-            <li>Final walkthrough & closeout</li>
+            <li>Final walkthrough &amp; closeout</li>
           </ul>
         </div>
         <div class="team-block">
           <h4>My Commitment</h4>
-          <p class="note" style="font-style:italic;margin-bottom:1.25rem;">"I personally oversee every project to ensure clean workmanship, reliable timelines, and a final result you're proud of."</p>
-          <p class="note">When you work with Ali Signature Construction, you're working directly with the owner — not a sales rep or a middleman. That means faster answers, better accountability, and no surprises.</p>
+          <p style="font-style:italic;font-size:.9rem;color:var(--light);margin-bottom:1rem;">"I personally oversee every project to ensure clean workmanship, reliable timelines, and a final result you're proud of."</p>
+          <p style="font-size:.88rem;color:var(--mid);">When you work with Ali Signature Construction, you work directly with the owner — not a sales rep or middleman. Faster answers, better accountability, no surprises.</p>
         </div>
       </div>
     </div>
 
-    <!-- Partner network -->
-    <h3 style="margin-bottom:1rem;color:var(--light);font-size:.82rem;text-transform:uppercase;letter-spacing:.08em;">Licensed Partner Network</h3>
+    <!-- ── TEAM MEMBERS ── -->
+    <!--
+    ════════════════════════════════════════════════
+    HOW TO ADD A TEAM MEMBER:
+    Copy one .team-member-card block below,
+    update the name, role, bio, and photo.
+
+    To add a photo:
+    - Upload the image to assets/img/
+    - Replace the emoji inside .member-avatar with:
+      <img src="assets/img/yourphoto.jpg" alt="Name">
+    ════════════════════════════════════════════════
+    -->
+
+    <h3 style="font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:1rem;">Team Members</h3>
+
+    <div class="team-members-grid">
+
+      <!-- TEAM MEMBER 1 — edit or replace -->
+      <div class="team-member-card">
+        <div class="member-avatar">👤</div>
+        <!-- To add a photo: <div class="member-avatar"><img src="assets/img/member1.jpg" alt="Name"></div> -->
+        <div class="member-name">Team Member Name</div>
+        <div class="member-role">Job Title</div>
+        <div class="member-bio">Short description of their role and experience on the team.</div>
+      </div>
+
+      <!-- TEAM MEMBER 2 — edit or replace -->
+      <div class="team-member-card">
+        <div class="member-avatar">👤</div>
+        <div class="member-name">Team Member Name</div>
+        <div class="member-role">Job Title</div>
+        <div class="member-bio">Short description of their role and experience on the team.</div>
+      </div>
+
+      <!-- TEAM MEMBER 3 — edit or replace -->
+      <div class="team-member-card">
+        <div class="member-avatar">👤</div>
+        <div class="member-name">Team Member Name</div>
+        <div class="member-role">Job Title</div>
+        <div class="member-bio">Short description of their role and experience on the team.</div>
+      </div>
+
+      <!-- ADD MORE: copy a .team-member-card block above and paste it here -->
+
+    </div>
+
+    <!-- ── LICENSED PARTNERS ── -->
+    <h3 style="font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:1rem;">Licensed Partner Network</h3>
     <div class="partners-grid">
       <div class="partner-card">
         <div class="partner-icon">⚡</div>
@@ -92,7 +142,7 @@
       <div class="partner-card">
         <div class="partner-icon">❄️</div>
         <h3>HVAC</h3>
-        <p>Licensed HVAC professionals for heating and cooling upgrades, service, and new system installation.</p>
+        <p>Licensed HVAC professionals for heating and cooling upgrades, service, and system installation.</p>
       </div>
     </div>
 
@@ -109,17 +159,12 @@
       <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
     </div>
     <div style="text-align:right;">
-      <small>
-        <a href="contact.html">Contact & Estimate</a><br>
-        <a href="tel:3022578521" style="color:var(--mid);margin-top:.25rem;display:block;">(302) 257-8521</a>
-      </small>
+      <small><a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a></small>
     </div>
   </div>
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-</script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
