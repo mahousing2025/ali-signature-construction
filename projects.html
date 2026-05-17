@@ -13,10 +13,7 @@
   <div class="container nav-inner">
     <a class="brand" href="index.html">
       <img src="assets/img/logo.png" alt="Logo" class="logo-img">
-      <div>
-        <strong>Ali Signature Construction LLC</strong>
-        <small>Delaware • Residential & Commercial</small>
-      </div>
+      <div><strong>Ali Signature Construction LLC</strong><small>Delaware • Residential & Commercial</small></div>
     </a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
@@ -26,6 +23,7 @@
       <a href="team.html">Team</a>
       <a href="process.html">Process</a>
       <a href="contact.html">Contact</a>
+      <a href="portal.html" class="portal-link">Client Portal</a>
     </div>
     <div class="nav-cta">
       <a class="btn ghost" href="services.html">Services</a>
@@ -51,6 +49,16 @@
 
 <section class="section">
   <div class="container">
+    <!--
+    ════════════════════════════════════════
+    HOW TO ADD PHOTOS:
+    1. Upload your image to assets/img/
+    2. Copy one of the .project blocks below
+    3. Change the src, alt, title, and data-cat
+    data-cat options: renovation interior roofing flooring exterior
+    (space-separated for multiple categories)
+    ════════════════════════════════════════
+    -->
     <div class="projects-grid" id="projectsGrid">
 
       <div class="project" data-cat="renovation interior">
@@ -67,12 +75,6 @@
           <h3>Roof Replacement</h3>
           <div class="meta">Exterior · Roofing</div>
         </div>
-      </div>
-
-      <div class="project project-cta-card" data-cat="all">
-        <h3>Want yours featured here?</h3>
-        <p>Send your project photos — we'll build a clean before/after gallery.</p>
-        <a class="btn primary" href="contact.html">Request an Estimate</a>
       </div>
 
       <div class="project" data-cat="flooring interior">
@@ -99,6 +101,14 @@
         </div>
       </div>
 
+      <!-- ADD MORE PROJECT PHOTOS ABOVE THIS LINE -->
+
+      <div class="project-cta-card" data-cat="all">
+        <h3>Want yours featured here?</h3>
+        <p>Send project photos — we'll build a before/after gallery.</p>
+        <a class="btn primary" href="contact.html">Request an Estimate</a>
+      </div>
+
     </div>
   </div>
 </section>
@@ -113,30 +123,12 @@
       <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
     </div>
     <div style="text-align:right;">
-      <small>
-        <a href="contact.html">Contact & Estimate</a><br>
-        <a href="tel:3022578521" style="color:var(--mid);margin-top:.25rem;display:block;">(302) 257-8521</a>
-      </small>
+      <small><a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a></small>
     </div>
   </div>
 </footer>
 
 <script src="assets/js/main.js"></script>
-<script>
-  document.getElementById("year").textContent = new Date().getFullYear();
-
-  // Filter logic
-  document.querySelectorAll('.pill').forEach(btn => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.pill').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      const f = btn.dataset.filter;
-      document.querySelectorAll('#projectsGrid .project').forEach(card => {
-        const cats = card.dataset.cat || 'all';
-        card.style.display = (f === 'all' || cats.includes(f)) ? '' : 'none';
-      });
-    });
-  });
-</script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
 </html>
