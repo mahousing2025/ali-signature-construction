@@ -215,6 +215,39 @@
     .msg-err { font-size:.82rem; color:#e08080; margin-top:.5rem; }
     code { background:var(--surface); padding:.1rem .4rem; border-radius:3px; font-size:.78rem; }
 
+
+    /* ══ AI ASSISTANT ══ */
+    #aiBtn { position:fixed; bottom:1.75rem; right:1.75rem; width:56px; height:56px; background:var(--accent); border:none; border-radius:50%; cursor:pointer; display:none; align-items:center; justify-content:center; font-size:1.5rem; z-index:500; box-shadow:0 4px 24px rgba(200,169,110,.5); transition:transform .2s,box-shadow .2s; }
+    #aiBtn:hover { transform:scale(1.08); box-shadow:0 6px 30px rgba(200,169,110,.6); }
+    #aiPanel { position:fixed; bottom:5.5rem; right:1.75rem; width:390px; max-width:calc(100vw - 2rem); background:var(--dark); border:1px solid var(--border); border-radius:16px; box-shadow:0 12px 50px rgba(0,0,0,.7); z-index:500; display:none; flex-direction:column; overflow:hidden; height:580px; max-height:calc(100vh - 8rem); }
+    .ai-head { background:linear-gradient(135deg,var(--accent),var(--accent2)); padding:1rem 1.15rem; display:flex; align-items:center; justify-content:space-between; flex-shrink:0; }
+    .ai-head-left { display:flex; align-items:center; gap:.65rem; }
+    .ai-head-icon { font-size:1.3rem; }
+    .ai-head-name { font-size:.92rem; font-weight:700; color:var(--black); line-height:1.2; }
+    .ai-head-sub  { font-size:.68rem; color:rgba(0,0,0,.6); }
+    .ai-close { background:none; border:none; color:var(--black); font-size:1.2rem; cursor:pointer; opacity:.65; padding:.2rem; }
+    .ai-close:hover { opacity:1; }
+    .ai-key-bar { padding:.75rem 1rem; border-bottom:1px solid var(--border); background:var(--surface); flex-shrink:0; display:flex; gap:.5rem; align-items:center; }
+    .ai-key-bar input { flex:1; background:var(--card); border:1px solid var(--border); border-radius:5px; color:var(--white); font-size:.78rem; padding:.4rem .7rem; }
+    .ai-key-bar input:focus { outline:none; border-color:var(--accent); }
+    .ai-key-save { background:var(--accent); color:var(--black); border:none; border-radius:5px; font-size:.72rem; font-weight:700; padding:.4rem .8rem; cursor:pointer; white-space:nowrap; }
+    .ai-chips { padding:.6rem .85rem; border-bottom:1px solid var(--border); display:flex; gap:.4rem; flex-wrap:wrap; flex-shrink:0; background:var(--surface); }
+    .ai-chip { background:var(--card); border:1px solid var(--border); border-radius:99px; font-size:.68rem; font-weight:600; color:var(--light); padding:.25rem .7rem; cursor:pointer; transition:all .15s; white-space:nowrap; }
+    .ai-chip:hover { border-color:var(--accent); color:var(--accent); background:rgba(200,169,110,.08); }
+    .ai-messages { flex:1; overflow-y:auto; padding:.85rem; display:flex; flex-direction:column; gap:.7rem; }
+    .ai-msg { max-width:90%; padding:.7rem .9rem; border-radius:12px; font-size:.83rem; line-height:1.65; word-break:break-word; }
+    .ai-msg.assistant { background:var(--surface); border:1px solid var(--border); color:var(--light); align-self:flex-start; border-bottom-left-radius:3px; }
+    .ai-msg.user { background:var(--accent); color:var(--black); align-self:flex-end; border-bottom-right-radius:3px; font-weight:500; }
+    .ai-msg.thinking { background:var(--surface); border:1px solid var(--border); color:var(--mid); align-self:flex-start; font-style:italic; }
+    .ai-action-btn { display:inline-block; margin-top:.5rem; background:var(--accent); color:var(--black); border:none; border-radius:5px; font-size:.72rem; font-weight:700; padding:.35rem .8rem; cursor:pointer; text-transform:uppercase; letter-spacing:.04em; }
+    .ai-action-btn:hover { background:var(--accent2); }
+    .ai-input-row { padding:.75rem; border-top:1px solid var(--border); display:flex; gap:.5rem; flex-shrink:0; background:var(--surface); }
+    .ai-input { flex:1; background:var(--card); border:1.5px solid var(--border); border-radius:8px; color:var(--white); font-size:.84rem; padding:.6rem .85rem; resize:none; min-height:38px; max-height:100px; transition:border-color .2s; }
+    .ai-input:focus { outline:none; border-color:var(--accent); }
+    .ai-send { background:var(--accent); color:var(--black); border:none; border-radius:8px; width:38px; height:38px; font-size:1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:background .15s; }
+    .ai-send:hover { background:var(--accent2); }
+    .ai-send:disabled { opacity:.4; cursor:not-allowed; }
+
     @media(max-width:680px) {
       .grid2,.grid3 { grid-template-columns:1fr; }
       .summary-grid { grid-template-columns:1fr 1fr; }
@@ -408,8 +441,8 @@
                 <div class="fg"><label>Type</label>
                   <select id="photoType"><option value="before">Before</option><option value="after">After</option></select>
                 </div>
-                <div class="fg" style="flex:1;min-width:200px;"><label>Select Image (max 900KB)</label>
-                  <input type="file" id="photoFile" accept="image/*" style="background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--light);font-size:.85rem;padding:.55rem .9rem;width:100%;" />
+                <div class="fg" style="flex:1;min-width:200px;"><label>Select Image or PDF (images max 1.5MB, PDFs max 3MB)</label>
+                  <input type="file" id="photoFile" accept="image/*,.pdf" style="background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--light);font-size:.85rem;padding:.55rem .9rem;width:100%;" />
                 </div>
                 <button class="btn-p" id="uploadBtn" onclick="uploadPhoto()" style="margin-top:0;">Upload</button>
               </div>
@@ -666,6 +699,7 @@ function showPortal() {
   document.getElementById('adminNav').style.display = isAdmin ? 'flex' : 'none';
   document.getElementById('createArea').style.display = isAdmin ? 'block' : 'none';
   document.getElementById('listTitle').textContent  = isAdmin ? 'All Projects' : 'My Project';
+  if (isAdmin) showAIBtn();
   loadProjects();
 }
 
@@ -999,47 +1033,112 @@ async function loadPhotos(gridId, canDelete) {
     if (snap.empty) { grid.innerHTML = '<p class="empty-txt">No photos yet.</p>'; return; }
     snap.forEach(ds => {
       const ph = ds.data();
+      const isPDF = ph.name && ph.name.toLowerCase().endsWith('.pdf');
       const div = document.createElement('div'); div.className = 'photo-item';
-      div.innerHTML =
-        '<div class="pbadge ' + ph.type + '">' + ph.type + '</div>' +
-        '<img src="' + ph.data + '" alt="' + ph.type + '" loading="lazy" onclick="viewPhoto(\'' + ds.id + '\')" />' +
-        (canDelete ? '<button class="del-photo" onclick="deletePhoto(\'' + ds.id + '\')">✕</button>' : '');
+      if (isPDF) {
+        // PDF tile
+        div.innerHTML =
+          '<div class="pbadge ' + ph.type + '">' + ph.type + '</div>' +
+          '<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;cursor:pointer;background:var(--surface);" onclick="downloadFile(\'' + ds.id + '\')">' +
+            '<div style="font-size:2rem;">📄</div>' +
+            '<div style="font-size:.7rem;color:var(--mid);text-align:center;padding:0 .5rem;word-break:break-all;">' + (ph.name||'document.pdf') + '</div>' +
+            '<div style="font-size:.68rem;color:var(--accent);">Tap to download</div>' +
+          '</div>' +
+          (canDelete ? '<button class="del-photo" onclick="deletePhoto(\'' + ds.id + '\')">✕</button>' : '');
+      } else {
+        // Image tile — store data on element, click opens overlay directly
+        const img = document.createElement('img');
+        img.alt = ph.type;
+        img.loading = 'lazy';
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;cursor:zoom-in;';
+        // Set src directly from stored base64
+        if (ph.data) {
+          img.src = ph.data;
+        } else {
+          img.src = '';
+          img.style.display = 'none';
+        }
+        img.onclick = () => {
+          document.getElementById('photoOverlayImg').src = ph.data || '';
+          document.getElementById('photoOverlay').style.display = 'flex';
+        };
+        const badge = document.createElement('div');
+        badge.className = 'pbadge ' + ph.type;
+        badge.textContent = ph.type;
+        div.appendChild(badge);
+        div.appendChild(img);
+        if (canDelete) {
+          const delBtn = document.createElement('button');
+          delBtn.className = 'del-photo';
+          delBtn.textContent = '✕';
+          delBtn.onclick = () => deletePhoto(ds.id);
+          div.appendChild(delBtn);
+        }
+      }
       grid.appendChild(div);
     });
-  } catch { grid.innerHTML = '<p class="empty-txt">Error loading photos.</p>'; }
+  } catch(e) { grid.innerHTML = '<p class="empty-txt">Error loading: ' + e.message + '</p>'; }
 }
 
 window.uploadPhoto = async () => {
   const file = document.getElementById('photoFile').files[0];
   const type = document.getElementById('photoType').value;
   const msg  = document.getElementById('uploadMsg');
-  if (!file) { alert('Select a photo first.'); return; }
-  if (file.size > 900000) { alert('Photo must be under 900KB. Compress it at squoosh.app'); return; }
+  if (!file) { alert('Select a file first.'); return; }
+  const isPDF = file.name.toLowerCase().endsWith('.pdf');
+  const maxSize = isPDF ? 3000000 : 1500000; // 3MB for PDFs, 1.5MB for images
+  if (file.size > maxSize) {
+    alert(isPDF
+      ? 'PDF must be under 3MB. Try compressing it first.'
+      : 'Image must be under 1.5MB. Compress at squoosh.app'
+    );
+    return;
+  }
   const btn = document.getElementById('uploadBtn');
-  btn.disabled = true; btn.textContent = 'Uploading...'; msg.textContent = 'Reading file...';
+  btn.disabled = true; btn.textContent = 'Uploading...';
+  msg.textContent = 'Reading file...';
   const reader = new FileReader();
   reader.onload = async e => {
     try {
       await addDoc(collection(db,'projects',currentPid,'photos'), {
-        type, data: e.target.result, name: file.name, createdAt: serverTimestamp(),
+        type,
+        data: e.target.result,
+        name: file.name,
+        isPDF,
+        createdAt: serverTimestamp(),
       });
       document.getElementById('photoFile').value = '';
-      msg.textContent = '✅ Photo uploaded!';
+      msg.textContent = isPDF ? '✅ PDF uploaded!' : '✅ Photo uploaded!';
       loadPhotos('adminPhotoGrid', true);
-    } catch(err) { msg.textContent = 'Error: ' + err.message; }
+    } catch(err) {
+      if (err.message && err.message.includes('longer than')) {
+        msg.textContent = '❌ File too large for Firestore. Please compress it further.';
+      } else {
+        msg.textContent = 'Error: ' + err.message;
+      }
+    }
     btn.disabled = false; btn.textContent = 'Upload';
   };
   reader.readAsDataURL(file);
 };
 
-const photoCache = {};
+window.downloadFile = async id => {
+  const snap = await getDoc(doc(db,'projects',currentPid,'photos',id));
+  if (!snap.exists()) return;
+  const ph = snap.data();
+  const a  = document.createElement('a');
+  a.href     = ph.data;
+  a.download = ph.name || 'document.pdf';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
 window.viewPhoto = async id => {
-  if (!photoCache[id]) {
-    const snap = await getDoc(doc(db,'projects',currentPid,'photos',id));
-    if (snap.exists()) photoCache[id] = snap.data().data;
-  }
-  if (photoCache[id]) {
-    document.getElementById('photoOverlayImg').src = photoCache[id];
+  // legacy — kept for compatibility
+  const snap = await getDoc(doc(db,'projects',currentPid,'photos',id));
+  if (snap.exists() && snap.data().data) {
+    document.getElementById('photoOverlayImg').src = snap.data().data;
     document.getElementById('photoOverlay').style.display = 'flex';
   }
 };
@@ -1137,5 +1236,283 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') closeOverlay();
 });
 </script>
+
+<!-- AI ASSISTANT BUTTON -->
+<button id="aiBtn" onclick="toggleAI()" title="AI Assistant">🤖</button>
+
+<!-- AI ASSISTANT PANEL -->
+<div id="aiPanel">
+  <div class="ai-head">
+    <div class="ai-head-left">
+      <div class="ai-head-icon">🤖</div>
+      <div>
+        <div class="ai-head-name">ASC Assistant</div>
+        <div class="ai-head-sub">Powered by Google Gemini • Free</div>
+      </div>
+    </div>
+    <button class="ai-close" onclick="toggleAI()">✕</button>
+  </div>
+
+  <!-- API Key bar -->
+  <div class="ai-key-bar" id="aiKeyBar">
+    <input type="password" id="aiKeyInput" placeholder="Paste your Gemini API key (aistudio.google.com)" />
+    <button class="ai-key-save" onclick="saveApiKey()">Save</button>
+  </div>
+
+  <!-- Quick action chips -->
+  <div class="ai-chips">
+    <div class="ai-chip" onclick="aiQuick('fill-project')">📋 Fill Project Form</div>
+    <div class="ai-chip" onclick="aiQuick('fill-expense')">💰 Log Expense</div>
+    <div class="ai-chip" onclick="aiQuick('permit')">📜 Permit Help</div>
+    <div class="ai-chip" onclick="aiQuick('client-note')">✍️ Client Note</div>
+    <div class="ai-chip" onclick="aiQuick('scope')">🔨 Write Scope</div>
+  </div>
+
+  <div class="ai-messages" id="aiMessages">
+    <div class="ai-msg assistant">
+      👋 Hi Mohamed! I'm your construction assistant.<br><br>
+      I can <strong>fill out your project forms</strong>, log expenses, write client updates, help with permits, and answer any construction questions.<br><br>
+      First, paste your free Gemini API key above. Get one in 2 minutes at <strong>aistudio.google.com</strong> — completely free, no credit card.
+    </div>
+  </div>
+
+  <div class="ai-input-row">
+    <textarea class="ai-input" id="aiInput" placeholder="Ask me anything or describe what you need..." rows="1" onkeydown="aiKeyDown(event)"></textarea>
+    <button class="ai-send" id="aiSendBtn" onclick="aiSend()">➤</button>
+  </div>
+</div>
+
+
+<script>
+/* ══ AI ASSISTANT ══ */
+const AI_KEY_STORAGE = 'asc_gemini_key';
+const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
+
+let aiOpen    = false;
+let aiHistory = [];
+let geminiKey = localStorage.getItem(AI_KEY_STORAGE) || '';
+
+const SYSTEM_PROMPT = `You are the AI assistant for Ali Signature Construction LLC, a Delaware-based residential and commercial construction company owned by Mohamed Abdullah Ali.
+
+COMPANY INFO:
+- Owner: Mohamed Abdullah Ali
+- Email: info@alisignatureconstruction.com
+- Phone: (302) 257-8521
+- Service area: Delaware and nearby areas
+- Services: Full renovations, kitchen/bathroom remodels, roofing, flooring, drywall, painting, doors/windows, general contracting
+- Also buys houses for cash in any condition
+
+YOUR CAPABILITIES:
+1. FILL PROJECT FORM - When user describes a project, extract: project name, address, contract value, description/scope. Return as JSON with keys: name, address, contractValue, description
+2. LOG EXPENSE - When user describes an expense, extract: category (Materials/Labor/Permits/Equipment/Subcontractor/Other), description, amount, date. Return as JSON with keys: category, description, amount, date (YYYY-MM-DD format)
+3. PERMIT HELP - Guide through Delaware building permit requirements. Know these portals:
+   - New Castle County: https://www.nccde.org/1699/Building-Permits
+   - City of Wilmington: https://www.wilmingtonde.gov/government/city-departments/licenses-inspections
+   - Kent County: https://www.co.kent.de.us/government/departments/planning-services/building-inspections.aspx
+   - Sussex County: https://www.sussexcountyde.gov/building-permits-inspections
+   - Delaware Division of Professional Regulation: https://dpr.delaware.gov
+4. CLIENT NOTE - Write professional project update notes for clients
+5. SCOPE - Write professional scope of work descriptions
+
+RULES:
+- Be concise and practical
+- When filling forms, ALWAYS return valid JSON wrapped in triple backticks with json tag
+- For permits, always ask: What county? What type of work? Is it residential or commercial?
+- Always be helpful, professional, and accurate
+- If asked about pricing, remind that estimates should be given in person after site visit`;
+
+function toggleAI() {
+  aiOpen = !aiOpen;
+  document.getElementById('aiPanel').style.display = aiOpen ? 'flex' : 'none';
+  if (aiOpen && geminiKey) {
+    document.getElementById('aiKeyBar').style.display = 'none';
+  }
+  if (aiOpen) {
+    setTimeout(() => document.getElementById('aiInput').focus(), 100);
+  }
+}
+
+function saveApiKey() {
+  const key = document.getElementById('aiKeyInput').value.trim();
+  if (!key) { alert('Please paste your Gemini API key.'); return; }
+  geminiKey = key;
+  localStorage.setItem(AI_KEY_STORAGE, key);
+  document.getElementById('aiKeyBar').style.display = 'none';
+  addMsg('assistant', '✅ API key saved! I am ready to help. Try clicking one of the quick buttons above or just type what you need.');
+}
+
+function addMsg(role, text) {
+  const msgs = document.getElementById('aiMessages');
+  const div  = document.createElement('div');
+  div.className = 'ai-msg ' + role;
+  div.innerHTML = text.replace(/
+/g, '<br>');
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return div;
+}
+
+function aiQuick(type) {
+  const prompts = {
+    'fill-project':  'I want to fill out a new project form. Ask me for the details.',
+    'fill-expense':  'I want to log an expense. Ask me what it was.',
+    'permit':        'I need help figuring out what building permit I need. Ask me about the job.',
+    'client-note':   'Write a professional client update note. Ask me for the project details and current status.',
+    'scope':         'Help me write a professional scope of work. Ask me about the job.',
+  };
+  document.getElementById('aiInput').value = prompts[type] || '';
+  aiSend();
+}
+
+function aiKeyDown(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiSend(); }
+}
+
+async function aiSend() {
+  const input = document.getElementById('aiInput');
+  const text  = input.value.trim();
+  if (!text) return;
+  if (!geminiKey) { addMsg('assistant', '⚠️ Please paste your Gemini API key first. Get one free at <a href="https://aistudio.google.com" target="_blank" style="color:var(--accent);">aistudio.google.com</a>'); document.getElementById('aiKeyBar').style.display='flex'; return; }
+
+  input.value = '';
+  input.style.height = 'auto';
+  addMsg('user', text);
+  aiHistory.push({ role:'user', parts:[{ text }] });
+
+  const sendBtn = document.getElementById('aiSendBtn');
+  sendBtn.disabled = true;
+  const thinkDiv = addMsg('thinking', '⏳ Thinking...');
+
+  try {
+    const body = {
+      system_instruction: { parts: [{ text: SYSTEM_PROMPT }] },
+      contents: aiHistory,
+      generationConfig: { temperature: 0.7, maxOutputTokens: 1024 },
+    };
+
+    const res = await fetch(GEMINI_URL + '?key=' + geminiKey, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(body),
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      thinkDiv.remove();
+      const errMsg = data.error?.message || 'API error. Check your key.';
+      addMsg('assistant', '❌ ' + errMsg);
+      sendBtn.disabled = false;
+      return;
+    }
+
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+    aiHistory.push({ role: 'model', parts: [{ text: reply }] });
+    thinkDiv.remove();
+
+    // Check if reply contains JSON for form filling
+    const jsonMatch = reply.match(/```json\n?([\s\S]*?)```/);
+    if (jsonMatch) {
+      try {
+        const parsed = JSON.parse(jsonMatch[1].trim());
+        const cleaned = reply.replace(/```json[\s\S]*?```/, '').trim();
+        const msgDiv = addMsg('assistant', cleaned || 'Here is what I extracted:');
+        handleFormFill(parsed, msgDiv);
+      } catch {
+        addMsg('assistant', reply);
+      }
+    } else {
+      addMsg('assistant', reply);
+    }
+  } catch(e) {
+    thinkDiv.remove();
+    addMsg('assistant', '❌ Network error: ' + e.message);
+  }
+  sendBtn.disabled = false;
+}
+
+function handleFormFill(data, msgDiv) {
+  // PROJECT form fill
+  if (data.name || data.address) {
+    const btn = document.createElement('button');
+    btn.className = 'ai-action-btn';
+    btn.textContent = '📋 Fill Project Form';
+    btn.onclick = () => {
+      // Switch to projects section and fill form
+      const nameEl    = document.getElementById('newName');
+      const addrEl    = document.getElementById('newAddress');
+      const contractEl= document.getElementById('newContract');
+      const descEl    = document.getElementById('newDesc');
+      if (nameEl && data.name)          { nameEl.value     = data.name; nameEl.style.borderColor = 'var(--accent)'; }
+      if (addrEl && data.address)       { addrEl.value     = data.address; addrEl.style.borderColor = 'var(--accent)'; }
+      if (contractEl && data.contractValue) { contractEl.value = data.contractValue; contractEl.style.borderColor = 'var(--accent)'; }
+      if (descEl && data.description)   { descEl.value     = data.description; descEl.style.borderColor = 'var(--accent)'; }
+      // Scroll to form
+      const createArea = document.getElementById('createArea');
+      if (createArea) createArea.scrollIntoView({ behavior:'smooth' });
+      addMsg('assistant', '✅ Project form filled! Review the details and click Create Project.');
+      // Reset border colors after 3s
+      setTimeout(() => {
+        [nameEl, addrEl, contractEl, descEl].forEach(el => { if(el) el.style.borderColor = ''; });
+      }, 3000);
+    };
+    msgDiv.appendChild(document.createElement('br'));
+    msgDiv.appendChild(btn);
+  }
+
+  // EXPENSE form fill
+  if (data.category && data.amount) {
+    const btn = document.createElement('button');
+    btn.className = 'ai-action-btn';
+    btn.textContent = '💰 Fill Expense Form';
+    btn.onclick = () => {
+      const catEl  = document.getElementById('expCat');
+      const descEl = document.getElementById('expDesc');
+      const amtEl  = document.getElementById('expAmt');
+      const dateEl = document.getElementById('expDate');
+      if (catEl && data.category) {
+        for (let i = 0; i < catEl.options.length; i++) {
+          if (catEl.options[i].value === data.category) { catEl.selectedIndex = i; break; }
+        }
+      }
+      if (descEl && data.description) { descEl.value = data.description; descEl.style.borderColor = 'var(--accent)'; }
+      if (amtEl  && data.amount)      { amtEl.value  = data.amount;      amtEl.style.borderColor  = 'var(--accent)'; }
+      if (dateEl && data.date)        { dateEl.value = data.date;         dateEl.style.borderColor = 'var(--accent)'; }
+      // Switch to expenses tab
+      if (typeof switchAdminTab === 'function') switchAdminTab('expenses');
+      const expPanel = document.getElementById('apanel-expenses');
+      if (expPanel) expPanel.scrollIntoView({ behavior:'smooth' });
+      addMsg('assistant', '✅ Expense form filled! Review and click Add Expense.');
+      setTimeout(() => {
+        [descEl, amtEl, dateEl].forEach(el => { if(el) el.style.borderColor = ''; });
+      }, 3000);
+    };
+    msgDiv.appendChild(document.createElement('br'));
+    msgDiv.appendChild(btn);
+  }
+}
+
+// Show AI button only for admin
+function showAIBtn() {
+  const btn = document.getElementById('aiBtn');
+  if (btn) btn.style.display = 'flex';
+}
+
+// Auto-resize textarea
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('aiInput');
+  if (input) {
+    input.addEventListener('input', () => {
+      input.style.height = 'auto';
+      input.style.height = Math.min(input.scrollHeight, 100) + 'px';
+    });
+  }
+  // Load saved key
+  if (geminiKey) {
+    document.getElementById('aiKeyBar').style.display = 'none';
+  }
+});
+</script>
+
 </body>
 </html>
