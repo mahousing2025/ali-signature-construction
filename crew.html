@@ -428,9 +428,6 @@ import { initializeApp }                        from "https://www.gstatic.com/fi
 import { getAuth, signInWithEmailAndPassword,
          createUserWithEmailAndPassword,
          signOut, onAuthStateChanged }          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { initializeApp as initializeApp2 }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth as getAuth2,
-         createUserWithEmailAndPassword as createUser2 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, doc, addDoc,
          updateDoc, deleteDoc, getDocs, getDoc,
          query, where, orderBy, limit,
@@ -881,8 +878,7 @@ async function loadDashboard() {
     collection(db,'timeLogs'),
     where('status','==','complete'),
     where('date','==',today),
-    orderBy('clockOut','desc'),
-    limit(10)
+    limit(50)
   ));
   const updList = document.getElementById('recentUpdates');
   updList.innerHTML = '';
@@ -906,7 +902,7 @@ async function loadTimeLogs() {
   const dateFilter = document.getElementById('filterDate').value;
 
   let q = collection(db,'timeLogs');
-  const constraints = [orderBy('clockIn','desc'), limit(50)];
+  const constraints = [limit(50)];
   if (crewFilter) constraints.unshift(where('uid','==',crewFilter));
   if (dateFilter) constraints.unshift(where('date','==',dateFilter));
 
@@ -958,7 +954,7 @@ window.createTask = async () => {
 async function loadAdminTasks() {
   const list = document.getElementById('adminTaskList');
   list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
-  const snap = await getDocs(query(collection(db,'tasks'), orderBy('createdAt','desc')));
+  const snap = await getDocs(collection(db,'tasks'));
   list.innerHTML = '';
   if (snap.empty) { list.innerHTML = '<p class="empty-txt">No tasks yet.</p>'; return; }
   snap.forEach(ds => {
@@ -1009,29 +1005,34 @@ window.addCrewMember = async () => {
   if (pass.length < 6)      { msg.innerHTML='<span class="msg-err">Password must be at least 6 characters.</span>'; return; }
   const btn = document.getElementById('addCrewBtn');
   btn.disabled = true; btn.textContent = 'Creating account...';
-  try {
-    // Use a secondary Firebase app so admin stays logged in
-    const secondaryApp  = initializeApp2(firebaseConfig, 'secondary-' + Date.now());
-    const secondaryAuth = getAuth2(secondaryApp);
-    const cred = await createUser2(secondaryAuth, email, pass);
-    const uid  = cred.user.uid;
-    // Sign out of secondary app immediately
-    await secondaryAuth.signOut();
 
-    // Save to Firestore (admin is still logged in on primary app)
+  // Store admin password so we can sign back in after creating crew account
+  const adminPassword = prompt('Enter YOUR admin password to confirm (you will stay logged in):');
+  if (!adminPassword) { btn.disabled = false; btn.textContent = 'Add Crew Member'; return; }
+
+  try {
+    // Create the crew member account - this temporarily signs us in as them
+    const cred = await createUserWithEmailAndPassword(auth, email, pass);
+    const uid  = cred.user.uid;
+
+    // Sign back in as admin immediately
+    await signInWithEmailAndPassword(auth, ADMIN_EMAIL, adminPassword);
+
+    // Now save to Firestore as admin
     await addDoc(collection(db,'crewMembers'), {
       uid, name, email, role,
       createdAt: serverTimestamp(),
     });
 
     ['crewName','crewEmail','crewRole','crewPass'].forEach(id => document.getElementById(id).value = '');
-    msg.innerHTML = '<span class="msg-ok">✅ ' + name + ' added! Share <strong>crew.html</strong> with them along with their email and password.</span>';
+    msg.innerHTML = '<span class="msg-ok">✅ ' + name + ' added successfully!<br>Share <strong>alisignatureconstruction.com/crew.html</strong> with them.<br>Their login: ' + email + ' / ' + pass + '</span>';
     loadCrewDropdowns();
     loadCrewList();
   } catch(e) {
     let errMsg = e.message;
-    if (e.code === 'auth/email-already-in-use') errMsg = 'That email already has an account.';
-    if (e.code === 'auth/invalid-email') errMsg = 'Invalid email address.';
+    if (e.code === 'auth/email-already-in-use') errMsg = 'That email already has a crew account.';
+    if (e.code === 'auth/invalid-email')        errMsg = 'Invalid email address.';
+    if (e.code === 'auth/wrong-password')       errMsg = 'Wrong admin password — your account was not affected.';
     msg.innerHTML = '<span class="msg-err">Error: ' + errMsg + '</span>';
   }
   btn.disabled = false; btn.textContent = 'Add Crew Member';
