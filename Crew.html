@@ -1,0 +1,1115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Crew Portal • Ali Signature Construction LLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black:#0a0a0a; --dark:#111; --surface:#161616; --card:#1c1c1c;
+      --border:#2a2a2a; --muted:#3a3a3a; --mid:#6b6b6b; --light:#b0b0b0;
+      --white:#f4f2ee; --accent:#c8a96e; --accent2:#e8c887;
+      --green:#6ec87a; --red:#d14f4f; --blue:#5b9bd5; --orange:#e8944a;
+    }
+    html,body { font-family:'DM Sans',sans-serif; background:var(--black); color:var(--white); min-height:100vh; -webkit-font-smoothing:antialiased; }
+    input,select,textarea,button { font-family:inherit; }
+    img { display:block; max-width:100%; }
+
+    /* AUTH */
+    #authScreen { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:1.5rem; background:radial-gradient(ellipse at 50% 0%,rgba(200,169,110,.08) 0%,transparent 70%); }
+    .auth-box { background:var(--dark); border:1px solid var(--border); border-radius:16px; padding:2.5rem 2rem; width:100%; max-width:400px; }
+    .auth-logo { text-align:center; margin-bottom:1.75rem; }
+    .auth-mark { display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; background:var(--accent); border-radius:11px; font-family:'Bebas Neue',sans-serif; font-size:1.5rem; color:var(--black); margin-bottom:.65rem; }
+    .auth-logo h1 { font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:.06em; }
+    .auth-logo p  { font-size:.78rem; color:var(--mid); margin-top:.2rem; }
+    .lfield { margin-bottom:.9rem; }
+    .lfield label { display:block; font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--mid); margin-bottom:.35rem; }
+    .lfield input { width:100%; background:var(--surface); border:1.5px solid var(--border); border-radius:6px; color:var(--white); font-size:.9rem; padding:.7rem .95rem; transition:border-color .2s; }
+    .lfield input:focus { outline:none; border-color:var(--accent); }
+    .auth-btn { width:100%; background:var(--accent); color:var(--black); border:none; border-radius:6px; font-size:.86rem; font-weight:700; letter-spacing:.05em; text-transform:uppercase; padding:.8rem; cursor:pointer; transition:background .2s; margin-top:.25rem; }
+    .auth-btn:hover { background:var(--accent2); }
+    .auth-btn:disabled { opacity:.5; cursor:not-allowed; }
+    .auth-err { font-size:.8rem; color:#e08080; text-align:center; margin-top:.65rem; min-height:1rem; }
+
+    /* HEADER */
+    #appScreen { display:none; min-height:100vh; }
+    .app-header { height:58px; background:rgba(10,10,10,.97); border-bottom:1px solid var(--border); display:flex; align-items:center; padding:0 1.25rem; gap:.65rem; position:sticky; top:0; z-index:100; }
+    .app-logo { width:34px; height:34px; background:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-family:'Bebas Neue',sans-serif; font-size:1rem; color:var(--black); flex-shrink:0; }
+    .app-brand { font-size:.82rem; font-weight:600; line-height:1.3; }
+    .app-brand-sub { font-size:.68rem; color:var(--mid); }
+    .role-pill { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; padding:.16rem .6rem; border-radius:99px; }
+    .rp-admin { background:rgba(200,169,110,.15); color:var(--accent); border:1px solid rgba(200,169,110,.3); }
+    .rp-crew  { background:rgba(110,200,122,.15); color:var(--green); border:1px solid rgba(110,200,122,.3); }
+    .app-nav { display:flex; gap:.15rem; margin-left:.65rem; }
+    .app-nav-btn { background:none; border:none; color:var(--mid); font-size:.78rem; font-weight:500; padding:.35rem .85rem; border-radius:5px; cursor:pointer; transition:all .15s; }
+    .app-nav-btn.active,.app-nav-btn:hover { background:var(--surface); color:var(--white); }
+    .app-user { margin-left:auto; font-size:.76rem; color:var(--mid); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:160px; }
+    .app-logout { background:none; border:1px solid var(--border); color:var(--light); font-size:.7rem; font-weight:600; text-transform:uppercase; padding:.3rem .8rem; border-radius:5px; cursor:pointer; margin-left:.5rem; transition:all .15s; flex-shrink:0; }
+    .app-logout:hover { border-color:var(--red); color:var(--red); }
+
+    /* BODY */
+    .app-body { max-width:1100px; margin:0 auto; padding:1.75rem 1.25rem; }
+    .app-section { display:none; } .app-section.active { display:block; }
+    .sec-title { font-family:'Bebas Neue',sans-serif; font-size:1.7rem; letter-spacing:.04em; margin-bottom:1.25rem; }
+
+    /* CARDS */
+    .panel { background:var(--dark); border:1px solid var(--border); border-radius:12px; padding:1.5rem; margin-bottom:1.1rem; }
+    .panel-label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--mid); margin-bottom:.9rem; display:flex; align-items:center; gap:.45rem; }
+    .panel-label::before { content:''; display:block; width:3px; height:12px; background:var(--accent); border-radius:2px; }
+    .fg { display:flex; flex-direction:column; gap:.32rem; }
+    .fg label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--mid); }
+    .fg input,.fg select,.fg textarea { background:var(--surface); border:1.5px solid var(--border); border-radius:6px; color:var(--white); font-size:.86rem; padding:.58rem .88rem; transition:border-color .2s; width:100%; }
+    .fg input:focus,.fg select:focus,.fg textarea:focus { outline:none; border-color:var(--accent); }
+    .fg select option { background:var(--dark); }
+    .fg textarea { resize:vertical; min-height:80px; }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:.9rem; }
+    .grid3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.9rem; }
+    .btn-p { background:var(--accent); color:var(--black); border:none; border-radius:6px; font-size:.78rem; font-weight:700; text-transform:uppercase; letter-spacing:.05em; padding:.58rem 1.3rem; cursor:pointer; transition:background .2s; margin-top:.7rem; }
+    .btn-p:hover { background:var(--accent2); }
+    .btn-p:disabled { opacity:.5; cursor:not-allowed; }
+    .btn-ghost { background:none; border:1px solid var(--border); color:var(--light); font-size:.76rem; font-weight:500; padding:.4rem .95rem; border-radius:5px; cursor:pointer; transition:all .15s; }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
+
+    /* CLOCK IN/OUT BIG BUTTON */
+    .clock-hero { text-align:center; padding:2rem 1rem; }
+    .clock-time { font-family:'Bebas Neue',sans-serif; font-size:4rem; letter-spacing:.04em; color:var(--white); line-height:1; margin-bottom:.25rem; }
+    .clock-date { font-size:.85rem; color:var(--mid); margin-bottom:1.75rem; }
+    .clock-btn { width:160px; height:160px; border-radius:50%; border:none; cursor:pointer; display:inline-flex; flex-direction:column; align-items:center; justify-content:center; gap:.4rem; font-family:'DM Sans',sans-serif; font-weight:700; font-size:.95rem; text-transform:uppercase; letter-spacing:.06em; transition:all .25s; box-shadow:0 8px 32px rgba(0,0,0,.4); }
+    .clock-btn.in  { background:linear-gradient(135deg,var(--green),#4db35a); color:#000; }
+    .clock-btn.in:hover  { transform:scale(1.05); box-shadow:0 12px 40px rgba(110,200,122,.4); }
+    .clock-btn.out { background:linear-gradient(135deg,var(--red),#b83a3a); color:#fff; }
+    .clock-btn.out:hover { transform:scale(1.05); box-shadow:0 12px 40px rgba(209,79,79,.4); }
+    .clock-btn:disabled { opacity:.5; cursor:not-allowed; transform:none; }
+    .clock-btn-icon { font-size:2rem; }
+    .clock-status { margin-top:1.5rem; }
+    .clocked-in-badge { display:inline-flex; align-items:center; gap:.5rem; background:rgba(110,200,122,.1); border:1px solid rgba(110,200,122,.3); border-radius:99px; padding:.4rem 1rem; font-size:.82rem; color:var(--green); font-weight:600; }
+    .clocked-in-badge::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--green); animation:pulse 1.5s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .location-tag { display:inline-flex; align-items:center; gap:.4rem; background:var(--surface); border:1px solid var(--border); border-radius:6px; padding:.35rem .75rem; font-size:.76rem; color:var(--mid); margin-top:.5rem; }
+
+    /* TASKS */
+    .task-card { background:var(--dark); border:1px solid var(--border); border-radius:10px; margin-bottom:.6rem; overflow:hidden; transition:border-color .2s; }
+    .task-card:hover { border-color:var(--muted); }
+    .task-header { display:flex; align-items:center; gap:.85rem; padding:.9rem 1.1rem; }
+    .task-priority { width:4px; height:40px; border-radius:2px; flex-shrink:0; }
+    .tp-high   { background:var(--red); }
+    .tp-medium { background:var(--orange); }
+    .tp-low    { background:var(--green); }
+    .task-info { flex:1; min-width:0; }
+    .task-name { font-size:.92rem; font-weight:600; }
+    .task-meta { font-size:.74rem; color:var(--mid); margin-top:.15rem; }
+    .task-right { display:flex; align-items:center; gap:.6rem; flex-shrink:0; }
+    .task-status { font-size:.65rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; padding:.16rem .6rem; border-radius:99px; }
+    .ts-pending   { background:rgba(200,169,110,.15); color:var(--accent); border:1px solid rgba(200,169,110,.3); }
+    .ts-inprogress{ background:rgba(91,155,213,.15);  color:var(--blue);   border:1px solid rgba(91,155,213,.3); }
+    .ts-done      { background:rgba(110,200,122,.15); color:var(--green);  border:1px solid rgba(110,200,122,.3); }
+    .task-actions { display:flex; gap:.4rem; }
+    .task-btn { background:none; border:1px solid var(--border); color:var(--light); font-size:.7rem; padding:.28rem .7rem; border-radius:4px; cursor:pointer; transition:all .15s; }
+    .task-btn:hover { border-color:var(--accent); color:var(--accent); }
+    .task-btn.danger:hover { border-color:var(--red); color:var(--red); }
+
+    /* TIME LOG ENTRIES */
+    .log-entry { background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:.85rem 1rem; margin-bottom:.45rem; }
+    .log-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:.4rem; flex-wrap:wrap; gap:.5rem; }
+    .log-name   { font-size:.9rem; font-weight:600; }
+    .log-time   { font-size:.78rem; color:var(--accent); font-weight:600; }
+    .log-meta   { font-size:.76rem; color:var(--mid); margin-bottom:.35rem; }
+    .log-update { font-size:.82rem; color:var(--light); background:var(--card); border-radius:6px; padding:.5rem .75rem; margin-top:.4rem; border-left:2px solid var(--accent); }
+    .log-photos { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.5rem; }
+    .log-photo  { width:70px; height:70px; border-radius:6px; object-fit:cover; cursor:zoom-in; border:1px solid var(--border); }
+    .log-loc    { display:inline-flex; align-items:center; gap:.3rem; font-size:.72rem; color:var(--mid); margin-top:.3rem; }
+    .duration-badge { font-size:.7rem; font-weight:600; background:rgba(200,169,110,.12); color:var(--accent); padding:.15rem .55rem; border-radius:99px; border:1px solid rgba(200,169,110,.25); }
+
+    /* CREW MEMBER CARDS */
+    .crew-card { background:var(--dark); border:1px solid var(--border); border-radius:10px; margin-bottom:.6rem; padding:1rem 1.1rem; display:flex; align-items:center; gap:.85rem; flex-wrap:wrap; }
+    .crew-avatar { width:42px; height:42px; border-radius:50%; background:var(--surface); border:2px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; overflow:hidden; }
+    .crew-avatar img { width:100%; height:100%; object-fit:cover; }
+    .crew-info { flex:1; min-width:0; }
+    .crew-name  { font-size:.92rem; font-weight:600; }
+    .crew-role  { font-size:.74rem; color:var(--mid); margin-top:.1rem; }
+    .crew-right { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
+    .online-dot { width:8px; height:8px; border-radius:50%; }
+    .od-in  { background:var(--green); box-shadow:0 0 6px rgba(110,200,122,.6); }
+    .od-out { background:var(--muted); }
+
+    /* CLOCK OUT MODAL */
+    #clockOutModal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.85); z-index:800; align-items:center; justify-content:center; padding:1rem; }
+    .co-modal-box { background:var(--dark); border:1px solid var(--border); border-radius:16px; width:100%; max-width:480px; max-height:90vh; overflow-y:auto; }
+    .co-modal-head { background:var(--accent); padding:1.1rem 1.25rem; }
+    .co-modal-head h2 { font-family:'Bebas Neue',sans-serif; font-size:1.4rem; letter-spacing:.04em; color:var(--black); }
+    .co-modal-head p  { font-size:.8rem; color:rgba(0,0,0,.65); margin-top:.15rem; }
+    .co-modal-body { padding:1.25rem; }
+    .co-modal-body .fg { margin-bottom:.85rem; }
+    .co-section-label { font-size:.7rem; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--mid); margin-bottom:.6rem; }
+    .photo-upload-area { border:2px dashed var(--border); border-radius:8px; padding:1.25rem; text-align:center; cursor:pointer; transition:border-color .2s; }
+    .photo-upload-area:hover { border-color:var(--accent); }
+    .photo-upload-area input { display:none; }
+    .photo-preview-grid { display:flex; gap:.5rem; flex-wrap:wrap; margin-top:.6rem; }
+    .photo-preview { position:relative; width:72px; height:72px; }
+    .photo-preview img { width:100%; height:100%; object-fit:cover; border-radius:6px; border:1px solid var(--border); }
+    .photo-preview-del { position:absolute; top:-5px; right:-5px; background:var(--red); border:none; color:#fff; width:18px; height:18px; border-radius:50%; font-size:.6rem; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+    .star-rating { display:flex; gap:.35rem; margin-top:.35rem; }
+    .star { font-size:1.4rem; cursor:pointer; color:var(--muted); transition:color .15s; }
+    .star.active { color:var(--accent); }
+
+    /* PHOTO OVERLAY */
+    #photoOverlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,.94); z-index:999; align-items:center; justify-content:center; padding:1.5rem; cursor:zoom-out; }
+    #photoOverlayImg { max-width:90vw; max-height:90vh; border-radius:8px; object-fit:contain; }
+
+    /* MISC */
+    .empty-txt { font-size:.82rem; color:var(--mid); padding:.75rem 0; }
+    .spin-wrap  { display:flex; align-items:center; gap:.5rem; padding:.75rem 0; font-size:.82rem; color:var(--mid); }
+    .spinner { width:13px; height:13px; border:2px solid var(--border); border-top-color:var(--accent); border-radius:50%; animation:spin .6s linear infinite; flex-shrink:0; }
+    @keyframes spin { to{transform:rotate(360deg);} }
+    .msg-ok  { font-size:.8rem; color:var(--green); margin-top:.45rem; }
+    .msg-err { font-size:.8rem; color:#e08080; margin-top:.45rem; }
+    .divider { height:1px; background:var(--border); margin:1rem 0; }
+    .stat-row { display:grid; grid-template-columns:repeat(3,1fr); gap:.75rem; margin-bottom:1.25rem; }
+    .stat-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:1rem 1.1rem; }
+    .stat-label { font-size:.68rem; font-weight:600; text-transform:uppercase; letter-spacing:.06em; color:var(--mid); margin-bottom:.3rem; }
+    .stat-value { font-family:'Bebas Neue',sans-serif; font-size:1.8rem; color:var(--accent); letter-spacing:.02em; line-height:1; }
+    .stat-sub   { font-size:.72rem; color:var(--mid); margin-top:.15rem; }
+    code { background:var(--surface); padding:.1rem .4rem; border-radius:3px; font-size:.76rem; }
+
+    @media(max-width:650px) {
+      .grid2,.grid3 { grid-template-columns:1fr; }
+      .stat-row     { grid-template-columns:1fr 1fr; }
+      .app-body     { padding:1.25rem .85rem; }
+      .clock-time   { font-size:3rem; }
+      .clock-btn    { width:140px; height:140px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- AUTH -->
+<div id="authScreen">
+  <div class="auth-box">
+    <div class="auth-logo">
+      <div class="auth-mark">ASC</div>
+      <h1>Crew Portal</h1>
+      <p>Ali Signature Construction LLC</p>
+    </div>
+    <div class="lfield"><label>Email</label><input type="email" id="loginEmail" placeholder="you@email.com" autocomplete="email" /></div>
+    <div class="lfield"><label>Password</label><input type="password" id="loginPass" placeholder="••••••••" autocomplete="current-password" /></div>
+    <button class="auth-btn" id="loginBtn" onclick="doLogin()">Sign In</button>
+    <div class="auth-err" id="loginErr"></div>
+    <p style="font-size:.72rem;color:var(--mid);text-align:center;margin-top:1.25rem;">Contact <a href="mailto:info@alisignatureconstruction.com" style="color:var(--accent);">info@alisignatureconstruction.com</a> for access</p>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="appScreen">
+  <div class="app-header">
+    <div class="app-logo">ASC</div>
+    <div><div class="app-brand">Ali Signature Construction</div><div class="app-brand-sub">Crew Portal</div></div>
+    <span id="rolePill" class="role-pill"></span>
+    <!-- Admin nav -->
+    <div class="app-nav" id="adminNav" style="display:none;">
+      <button class="app-nav-btn active" onclick="showSection('dashboard',this)">Dashboard</button>
+      <button class="app-nav-btn" onclick="showSection('timelog',this)">Time Log</button>
+      <button class="app-nav-btn" onclick="showSection('tasks',this)">Tasks</button>
+      <button class="app-nav-btn" onclick="showSection('crew',this)">Crew</button>
+    </div>
+    <!-- Crew nav -->
+    <div class="app-nav" id="crewNav" style="display:none;">
+      <button class="app-nav-btn active" onclick="showSection('clock',this)">Clock In/Out</button>
+      <button class="app-nav-btn" onclick="showSection('mytasks',this)">My Tasks</button>
+    </div>
+    <span class="app-user" id="userLabel"></span>
+    <button class="app-logout" onclick="doLogout()">Log Out</button>
+  </div>
+
+  <div class="app-body">
+
+    <!-- ══ ADMIN: DASHBOARD ══ -->
+    <div class="app-section active" id="section-dashboard">
+      <h2 class="sec-title">Dashboard</h2>
+      <div class="stat-row">
+        <div class="stat-card"><div class="stat-label">Clocked In Now</div><div class="stat-value" id="statClockedIn">0</div><div class="stat-sub">crew members</div></div>
+        <div class="stat-card"><div class="stat-label">Hours Today</div><div class="stat-value" id="statHoursToday">0</div><div class="stat-sub">total across crew</div></div>
+        <div class="stat-card"><div class="stat-label">Open Tasks</div><div class="stat-value" id="statOpenTasks">0</div><div class="stat-sub">pending + in progress</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">Currently Clocked In</div>
+        <div id="liveCrewList"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">Recent Clock-Out Updates</div>
+        <div id="recentUpdates"></div>
+      </div>
+    </div>
+
+    <!-- ══ ADMIN: TIME LOG ══ -->
+    <div class="app-section" id="section-timelog">
+      <h2 class="sec-title">Time Log</h2>
+      <div class="panel" style="margin-bottom:1rem;">
+        <div style="display:flex;gap:.75rem;flex-wrap:wrap;align-items:flex-end;">
+          <div class="fg" style="flex:1;min-width:140px;"><label>Filter by Crew Member</label>
+            <select id="filterCrew"><option value="">All crew</option></select>
+          </div>
+          <div class="fg" style="flex:1;min-width:140px;"><label>Filter by Date</label>
+            <input type="date" id="filterDate" />
+          </div>
+          <button class="btn-p" style="margin-top:0;" onclick="loadTimeLogs()">Filter</button>
+          <button class="btn-ghost" onclick="clearFilters()">Clear</button>
+        </div>
+      </div>
+      <div id="timeLogList"></div>
+    </div>
+
+    <!-- ══ ADMIN: TASKS ══ -->
+    <div class="app-section" id="section-tasks">
+      <h2 class="sec-title">Task Management</h2>
+      <div class="panel">
+        <div class="panel-label">Create New Task</div>
+        <div class="grid2" style="margin-bottom:.8rem;">
+          <div class="fg"><label>Task Name *</label><input id="taskName" placeholder="e.g. Install shingles on east side" /></div>
+          <div class="fg"><label>Assign To *</label><select id="taskAssignee"><option value="">Select crew member</option></select></div>
+          <div class="fg"><label>Project / Job Site</label><input id="taskProject" placeholder="e.g. 836 KrikWood St" /></div>
+          <div class="fg"><label>Due Date</label><input type="date" id="taskDue" /></div>
+        </div>
+        <div class="fg" style="margin-bottom:.8rem;">
+          <label>Priority</label>
+          <select id="taskPriority">
+            <option value="high">🔴 High</option>
+            <option value="medium" selected>🟠 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+        <div class="fg" style="margin-bottom:.8rem;"><label>Task Description / Instructions</label><textarea id="taskDesc" placeholder="Detailed instructions for the crew member..."></textarea></div>
+        <button class="btn-p" id="createTaskBtn" onclick="createTask()">Create Task</button>
+        <div id="taskCreateMsg"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">All Tasks</div>
+        <div id="adminTaskList"></div>
+      </div>
+    </div>
+
+    <!-- ══ ADMIN: CREW MANAGEMENT ══ -->
+    <div class="app-section" id="section-crew">
+      <h2 class="sec-title">Crew Members</h2>
+      <div class="panel">
+        <div class="panel-label">Add Crew Member</div>
+        <p style="font-size:.82rem;color:var(--mid);margin-bottom:1rem;">Creates a login for a crew member. They use the Crew Portal to clock in/out and see their tasks.</p>
+        <div class="grid3" style="margin-bottom:.8rem;">
+          <div class="fg"><label>Full Name *</label><input id="crewName" placeholder="John Smith" /></div>
+          <div class="fg"><label>Email *</label><input type="email" id="crewEmail" placeholder="john@email.com" /></div>
+          <div class="fg"><label>Role / Trade</label><input id="crewRole" placeholder="e.g. Roofer, Electrician" /></div>
+        </div>
+        <div class="fg" style="max-width:220px;margin-bottom:.8rem;"><label>Temporary Password *</label><input type="text" id="crewPass" placeholder="Min 6 characters" /></div>
+        <button class="btn-p" id="addCrewBtn" onclick="addCrewMember()">Add Crew Member</button>
+        <div id="crewAddMsg"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">Current Crew</div>
+        <div id="crewList"></div>
+      </div>
+
+      <div class="panel" style="background:rgba(200,169,110,.04);border-color:rgba(200,169,110,.2);">
+        <div style="font-size:.82rem;color:var(--light);line-height:1.8;">
+          <strong style="color:var(--accent);">Share this URL with your crew:</strong><br>
+          <code>alisignatureconstruction.com/crew.html</code><br>
+          They log in with the email and password you set. They can clock in/out and see their assigned tasks.
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CREW: CLOCK IN/OUT ══ -->
+    <div class="app-section" id="section-clock">
+      <h2 class="sec-title">Time Clock</h2>
+      <div class="panel">
+        <div class="clock-hero">
+          <div class="clock-time" id="liveClock">00:00:00</div>
+          <div class="clock-date" id="liveDate"></div>
+          <div id="clockStatusArea">
+            <button class="clock-btn in" id="clockInBtn" onclick="clockIn()">
+              <span class="clock-btn-icon">▶</span>
+              Clock In
+            </button>
+          </div>
+          <div class="clock-status" id="clockStatusLabel"></div>
+          <div id="locationTag"></div>
+          <div id="elapsedTimer" style="margin-top:.75rem;font-size:.85rem;color:var(--mid);display:none;">
+            Time worked: <strong id="elapsedTime" style="color:var(--accent);">00:00:00</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Today's log for this crew member -->
+      <div class="panel">
+        <div class="panel-label">My Time Log Today</div>
+        <div id="myTimeLog"></div>
+      </div>
+    </div>
+
+    <!-- ══ CREW: MY TASKS ══ -->
+    <div class="app-section" id="section-mytasks">
+      <h2 class="sec-title">My Tasks</h2>
+      <div id="myTaskList"></div>
+    </div>
+
+  </div><!-- /app-body -->
+</div><!-- /appScreen -->
+
+<!-- CLOCK OUT MODAL -->
+<div id="clockOutModal">
+  <div class="co-modal-box">
+    <div class="co-modal-head">
+      <h2>Clock Out</h2>
+      <p>Give a quick update on what you did today</p>
+    </div>
+    <div class="co-modal-body">
+      <div class="fg" style="margin-bottom:.85rem;">
+        <label>Work Update *</label>
+        <textarea id="coUpdate" placeholder="What did you accomplish today? Any issues or notes for Mohamed?" style="min-height:100px;"></textarea>
+      </div>
+
+      <div class="fg" style="margin-bottom:.85rem;">
+        <label>Task Worked On</label>
+        <select id="coTask"><option value="">Select task (optional)</option></select>
+      </div>
+
+      <div class="fg" style="margin-bottom:.85rem;">
+        <label>Task Status</label>
+        <select id="coTaskStatus">
+          <option value="">No change</option>
+          <option value="inprogress">Still in progress</option>
+          <option value="done">Completed</option>
+        </select>
+      </div>
+
+      <div style="margin-bottom:.85rem;">
+        <div class="co-section-label">Rate your day</div>
+        <div class="star-rating" id="starRating">
+          <span class="star" onclick="setStar(1)">★</span>
+          <span class="star" onclick="setStar(2)">★</span>
+          <span class="star" onclick="setStar(3)">★</span>
+          <span class="star" onclick="setStar(4)">★</span>
+          <span class="star" onclick="setStar(5)">★</span>
+        </div>
+      </div>
+
+      <div style="margin-bottom:.85rem;">
+        <div class="co-section-label">Upload Photos (optional)</div>
+        <div class="photo-upload-area" onclick="document.getElementById('coPhotoInput').click()">
+          <input type="file" id="coPhotoInput" accept="image/*" multiple onchange="previewPhotos(event)" />
+          <div style="font-size:1.5rem;margin-bottom:.35rem;">📷</div>
+          <div style="font-size:.8rem;color:var(--mid);">Tap to add photos of your work</div>
+          <div style="font-size:.72rem;color:var(--muted);margin-top:.2rem;">Max 900KB each</div>
+        </div>
+        <div class="photo-preview-grid" id="photoPreviewGrid"></div>
+      </div>
+
+      <div style="display:flex;gap:.65rem;flex-wrap:wrap;">
+        <button class="btn-p" style="flex:1;text-align:center;margin-top:0;" id="confirmClockOutBtn" onclick="confirmClockOut()">Confirm Clock Out</button>
+        <button class="btn-ghost" onclick="closeClockOutModal()" style="margin-top:0;">Cancel</button>
+      </div>
+      <div id="coMsg" style="margin-top:.6rem;font-size:.8rem;min-height:1rem;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Photo lightbox -->
+<div id="photoOverlay" onclick="document.getElementById('photoOverlay').style.display='none'">
+  <img id="photoOverlayImg" src="" alt="" />
+</div>
+
+<script type="module">
+import { initializeApp }                        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword,
+         createUserWithEmailAndPassword,
+         signOut, onAuthStateChanged }          from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { initializeApp as initializeApp2 }     from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth as getAuth2,
+         createUserWithEmailAndPassword as createUser2 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, collection, doc, addDoc,
+         updateDoc, deleteDoc, getDocs, getDoc,
+         query, where, orderBy, limit,
+         serverTimestamp, Timestamp }           from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+/* ── Firebase config — same project as portal ── */
+const firebaseConfig = {
+  apiKey:            "AIzaSyD5TrqFQQo-FyIQ8u7CZf01zgXokS5W130",
+  authDomain:        "ali-signature-construction.firebaseapp.com",
+  projectId:         "ali-signature-construction",
+  storageBucket:     "ali-signature-construction.firebasestorage.app",
+  messagingSenderId: "1042515859712",
+  appId:             "1:1042515859712:web:9178f6fe04c46d08357be5",
+};
+const ADMIN_EMAIL = "info@alisignatureconstruction.com";
+
+const app  = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+let currentUser  = null;
+let isAdmin      = false;
+let currentEntry = null; // active clock-in entry
+let clockInterval= null;
+let clockInTime  = null;
+let elapsedInterval = null;
+let starValue    = 0;
+let photoFiles   = [];
+
+/* ═══════════════════
+   AUTH
+═══════════════════ */
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if (!user) { showScreen('auth'); return; }
+  isAdmin = user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  showApp();
+});
+
+function showScreen(name) {
+  document.getElementById('authScreen').style.display = name==='auth' ? 'flex'  : 'none';
+  document.getElementById('appScreen').style.display  = name==='app'  ? 'block' : 'none';
+}
+
+window.doLogin = async () => {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+  const err   = document.getElementById('loginErr');
+  const btn   = document.getElementById('loginBtn');
+  err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in...';
+  try { await signInWithEmailAndPassword(auth, email, pass); }
+  catch { err.textContent = 'Incorrect email or password.'; btn.disabled = false; btn.textContent = 'Sign In'; }
+};
+
+window.doLogout = () => signOut(auth);
+
+/* ═══════════════════
+   APP SETUP
+═══════════════════ */
+function showApp() {
+  showScreen('app');
+  document.getElementById('userLabel').textContent  = currentUser.email;
+  document.getElementById('rolePill').textContent   = isAdmin ? 'Admin' : 'Crew';
+  document.getElementById('rolePill').className     = 'role-pill ' + (isAdmin ? 'rp-admin' : 'rp-crew');
+  document.getElementById('adminNav').style.display = isAdmin ? 'flex' : 'none';
+  document.getElementById('crewNav').style.display  = isAdmin ? 'none' : 'flex';
+
+  startClock();
+  if (isAdmin) {
+    loadDashboard();
+    loadCrewDropdowns();
+  } else {
+    checkActiveClockIn();
+    loadMyTasks();
+    loadMyTimeLog();
+  }
+}
+
+/* ═══════════════════
+   LIVE CLOCK
+═══════════════════ */
+function startClock() {
+  function tick() {
+    const now = new Date();
+    document.getElementById('liveClock').textContent =
+      now.toLocaleTimeString('en-US', { hour12:false });
+    document.getElementById('liveDate').textContent =
+      now.toLocaleDateString('en-US', { weekday:'long', year:'numeric', month:'long', day:'numeric' });
+  }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ═══════════════════
+   CLOCK IN
+═══════════════════ */
+window.clockIn = async () => {
+  const btn = document.getElementById('clockInBtn');
+  btn.disabled = true; btn.textContent = 'Getting location...';
+
+  // Get GPS location
+  let lat = null, lng = null, locStr = 'Location not available';
+  try {
+    const pos = await new Promise((res, rej) =>
+      navigator.geolocation.getCurrentPosition(res, rej, { timeout:10000 })
+    );
+    lat = pos.coords.latitude.toFixed(6);
+    lng = pos.coords.longitude.toFixed(6);
+    locStr = lat + ', ' + lng;
+  } catch { locStr = 'Location denied'; }
+
+  const now = new Date();
+  clockInTime = now;
+
+  try {
+    // Get crew member info
+    const crewSnap = await getDocs(query(collection(db,'crewMembers'), where('uid','==',currentUser.uid)));
+    const crewData = crewSnap.empty ? { name: currentUser.email, role: '' } : crewSnap.docs[0].data();
+
+    const entryRef = await addDoc(collection(db,'timeLogs'), {
+      uid:       currentUser.uid,
+      email:     currentUser.email,
+      name:      crewData.name || currentUser.email,
+      role:      crewData.role || '',
+      clockIn:   serverTimestamp(),
+      clockInStr:now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' }),
+      clockInLat: lat,
+      clockInLng: lng,
+      clockInLoc: locStr,
+      clockOut:   null,
+      duration:   null,
+      update:     null,
+      photos:     [],
+      status:     'active',
+      date:       now.toLocaleDateString('en-CA'), // YYYY-MM-DD
+    });
+
+    currentEntry = { id: entryRef.id, clockInTime: now, loc: locStr };
+
+    // Update UI
+    document.getElementById('clockStatusArea').innerHTML =
+      '<button class="clock-btn out" id="clockOutBtn" onclick="openClockOutModal()"><span class="clock-btn-icon">⏹</span>Clock Out</button>';
+    document.getElementById('clockStatusLabel').innerHTML =
+      '<div class="clocked-in-badge">Clocked in at ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) + '</div>';
+    document.getElementById('locationTag').innerHTML =
+      '<div class="location-tag">📍 ' + locStr + '</div>';
+    document.getElementById('elapsedTimer').style.display = 'block';
+    startElapsed(now);
+  } catch(e) {
+    btn.disabled = false;
+    alert('Error clocking in: ' + e.message);
+  }
+};
+
+function startElapsed(from) {
+  clearInterval(elapsedInterval);
+  elapsedInterval = setInterval(() => {
+    const diff = Math.floor((new Date() - from) / 1000);
+    const h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60), s = diff%60;
+    document.getElementById('elapsedTime').textContent =
+      String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  }, 1000);
+}
+
+async function checkActiveClockIn() {
+  const snap = await getDocs(query(
+    collection(db,'timeLogs'),
+    where('uid','==',currentUser.uid),
+    where('status','==','active')
+  ));
+  if (!snap.empty) {
+    const d   = snap.docs[0].data();
+    const cid = snap.docs[0].id;
+    // Reconstruct from Firestore
+    const ciTime = d.clockIn?.toDate ? d.clockIn.toDate() : new Date();
+    currentEntry = { id: cid, clockInTime: ciTime, loc: d.clockInLoc };
+    clockInTime  = ciTime;
+
+    document.getElementById('clockStatusArea').innerHTML =
+      '<button class="clock-btn out" id="clockOutBtn" onclick="openClockOutModal()"><span class="clock-btn-icon">⏹</span>Clock Out</button>';
+    document.getElementById('clockStatusLabel').innerHTML =
+      '<div class="clocked-in-badge">Clocked in at ' + d.clockInStr + '</div>';
+    document.getElementById('locationTag').innerHTML =
+      '<div class="location-tag">📍 ' + (d.clockInLoc || '') + '</div>';
+    document.getElementById('elapsedTimer').style.display = 'block';
+    startElapsed(ciTime);
+  }
+}
+
+/* ═══════════════════
+   CLOCK OUT MODAL
+═══════════════════ */
+window.openClockOutModal = async () => {
+  if (!currentEntry) return;
+  // Load this crew member's tasks for the dropdown
+  const taskSnap = await getDocs(query(
+    collection(db,'tasks'),
+    where('assigneeUid','==',currentUser.uid),
+    where('status','!=','done')
+  ));
+  const taskSel = document.getElementById('coTask');
+  taskSel.innerHTML = '<option value="">Select task (optional)</option>';
+  taskSnap.forEach(ds => {
+    const opt = document.createElement('option');
+    opt.value = ds.id; opt.textContent = ds.data().name;
+    taskSel.appendChild(opt);
+  });
+  photoFiles = [];
+  document.getElementById('photoPreviewGrid').innerHTML = '';
+  document.getElementById('coUpdate').value = '';
+  document.getElementById('coMsg').textContent = '';
+  starValue = 0;
+  document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
+  document.getElementById('clockOutModal').style.display = 'flex';
+};
+
+window.closeClockOutModal = () => {
+  document.getElementById('clockOutModal').style.display = 'none';
+};
+
+window.setStar = n => {
+  starValue = n;
+  document.querySelectorAll('.star').forEach((s,i) => s.classList.toggle('active', i < n));
+};
+
+window.previewPhotos = e => {
+  const files = Array.from(e.target.files);
+  files.forEach(f => {
+    if (f.size > 900000) { alert(f.name + ' is too large. Max 900KB.'); return; }
+    photoFiles.push(f);
+    const reader = new FileReader();
+    reader.onload = ev => {
+      const grid = document.getElementById('photoPreviewGrid');
+      const wrap = document.createElement('div'); wrap.className = 'photo-preview';
+      const img  = document.createElement('img'); img.src = ev.target.result;
+      const del  = document.createElement('button'); del.className = 'photo-preview-del'; del.textContent = '✕';
+      const idx  = photoFiles.length - 1;
+      del.onclick = () => { photoFiles.splice(idx,1); wrap.remove(); };
+      wrap.appendChild(img); wrap.appendChild(del); grid.appendChild(wrap);
+    };
+    reader.readAsDataURL(f);
+  });
+};
+
+window.confirmClockOut = async () => {
+  const update = document.getElementById('coUpdate').value.trim();
+  if (!update) { document.getElementById('coMsg').innerHTML = '<span style="color:#e08080;">Please write a work update.</span>'; return; }
+
+  const btn = document.getElementById('confirmClockOutBtn');
+  btn.disabled = true; btn.textContent = 'Clocking out...';
+
+  // Convert photos to base64
+  const photoData = [];
+  for (const f of photoFiles) {
+    const b64 = await new Promise(res => {
+      const r = new FileReader();
+      r.onload = e => res(e.target.result);
+      r.readAsDataURL(f);
+    });
+    photoData.push(b64);
+  }
+
+  const now  = new Date();
+  const diff = Math.floor((now - currentEntry.clockInTime) / 1000);
+  const h    = Math.floor(diff/3600), m = Math.floor((diff%3600)/60);
+  const duration = h + 'h ' + m + 'm';
+
+  // Get clock-out GPS
+  let lat2 = null, lng2 = null, loc2 = 'Location not available';
+  try {
+    const pos = await new Promise((res,rej) =>
+      navigator.geolocation.getCurrentPosition(res, rej, { timeout:8000 })
+    );
+    lat2 = pos.coords.latitude.toFixed(6);
+    lng2 = pos.coords.longitude.toFixed(6);
+    loc2 = lat2 + ', ' + lng2;
+  } catch {}
+
+  const taskId     = document.getElementById('coTask').value;
+  const taskStatus = document.getElementById('coTaskStatus').value;
+
+  try {
+    // Update time log entry
+    await updateDoc(doc(db,'timeLogs',currentEntry.id), {
+      clockOut:     serverTimestamp(),
+      clockOutStr:  now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}),
+      clockOutLat:  lat2, clockOutLng: lng2, clockOutLoc: loc2,
+      duration, durationSecs: diff,
+      update, photos: photoData, rating: starValue,
+      status: 'complete',
+    });
+
+    // Update task status if selected
+    if (taskId && taskStatus) {
+      await updateDoc(doc(db,'tasks',taskId), { status: taskStatus });
+    }
+
+    clearInterval(elapsedInterval);
+    currentEntry = null; clockInTime = null;
+    document.getElementById('clockStatusArea').innerHTML =
+      '<button class="clock-btn in" id="clockInBtn" onclick="clockIn()"><span class="clock-btn-icon">▶</span>Clock In</button>';
+    document.getElementById('clockStatusLabel').innerHTML = '<span style="font-size:.82rem;color:var(--green);">✅ Clocked out at ' + now.toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit'}) + ' — ' + duration + '</span>';
+    document.getElementById('locationTag').innerHTML = '';
+    document.getElementById('elapsedTimer').style.display = 'none';
+    document.getElementById('clockOutModal').style.display = 'none';
+    loadMyTimeLog();
+    if (taskId) loadMyTasks();
+  } catch(e) {
+    document.getElementById('coMsg').textContent = 'Error: ' + e.message;
+    btn.disabled = false; btn.textContent = 'Confirm Clock Out';
+  }
+};
+
+/* ═══════════════════
+   MY TIME LOG
+═══════════════════ */
+async function loadMyTimeLog() {
+  const list = document.getElementById('myTimeLog');
+  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  const today = new Date().toLocaleDateString('en-CA');
+  const snap = await getDocs(query(
+    collection(db,'timeLogs'),
+    where('uid','==',currentUser.uid),
+    where('date','==',today)
+  ));
+  list.innerHTML = '';
+  if (snap.empty) { list.innerHTML = '<p class="empty-txt">No entries today yet.</p>'; return; }
+  snap.forEach(ds => list.appendChild(buildLogEntry(ds.data(), false)));
+}
+
+function buildLogEntry(d, showName) {
+  const div = document.createElement('div'); div.className = 'log-entry';
+  let html = '<div class="log-header">';
+  if (showName) html += '<div class="log-name">👤 ' + (d.name||d.email) + (d.role ? ' <span style="font-size:.72rem;color:var(--mid);">— ' + d.role + '</span>' : '') + '</div>';
+  html += '<div style="display:flex;align-items:center;gap:.5rem;">';
+  if (d.duration) html += '<span class="duration-badge">⏱ ' + d.duration + '</span>';
+  html += '<span class="log-time">' + (d.clockInStr||'') + (d.clockOutStr ? ' → ' + d.clockOutStr : ' → active') + '</span></div></div>';
+  if (d.clockInLoc)  html += '<div class="log-loc">📍 In: ' + d.clockInLoc + '</div>';
+  if (d.clockOutLoc) html += '<div class="log-loc">📍 Out: ' + d.clockOutLoc + '</div>';
+  if (d.update) html += '<div class="log-update">📝 ' + d.update + '</div>';
+  if (d.rating) html += '<div style="margin-top:.35rem;font-size:.82rem;">Rating: ' + '★'.repeat(d.rating) + '☆'.repeat(5-d.rating) + '</div>';
+  if (d.photos && d.photos.length) {
+    html += '<div class="log-photos">';
+    d.photos.forEach((p,i) => {
+        if (p && p.startsWith('data:')) {
+          html += '<img class="log-photo" src="' + p + '" onclick="viewPhotoSrc(\'' + encodeURIComponent(p.substring(0,100)) + '\', this)" />';
+        }
+      });
+    html += '</div>';
+  }
+  div.innerHTML = html;
+  return div;
+}
+
+/* ═══════════════════
+   MY TASKS (crew)
+═══════════════════ */
+async function loadMyTasks() {
+  const list = document.getElementById('myTaskList');
+  if (!list) return;
+  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  const snap = await getDocs(query(
+    collection(db,'tasks'),
+    where('assigneeUid','==',currentUser.uid),
+    orderBy('createdAt','desc')
+  ));
+  list.innerHTML = '';
+  if (snap.empty) { list.innerHTML = '<p class="empty-txt">No tasks assigned to you yet.</p>'; return; }
+  snap.forEach(ds => {
+    const t = ds.data(); const tid = ds.id;
+    const div = document.createElement('div'); div.className = 'task-card';
+    div.innerHTML =
+      '<div class="task-header">' +
+        '<div class="task-priority tp-' + t.priority + '"></div>' +
+        '<div class="task-info">' +
+          '<div class="task-name">' + t.name + '</div>' +
+          '<div class="task-meta">' + (t.project||'') + (t.due ? ' • Due: ' + t.due : '') + '</div>' +
+          (t.description ? '<div style="font-size:.78rem;color:var(--mid);margin-top:.3rem;">' + t.description + '</div>' : '') +
+        '</div>' +
+        '<div class="task-right">' +
+          '<span class="task-status ts-' + t.status + '">' + t.status + '</span>' +
+          (t.status !== 'done' ?
+            '<div class="task-actions">' +
+              '<button class="task-btn" onclick="updateMyTaskStatus(\'' + tid + '\',\'inprogress\')">Start</button>' +
+              '<button class="task-btn" onclick="updateMyTaskStatus(\'' + tid + '\',\'done\')">Done ✓</button>' +
+            '</div>' : '') +
+        '</div>' +
+      '</div>';
+    list.appendChild(div);
+  });
+}
+
+window.updateMyTaskStatus = async (tid, status) => {
+  await updateDoc(doc(db,'tasks',tid), { status });
+  loadMyTasks();
+};
+
+/* ═══════════════════
+   ADMIN: DASHBOARD
+═══════════════════ */
+async function loadDashboard() {
+  // Live crew
+  const liveSnap = await getDocs(query(collection(db,'timeLogs'), where('status','==','active')));
+  document.getElementById('statClockedIn').textContent = liveSnap.size;
+
+  const liveList = document.getElementById('liveCrewList');
+  liveList.innerHTML = '';
+  if (liveSnap.empty) { liveList.innerHTML = '<p class="empty-txt">No one clocked in right now.</p>'; }
+  else {
+    let totalSecs = 0;
+    liveSnap.forEach(ds => {
+      const d = ds.data();
+      const ci = d.clockIn?.toDate ? d.clockIn.toDate() : new Date();
+      const diff = Math.floor((new Date() - ci) / 1000);
+      totalSecs += diff;
+      const h = Math.floor(diff/3600), m = Math.floor((diff%3600)/60);
+      const div = document.createElement('div'); div.className = 'crew-card';
+      div.innerHTML =
+        '<div class="crew-avatar">👷</div>' +
+        '<div class="crew-info"><div class="crew-name">' + (d.name||d.email) + '</div>' +
+        '<div class="crew-role">' + (d.role||'') + ' • Clocked in at ' + d.clockInStr + '</div>' +
+        '<div style="font-size:.72rem;color:var(--mid);margin-top:.1rem;">📍 ' + (d.clockInLoc||'') + '</div></div>' +
+        '<div class="crew-right">' +
+          '<span class="online-dot od-in"></span>' +
+          '<span style="font-size:.78rem;color:var(--green);font-weight:600;">' + h + 'h ' + m + 'm</span>' +
+        '</div>';
+      liveList.appendChild(div);
+    });
+    const th = Math.floor(totalSecs/3600), tm = Math.floor((totalSecs%3600)/60);
+    document.getElementById('statHoursToday').textContent = th + 'h ' + tm + 'm';
+  }
+
+  // Recent clock-out updates
+  const today = new Date().toLocaleDateString('en-CA');
+  const updSnap = await getDocs(query(
+    collection(db,'timeLogs'),
+    where('status','==','complete'),
+    where('date','==',today),
+    orderBy('clockOut','desc'),
+    limit(10)
+  ));
+  const updList = document.getElementById('recentUpdates');
+  updList.innerHTML = '';
+  if (updSnap.empty) { updList.innerHTML = '<p class="empty-txt">No clock-out updates today yet.</p>'; }
+  else { updSnap.forEach(ds => updList.appendChild(buildLogEntry(ds.data(), true))); }
+
+  // Open tasks count
+  const taskSnap = await getDocs(query(collection(db,'tasks'), where('status','!=','done')));
+  document.getElementById('statOpenTasks').textContent = taskSnap.size;
+}
+
+/* ═══════════════════
+   ADMIN: TIME LOG
+═══════════════════ */
+async function loadTimeLogs() {
+  const list = document.getElementById('timeLogList');
+  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  const crewFilter = document.getElementById('filterCrew').value;
+  const dateFilter = document.getElementById('filterDate').value;
+
+  let q = collection(db,'timeLogs');
+  const constraints = [orderBy('clockIn','desc'), limit(50)];
+  if (crewFilter) constraints.unshift(where('uid','==',crewFilter));
+  if (dateFilter) constraints.unshift(where('date','==',dateFilter));
+
+  try {
+    const snap = await getDocs(query(q, ...constraints));
+    list.innerHTML = '';
+    if (snap.empty) { list.innerHTML = '<p class="empty-txt">No time log entries found.</p>'; return; }
+    snap.forEach(ds => list.appendChild(buildLogEntry(ds.data(), true)));
+  } catch(e) {
+    list.innerHTML = '<p class="empty-txt" style="color:#e08080;">Error: ' + e.message + '</p>';
+  }
+}
+
+window.clearFilters = () => {
+  document.getElementById('filterCrew').value = '';
+  document.getElementById('filterDate').value = '';
+  loadTimeLogs();
+};
+
+/* ═══════════════════
+   ADMIN: TASKS
+═══════════════════ */
+window.createTask = async () => {
+  const name     = document.getElementById('taskName').value.trim();
+  const assignee = document.getElementById('taskAssignee').value;
+  if (!name||!assignee) { document.getElementById('taskCreateMsg').innerHTML='<span class="msg-err">Name and assignee required.</span>'; return; }
+  const [aUid, aName] = assignee.split('||');
+  const btn = document.getElementById('createTaskBtn');
+  btn.disabled = true; btn.textContent = 'Creating...';
+  try {
+    await addDoc(collection(db,'tasks'), {
+      name,
+      assigneeUid:   aUid,
+      assigneeName:  aName,
+      project:       document.getElementById('taskProject').value.trim(),
+      due:           document.getElementById('taskDue').value,
+      priority:      document.getElementById('taskPriority').value,
+      description:   document.getElementById('taskDesc').value.trim(),
+      status:        'pending',
+      createdAt:     serverTimestamp(),
+    });
+    ['taskName','taskProject','taskDue','taskDesc'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('taskCreateMsg').innerHTML = '<span class="msg-ok">✅ Task created!</span>';
+    loadAdminTasks();
+  } catch(e) { document.getElementById('taskCreateMsg').innerHTML = '<span class="msg-err">Error: '+e.message+'</span>'; }
+  btn.disabled = false; btn.textContent = 'Create Task';
+};
+
+async function loadAdminTasks() {
+  const list = document.getElementById('adminTaskList');
+  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  const snap = await getDocs(query(collection(db,'tasks'), orderBy('createdAt','desc')));
+  list.innerHTML = '';
+  if (snap.empty) { list.innerHTML = '<p class="empty-txt">No tasks yet.</p>'; return; }
+  snap.forEach(ds => {
+    const t = ds.data(); const tid = ds.id;
+    const div = document.createElement('div'); div.className = 'task-card';
+    div.innerHTML =
+      '<div class="task-header">' +
+        '<div class="task-priority tp-' + t.priority + '"></div>' +
+        '<div class="task-info">' +
+          '<div class="task-name">' + t.name + '</div>' +
+          '<div class="task-meta">👤 ' + (t.assigneeName||'') + (t.project ? ' • 📍 '+t.project : '') + (t.due ? ' • Due: '+t.due : '') + '</div>' +
+          (t.description ? '<div style="font-size:.76rem;color:var(--mid);margin-top:.25rem;">' + t.description + '</div>' : '') +
+        '</div>' +
+        '<div class="task-right">' +
+          '<span class="task-status ts-' + t.status + '">' + t.status + '</span>' +
+          '<div class="task-actions">' +
+            '<button class="task-btn" onclick="adminUpdateTask(\'' + tid + '\',\'inprogress\')">In Progress</button>' +
+            '<button class="task-btn" onclick="adminUpdateTask(\'' + tid + '\',\'done\')">Done</button>' +
+            '<button class="task-btn danger" onclick="deleteTask(\'' + tid + '\')">✕</button>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    list.appendChild(div);
+  });
+}
+
+window.adminUpdateTask = async (tid, status) => {
+  await updateDoc(doc(db,'tasks',tid), { status });
+  loadAdminTasks();
+};
+
+window.deleteTask = async tid => {
+  if (!confirm('Delete this task?')) return;
+  await deleteDoc(doc(db,'tasks',tid));
+  loadAdminTasks();
+};
+
+/* ═══════════════════
+   ADMIN: CREW
+═══════════════════ */
+window.addCrewMember = async () => {
+  const name  = document.getElementById('crewName').value.trim();
+  const email = document.getElementById('crewEmail').value.trim();
+  const role  = document.getElementById('crewRole').value.trim();
+  const pass  = document.getElementById('crewPass').value.trim();
+  const msg   = document.getElementById('crewAddMsg');
+  if (!name||!email||!pass) { msg.innerHTML='<span class="msg-err">Name, email, and password required.</span>'; return; }
+  if (pass.length < 6)      { msg.innerHTML='<span class="msg-err">Password must be at least 6 characters.</span>'; return; }
+  const btn = document.getElementById('addCrewBtn');
+  btn.disabled = true; btn.textContent = 'Creating account...';
+  try {
+    // Use a secondary Firebase app so admin stays logged in
+    const secondaryApp  = initializeApp2(firebaseConfig, 'secondary-' + Date.now());
+    const secondaryAuth = getAuth2(secondaryApp);
+    const cred = await createUser2(secondaryAuth, email, pass);
+    const uid  = cred.user.uid;
+    // Sign out of secondary app immediately
+    await secondaryAuth.signOut();
+
+    // Save to Firestore (admin is still logged in on primary app)
+    await addDoc(collection(db,'crewMembers'), {
+      uid, name, email, role,
+      createdAt: serverTimestamp(),
+    });
+
+    ['crewName','crewEmail','crewRole','crewPass'].forEach(id => document.getElementById(id).value = '');
+    msg.innerHTML = '<span class="msg-ok">✅ ' + name + ' added! Share <strong>crew.html</strong> with them along with their email and password.</span>';
+    loadCrewDropdowns();
+    loadCrewList();
+  } catch(e) {
+    let errMsg = e.message;
+    if (e.code === 'auth/email-already-in-use') errMsg = 'That email already has an account.';
+    if (e.code === 'auth/invalid-email') errMsg = 'Invalid email address.';
+    msg.innerHTML = '<span class="msg-err">Error: ' + errMsg + '</span>';
+  }
+  btn.disabled = false; btn.textContent = 'Add Crew Member';
+};
+
+async function loadCrewList() {
+  const list = document.getElementById('crewList');
+  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  const snap = await getDocs(collection(db,'crewMembers'));
+  list.innerHTML = '';
+  if (snap.empty) { list.innerHTML = '<p class="empty-txt">No crew members yet.</p>'; return; }
+
+  // Get who is currently clocked in
+  const liveSnap = await getDocs(query(collection(db,'timeLogs'), where('status','==','active')));
+  const liveUids = new Set();
+  liveSnap.forEach(ds => liveUids.add(ds.data().uid));
+
+  snap.forEach(ds => {
+    const c = ds.data(); const cid = ds.id;
+    const online = liveUids.has(c.uid);
+    const div = document.createElement('div'); div.className = 'crew-card';
+    div.innerHTML =
+      '<div class="crew-avatar">👷</div>' +
+      '<div class="crew-info"><div class="crew-name">' + c.name + '</div>' +
+      '<div class="crew-role">' + (c.role||'General') + ' • ' + c.email + '</div></div>' +
+      '<div class="crew-right">' +
+        '<span class="online-dot ' + (online?'od-in':'od-out') + '"></span>' +
+        '<span style="font-size:.76rem;color:' + (online?'var(--green)':'var(--mid)') + ';">' + (online?'Clocked In':'Off') + '</span>' +
+        '<button class="task-btn danger" onclick="removeCrewMember(\'' + cid + '\')">Remove</button>' +
+      '</div>';
+    list.appendChild(div);
+  });
+}
+
+window.removeCrewMember = async id => {
+  if (!confirm('Remove this crew member?')) return;
+  await deleteDoc(doc(db,'crewMembers',id));
+  loadCrewList();
+};
+
+async function loadCrewDropdowns() {
+  const snap = await getDocs(collection(db,'crewMembers'));
+  const selects = ['taskAssignee','filterCrew'];
+  selects.forEach(selId => {
+    const sel = document.getElementById(selId);
+    if (!sel) return;
+    const isFilter = selId === 'filterCrew';
+    sel.innerHTML = isFilter ? '<option value="">All crew</option>' : '<option value="">Select crew member</option>';
+    snap.forEach(ds => {
+      const c = ds.data();
+      const opt = document.createElement('option');
+      opt.value = isFilter ? c.uid : (c.uid + '||' + c.name);
+      opt.textContent = c.name + (c.role ? ' — ' + c.role : '');
+      sel.appendChild(opt);
+    });
+  });
+}
+
+/* ═══════════════════
+   UI HELPERS
+═══════════════════ */
+window.showSection = (id, btn) => {
+  document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.app-nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('section-' + id).classList.add('active');
+  if (btn) btn.classList.add('active');
+  // Load section data
+  if (id==='dashboard') loadDashboard();
+  if (id==='timelog')   loadTimeLogs();
+  if (id==='tasks')     loadAdminTasks();
+  if (id==='crew')      { loadCrewList(); loadCrewDropdowns(); }
+  if (id==='mytasks')   loadMyTasks();
+};
+
+window.viewPhoto = src => {
+  document.getElementById('photoOverlayImg').src = src;
+  document.getElementById('photoOverlay').style.display = 'flex';
+};
+window.viewPhotoSrc = (partial, imgEl) => {
+  // Get full src from the img element itself
+  const fullSrc = imgEl.src;
+  document.getElementById('photoOverlayImg').src = fullSrc;
+  document.getElementById('photoOverlay').style.display = 'flex';
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key==='Enter' && document.getElementById('authScreen').style.display!=='none') doLogin();
+  if (e.key==='Escape') {
+    document.getElementById('photoOverlay').style.display = 'none';
+    document.getElementById('clockOutModal').style.display = 'none';
+  }
+});
+</script>
+</body>
+</html>
