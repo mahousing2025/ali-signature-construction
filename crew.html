@@ -624,24 +624,34 @@ async function checkActiveClockIn() {
    CLOCK OUT MODAL
 ═══════════════════ */
 window.openClockOutModal = async () => {
-  if (!currentEntry) return;
-  // Load this crew member's tasks for the dropdown
-  const taskSnap = await getDocs(query(
-    collection(db,'tasks'),
-    where('assigneeUid','==',currentUser.uid),
-    where('status','!=','done')
-  ));
-  const taskSel = document.getElementById('coTask');
-  taskSel.innerHTML = '<option value="">Select task (optional)</option>';
-  taskSnap.forEach(ds => {
-    const opt = document.createElement('option');
-    opt.value = ds.id; opt.textContent = ds.data().name;
-    taskSel.appendChild(opt);
-  });
+  if (!currentEntry) { alert('You are not clocked in.'); return; }
+
+  // Load tasks — get all for this user then filter in JS (avoids needing a Firestore index)
+  try {
+    const taskSnap = await getDocs(query(
+      collection(db,'tasks'),
+      where('assigneeUid','==',currentUser.uid)
+    ));
+    const taskSel = document.getElementById('coTask');
+    taskSel.innerHTML = '<option value="">Select task (optional)</option>';
+    taskSnap.forEach(ds => {
+      const t = ds.data();
+      if (t.status === 'done') return; // filter out completed in JS
+      const opt = document.createElement('option');
+      opt.value = ds.id;
+      opt.textContent = t.name + (t.project ? ' — ' + t.project : '');
+      taskSel.appendChild(opt);
+    });
+  } catch(e) {
+    // If tasks fail to load just show empty dropdown — don't block clock out
+    document.getElementById('coTask').innerHTML = '<option value="">No tasks</option>';
+  }
+
   photoFiles = [];
   document.getElementById('photoPreviewGrid').innerHTML = '';
   document.getElementById('coUpdate').value = '';
   document.getElementById('coMsg').textContent = '';
+  document.getElementById('coTaskStatus').value = '';
   starValue = 0;
   document.querySelectorAll('.star').forEach(s => s.classList.remove('active'));
   document.getElementById('clockOutModal').style.display = 'flex';
@@ -792,14 +802,16 @@ async function loadMyTasks() {
   const list = document.getElementById('myTaskList');
   if (!list) return;
   list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
+  try {
   const snap = await getDocs(query(
     collection(db,'tasks'),
-    where('assigneeUid','==',currentUser.uid),
-    orderBy('createdAt','desc')
+    where('assigneeUid','==',currentUser.uid)
   ));
   list.innerHTML = '';
   if (snap.empty) { list.innerHTML = '<p class="empty-txt">No tasks assigned to you yet.</p>'; return; }
-  snap.forEach(ds => {
+  // Sort by createdAt descending in JS
+  const docs = snap.docs.sort((a,b) => (b.data().createdAt?.seconds||0) - (a.data().createdAt?.seconds||0));
+  docs.forEach(ds => {
     const t = ds.data(); const tid = ds.id;
     const div = document.createElement('div'); div.className = 'task-card';
     div.innerHTML =
@@ -878,8 +890,10 @@ async function loadDashboard() {
   else { updSnap.forEach(ds => updList.appendChild(buildLogEntry(ds.data(), true))); }
 
   // Open tasks count
-  const taskSnap = await getDocs(query(collection(db,'tasks'), where('status','!=','done')));
-  document.getElementById('statOpenTasks').textContent = taskSnap.size;
+  const taskSnap = await getDocs(collection(db,'tasks'));
+  let openCount = 0;
+  taskSnap.forEach(ds => { if (ds.data().status !== 'done') openCount++; });
+  document.getElementById('statOpenTasks').textContent = openCount;
 }
 
 /* ═══════════════════
