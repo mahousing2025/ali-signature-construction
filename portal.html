@@ -713,8 +713,10 @@ async function loadProjects() {
   try {
     let projects = [];
     if (isAdmin) {
-      const snap = await getDocs(query(collection(db,'projects'), orderBy('createdAt','desc')));
+      const snap = await getDocs(collection(db,'projects'));
       snap.forEach(ds => projects.push({ id:ds.id, ...ds.data() }));
+      // Sort newest first in JS - no index needed
+      projects.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
     } else {
       const cSnap = await getDocs(query(collection(db,'clients'), where('uid','==',currentUser.uid)));
       if (!cSnap.empty) {
@@ -957,7 +959,7 @@ async function loadExpenses() {
   const list = document.getElementById('expList');
   list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
   try {
-    const snap = await getDocs(query(collection(db,'projects',currentPid,'expenses'), orderBy('date','desc')));
+    const snap = await getDocs(collection(db,'projects',currentPid,'expenses'));
     renderExpenses(snap, 'expList', 'expTotal', true);
   } catch { renderExpenses(null, 'expList', 'expTotal', true); }
 }
@@ -966,7 +968,7 @@ async function loadClientExpenses() {
   const list = document.getElementById('clientExpList');
   list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
   try {
-    const snap = await getDocs(query(collection(db,'projects',currentPid,'expenses'), orderBy('date','desc')));
+    const snap = await getDocs(collection(db,'projects',currentPid,'expenses'));
     renderExpenses(snap, 'clientExpList', 'clientExpTotal', false);
   } catch { renderExpenses(null, 'clientExpList', 'clientExpTotal', false); }
 }
@@ -980,7 +982,9 @@ function renderExpenses(snap, listId, totalId, canDelete) {
     return;
   }
   let total = 0;
-  snap.forEach(ds => {
+  // Sort by date descending in JS
+  const sorted = snap.docs.sort((a,b) => (b.data().date||'') > (a.data().date||'') ? 1 : -1).reverse();
+  sorted.forEach(ds => {
     const e = ds.data(); total += parseFloat(e.amount||0);
     const div = document.createElement('div'); div.className = 'exp-row';
     div.innerHTML =
@@ -1028,7 +1032,7 @@ async function loadPhotos(gridId, canDelete) {
   const grid = document.getElementById(gridId);
   grid.innerHTML = '<div class="spin-wrap"><div class="spinner"></div></div>';
   try {
-    const snap = await getDocs(query(collection(db,'projects',currentPid,'photos'), orderBy('createdAt','asc')));
+    const snap = await getDocs(collection(db,'projects',currentPid,'photos'));
     grid.innerHTML = '';
     if (snap.empty) { grid.innerHTML = '<p class="empty-txt">No photos yet.</p>'; return; }
     snap.forEach(ds => {
@@ -1155,7 +1159,7 @@ window.deletePhoto = async id => {
 async function loadClients() {
   const list = document.getElementById('clientList');
   list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div> Loading clients...</div>';
-  const projSnap = await getDocs(query(collection(db,'projects'), orderBy('name','asc')));
+  const projSnap = await getDocs(collection(db,'projects'));
   const projects = [];
   projSnap.forEach(ds => projects.push({ id:ds.id, name:ds.data().name }));
 
