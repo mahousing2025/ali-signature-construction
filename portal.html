@@ -551,6 +551,11 @@ const app  = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db   = getFirestore(app);
 
+// Verify Firebase is configured
+if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY') {
+  document.getElementById('loginErr').textContent = 'Firebase not configured. Contact support.';
+}
+
 let currentUser = null;
 let isAdmin     = false;
 let currentPid  = null;
@@ -567,9 +572,17 @@ onAuthStateChanged(auth, async user => {
     const snap = await getDocs(collection(db,'clients'));
     let found = null;
     snap.forEach(ds => { if (ds.data().uid === user.uid) found = ds.data(); });
-    if (found && found.projectId) { showPortal(); }
-    else { document.getElementById('pendingEmail').textContent = 'We will notify you at ' + user.email; showScreen('pending'); }
-  } catch { showPortal(); }
+    if (found && found.projectId) {
+      showPortal();
+    } else {
+      document.getElementById('pendingEmail').textContent = 'We will notify you at ' + user.email;
+      showScreen('pending');
+    }
+  } catch(e) {
+    console.log('Client check error:', e.message);
+    // If we can't read clients collection, just show portal — admin will see all projects
+    showPortal();
+  }
 });
 
 function showScreen(name) {
@@ -591,10 +604,22 @@ window.doLogin = async () => {
   const pass  = document.getElementById('loginPass').value;
   const err   = document.getElementById('loginErr');
   const btn   = document.getElementById('loginBtn');
-  err.textContent = ''; btn.disabled = true; btn.textContent = 'Signing in...';
-  try { await signInWithEmailAndPassword(auth, email, pass); }
-  catch(e) {
-    err.textContent = 'Incorrect email or password.';
+  err.textContent = '';
+  if (!email) { err.textContent = 'Please enter your email.'; return; }
+  if (!pass)  { err.textContent = 'Please enter your password.'; return; }
+  btn.disabled = true; btn.textContent = 'Signing in...';
+  try {
+    await signInWithEmailAndPassword(auth, email, pass);
+  } catch(e) {
+    let msg = 'Login failed. Please try again.';
+    if (e.code === 'auth/user-not-found')      msg = 'No account found with that email.';
+    if (e.code === 'auth/wrong-password')       msg = 'Wrong password. Try again.';
+    if (e.code === 'auth/invalid-credential')   msg = 'Wrong email or password.';
+    if (e.code === 'auth/invalid-email')        msg = 'Invalid email address.';
+    if (e.code === 'auth/too-many-requests')    msg = 'Too many attempts. Wait a minute and try again.';
+    if (e.code === 'auth/network-request-failed') msg = 'Network error. Check your connection.';
+    if (e.code === 'auth/configuration-not-found') msg = 'Firebase not configured yet. Add your admin user in Firebase Authentication.';
+    err.textContent = msg + ' (Code: ' + e.code + ')';
     btn.disabled = false; btn.textContent = 'Sign In';
   }
 };
