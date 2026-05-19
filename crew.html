@@ -156,6 +156,19 @@
     .msg-err{font-size:.8rem;color:#e08080;margin-top:.45rem}
     code{background:var(--surface);padding:.1rem .4rem;border-radius:3px;font-size:.76rem}
 
+
+    .weather-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+    .weather-icon{font-size:2rem;flex-shrink:0}
+    .weather-temp{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:.02em;line-height:1}
+    .weather-desc{font-size:.82rem;color:var(--light);margin-top:.1rem;text-transform:capitalize}
+    .weather-details{display:flex;gap:1rem;flex-wrap:wrap;margin-left:auto}
+    .weather-detail{font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:.3rem}
+    .weather-alert{background:rgba(232,148,74,.1);border:1px solid rgba(232,148,74,.3);border-radius:6px;padding:.4rem .8rem;font-size:.76rem;color:var(--orange)}
+    .sms-panel-crew{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
+    .sms-lang-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.85rem}
+    .lang-btn{background:var(--surface);border:1px solid var(--border);color:var(--mid);font-size:.72rem;font-weight:600;padding:.28rem .75rem;border-radius:99px;cursor:pointer;transition:all .15s}
+    .lang-btn.active{background:var(--accent);border-color:var(--accent);color:var(--black)}
+
     @media(max-width:650px){
       .grid2,.grid3{grid-template-columns:1fr}
       .stat-row{grid-template-columns:1fr 1fr}
@@ -204,6 +217,14 @@
   </div>
 
   <div class="app-body">
+
+
+    <!-- WEATHER BAR -->
+    <div id="weatherBar" style="display:none;margin-bottom:.5rem">
+      <div class="weather-bar" id="weatherWidget">
+        <div style="font-size:.82rem;color:var(--mid)">📍 Loading weather...</div>
+      </div>
+    </div>
 
     <!-- ADMIN: DASHBOARD -->
     <div class="app-section active" id="section-dashboard">
@@ -417,6 +438,9 @@ function showApp() {
   document.getElementById('adminNav').style.display = isAdmin ? 'flex' : 'none';
   document.getElementById('crewNav').style.display  = isAdmin ? 'none' : 'flex';
   startClock();
+  // Show weather for everyone
+  document.getElementById('weatherBar').style.display='block';
+  loadWeatherCrew();
   if (isAdmin) { loadDashboard(); loadCrewDropdowns(); }
   else { checkActiveClockIn(); loadMyTasks(); loadMyTimeLog(); }
 }
@@ -817,6 +841,33 @@ window.showSection=(id,btn)=>{
   if(id==='crew')      {loadCrewList();loadCrewDropdowns();}
   if(id==='mytasks')   loadMyTasks();
 };
+
+
+/* WEATHER */
+const WEATHER_ICONS={0:'☀️',1:'☀️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'❄️',80:'🌦️',82:'⛈️',95:'⛈️'};
+const WEATHER_DESC={0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',80:'Showers',82:'Heavy showers',95:'Thunderstorm'};
+
+async function loadWeatherCrew() {
+  const bar = document.getElementById('weatherWidget');
+  try {
+    const pos = await new Promise((res,rej)=>navigator.geolocation.getCurrentPosition(res,rej,{timeout:8000}));
+    const {latitude:lat,longitude:lon} = pos.coords;
+    const r = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch`);
+    const d = await r.json(); const c=d.current;
+    const code=c.weather_code;
+    const icon=WEATHER_ICONS[code]||'🌤️';
+    const desc=WEATHER_DESC[code]||'';
+    const temp=Math.round(c.temperature_2m);
+    const feel=Math.round(c.apparent_temperature);
+    const wind=Math.round(c.wind_speed_10m);
+    const gust=Math.round(c.wind_gusts_10m);
+    let alert='';
+    if (wind>25||gust>35) alert='<div class="weather-alert">⚠️ High winds — roofing caution</div>';
+    if (c.precipitation>0.1) alert='<div class="weather-alert">⚠️ Rain today — plan work accordingly</div>';
+    if (temp<32) alert='<div class="weather-alert">⚠️ Freezing — protect materials & pipes</div>';
+    bar.innerHTML=`<div class="weather-icon">${icon}</div><div><div class="weather-temp">${temp}°F</div><div class="weather-desc">${desc} · Feels like ${feel}°F</div></div><div class="weather-details"><div class="weather-detail">💨 ${wind} mph</div><div class="weather-detail">🌪️ ${gust} mph gusts</div></div>${alert}`;
+  } catch { bar.innerHTML='<div style="font-size:.8rem;color:var(--mid)">📍 Allow location for weather</div>'; }
+}
 
 document.addEventListener('keydown',e=>{
   if(e.key==='Enter'&&document.getElementById('authScreen').style.display!=='none') doLogin();
