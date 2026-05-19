@@ -293,37 +293,40 @@
       </div>
     </div>
 
-    <!-- SMS PANEL (admin only) -->
+    <!-- SMS PANEL (admin only) - Twilio Auto SMS -->
     <div id="smsPanel" style="display:none">
       <div class="sms-panel">
-        <div class="sms-label">Send SMS Notification</div>
+        <div class="sms-label">Send Text Message — (302) 202-2204</div>
+        <div style="font-size:.78rem;color:var(--green);margin-bottom:.9rem">
+          ✅ Sends automatically from your business number (302) 202-2204
+        </div>
         <div class="lang-row">
           <button class="lang-btn active" onclick="setLang('en',this)">🇺🇸 English</button>
           <button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Spanish</button>
           <button class="lang-btn" onclick="setLang('ar',this)">🇸🇦 Arabic</button>
         </div>
         <div class="sms-row">
-          <input class="sms-input" type="tel" id="smsTo" placeholder="+1 (302) 000-0000" />
-          <select class="sms-select" id="smsToSelect" onchange="document.getElementById('smsTo').value=this.value">
-            <option value="">Pick contact...</option>
+          <input class="sms-input" type="tel" id="smsPhone" placeholder="+1 (302) 000-0000" style="width:100%" />
+          <select class="sms-select" id="smsContactPick" onchange="pickContact(this.value)" style="width:100%">
+            <option value="">Pick saved contact...</option>
           </select>
         </div>
         <div class="tmpl-row">
           <button class="tmpl-btn" onclick="useTemplate('update')">📋 Update</button>
           <button class="tmpl-btn" onclick="useTemplate('schedule')">📅 Schedule</button>
-          <button class="tmpl-btn" onclick="useTemplate('weather')">🌤 Weather Delay</button>
+          <button class="tmpl-btn" onclick="useTemplate('weather')">🌤 Delay</button>
           <button class="tmpl-btn" onclick="useTemplate('complete')">✅ Complete</button>
           <button class="tmpl-btn" onclick="useTemplate('reminder')">🔔 Reminder</button>
         </div>
         <textarea class="sms-textarea" id="smsBody" placeholder="Type your message..." oninput="updateCharCount()"></textarea>
-        <div class="sms-char"><span id="charCount">0</span>/160</div>
-        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
-          <button class="sms-send" id="smsSendBtn" onclick="sendSMS()">📤 Send SMS</button>
-          <span style="font-size:.74rem;color:var(--mid)">~$0.01/message via Twilio</span>
+        <div class="sms-char"><span id="charCount">0</span>/160 characters</div>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap;margin-top:.5rem">
+          <button class="sms-send" id="smsSendBtn" onclick="sendSMS()">📤 Send Text</button>
+          <span style="font-size:.74rem;color:var(--mid)">~$0.01/text · From (302) 202-2204</span>
         </div>
-        <div id="smsMsg" style="font-size:.8rem;margin-top:.4rem;min-height:1rem"></div>
+        <div id="smsMsg" style="font-size:.8rem;margin-top:.5rem;min-height:1rem;line-height:1.6"></div>
         <div style="margin-top:.85rem;border-top:1px solid var(--border);padding-top:.75rem">
-          <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.5rem">Recent Messages</div>
+          <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.5rem">Recent Messages Sent</div>
           <div id="smsHistory"></div>
         </div>
       </div>
@@ -341,12 +344,24 @@
               <div class="fg"><label>Contract Value ($)</label><input type="number" id="newContract" placeholder="0.00" min="0" step="0.01" /></div>
             </div>
             <div class="grid2" style="margin-bottom:.8rem">
-              <div class="fg"><label>Client Phone (for auto SMS)</label><input type="tel" id="newPhone" placeholder="+1 (302) 000-0000" /></div>
+              <div class="fg"><label>Client Phone (10 digits, no dashes)</label><input type="tel" id="newPhone" placeholder="3025551234" /></div>
               <div class="fg"><label>Client Language</label>
                 <select id="newLang">
                   <option value="en">🇺🇸 English</option>
                   <option value="es">🇪🇸 Spanish</option>
                   <option value="ar">🇸🇦 Arabic</option>
+                </select>
+              </div>
+              <div class="fg"><label>Client Carrier</label>
+                <select id="newCarrier">
+                  <option value="txt.att.net">AT&amp;T</option>
+                  <option value="vtext.com">Verizon</option>
+                  <option value="tmomail.net">T-Mobile / Google Fi</option>
+                  <option value="messaging.sprintpcs.com">Sprint / Boost</option>
+                  <option value="mms.cricketwireless.net">Cricket Wireless</option>
+                  <option value="mymetropcs.com">Metro PCS</option>
+                  <option value="sms.myboostmobile.com">Boost Mobile</option>
+                  <option value="vmobl.com">Virgin Mobile</option>
                 </select>
               </div>
             </div>
@@ -414,12 +429,24 @@
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
-                <div class="fg"><label>Client Phone (auto SMS)</label><input type="tel" id="ePhone" placeholder="+1 (302) 000-0000" /></div>
+                <div class="fg"><label>Client Phone (10 digits)</label><input type="tel" id="ePhone" placeholder="3025551234" /></div>
                 <div class="fg"><label>Client Language</label>
                   <select id="eLang">
                     <option value="en">🇺🇸 English</option>
                     <option value="es">🇪🇸 Spanish</option>
                     <option value="ar">🇸🇦 Arabic</option>
+                  </select>
+                </div>
+                <div class="fg"><label>Client Carrier</label>
+                  <select id="eCarrier">
+                    <option value="txt.att.net">AT&amp;T</option>
+                    <option value="vtext.com">Verizon</option>
+                    <option value="tmomail.net">T-Mobile / Google Fi</option>
+                    <option value="messaging.sprintpcs.com">Sprint / Boost</option>
+                    <option value="mms.cricketwireless.net">Cricket Wireless</option>
+                    <option value="mymetropcs.com">Metro PCS</option>
+                    <option value="sms.myboostmobile.com">Boost Mobile</option>
+                    <option value="vmobl.com">Virgin Mobile</option>
                   </select>
                 </div>
               </div>
@@ -721,6 +748,50 @@ async function loadWeather() {
 }
 
 /* ── SMS FUNCTIONS ── */
+/* ── TWILIO SMS — credentials stored safely in browser only ── */
+// Credentials never in code — stored in YOUR browser localStorage only
+// Run once in browser console to set up:
+// localStorage.setItem("asc_twilio_sid",   "YOUR_ACCOUNT_SID")
+// localStorage.setItem("asc_twilio_token", "YOUR_AUTH_TOKEN")
+// localStorage.setItem("asc_twilio_from",  "+13022022204")
+
+function getTwilioConfig() {
+  return {
+    sid:   localStorage.getItem("asc_twilio_sid")   || "",
+    token: localStorage.getItem("asc_twilio_token") || "",
+    from:  localStorage.getItem("asc_twilio_from")  || "",
+  };
+}
+
+async function twilioSend(to, body) {
+  const cfg = getTwilioConfig();
+  if (!cfg.sid || !cfg.token || !cfg.from) {
+    throw new Error("Twilio not configured. Run setup in browser console.");
+  }
+  const phone = to.replace(/\D/g,"");
+  const toNum = phone.length === 10 ? "+1" + phone : "+" + phone;
+  const creds = btoa(cfg.sid + ":" + cfg.token);
+  const res = await fetch(
+    "https://api.twilio.com/2010-04-01/Accounts/" + cfg.sid + "/Messages.json",
+    {
+      method: "POST",
+      headers: {
+        "Authorization": "Basic " + creds,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({ To: toNum, From: cfg.from, Body: body }),
+    }
+  );
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Send failed");
+  return data;
+}
+
+window.pickContact = val => {
+  if (!val) return;
+  document.getElementById("smsPhone").value = val;
+};
+
 window.setLang = (lang, btn) => {
   currentLang = lang;
   document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
@@ -729,13 +800,13 @@ window.setLang = (lang, btn) => {
 };
 
 window.useTemplate = type => {
-  const t = (TMPLS[currentLang] || TMPLS.en)[type] || "";
-  const addr   = document.getElementById("dAddr")?.textContent || "[address]";
-  const pct    = document.getElementById("sumProgress")?.textContent || "0%";
-  const status = document.getElementById("sumStatus")?.textContent || "active";
-  const date   = new Date(Date.now() + 86400000).toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
-  document.getElementById("smsBody").value = t.replace("{address}", addr).replace("{pct}", pct).replace("{status}", status).replace("{date}", date);
-  document.getElementById("smsBody").dir   = currentLang === "ar" ? "rtl" : "ltr";
+  const t    = (TMPLS[currentLang] || TMPLS.en)[type] || "";
+  const addr = document.getElementById("dAddr")?.textContent || "[address]";
+  const pct  = document.getElementById("sumProgress")?.textContent || "0%";
+  const stat = document.getElementById("sumStatus")?.textContent || "active";
+  const date = new Date(Date.now() + 86400000).toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
+  document.getElementById("smsBody").value = t.replace("{address}", addr).replace("{pct}", pct).replace("{status}", stat).replace("{date}", date);
+  document.getElementById("smsBody").dir   = lang === "ar" ? "rtl" : "ltr";
   updateCharCount();
 };
 
@@ -747,34 +818,33 @@ window.updateCharCount = () => {
 };
 
 window.sendSMS = async () => {
-  const to   = document.getElementById("smsTo").value.trim();
-  const body = document.getElementById("smsBody").value.trim();
-  const msg  = document.getElementById("smsMsg");
-  if (!to)   { msg.style.color = "#e08080"; msg.textContent = "Enter a phone number."; return; }
-  if (!body) { msg.style.color = "#e08080"; msg.textContent = "Enter a message."; return; }
-  const srv = localStorage.getItem("asc_sms_server") || "";
-  if (!srv) {
-    msg.style.color = "#e08080";
-    msg.textContent = "Set your server URL: open browser console and run: localStorage.setItem(\"asc_sms_server\",\"https://your-railway-url.railway.app\")";
-    return;
-  }
+  const phone = document.getElementById("smsPhone").value.trim();
+  const body  = document.getElementById("smsBody").value.trim();
+  const msgEl = document.getElementById("smsMsg");
+  msgEl.textContent = "";
+  if (!phone) { msgEl.style.color="#e08080"; msgEl.textContent="Enter a phone number."; return; }
+  if (!body)  { msgEl.style.color="#e08080"; msgEl.textContent="Enter a message."; return; }
   const btn = document.getElementById("smsSendBtn");
   btn.disabled = true; btn.textContent = "Sending...";
-  msg.textContent = "";
   try {
-    const res  = await fetch(srv + "/api/send-sms", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({to, body, language: currentLang}) });
-    const data = await res.json();
-    if (data.success) {
-      msg.style.color = "var(--green)"; msg.textContent = "✅ Message sent!";
-      smsHistory.unshift({to, body, lang: currentLang, at: new Date().toLocaleString()});
-      smsHistory = smsHistory.slice(0, 20);
-      localStorage.setItem("asc_sms_hist", JSON.stringify(smsHistory));
-      renderSmsHistory();
-      document.getElementById("smsBody").value = "";
-      updateCharCount();
-    } else { throw new Error(data.error || "Send failed"); }
-  } catch(e) { msg.style.color = "#e08080"; msg.textContent = "Error: " + e.message; }
-  btn.disabled = false; btn.textContent = "📤 Send SMS";
+    await twilioSend(phone, body);
+    msgEl.style.color = "var(--green)";
+    msgEl.textContent = "✅ Text sent from (302) 202-2204!";
+    smsHistory.unshift({to: phone, body, lang: currentLang, at: new Date().toLocaleString()});
+    smsHistory = smsHistory.slice(0, 20);
+    localStorage.setItem("asc_sms_hist", JSON.stringify(smsHistory));
+    renderSmsHistory();
+    document.getElementById("smsBody").value = "";
+    updateCharCount();
+  } catch(e) {
+    msgEl.style.color = "#e08080";
+    if (e.message.includes("unverified")) {
+      msgEl.textContent = "❌ Trial account: add this number at twilio.com → Verified Caller IDs, or upgrade your account.";
+    } else {
+      msgEl.textContent = "❌ Error: " + e.message;
+    }
+  }
+  btn.disabled = false; btn.textContent = "📤 Send Text";
 };
 
 function renderSmsHistory() {
@@ -788,32 +858,46 @@ function renderSmsHistory() {
 }
 
 async function loadSmsContacts() {
-  const sel = document.getElementById("smsToSelect");
+  const sel = document.getElementById("smsContactPick");
   if (!sel) return;
   try {
-    const cSnap = await getDocs(collection(db, "clients"));
-    cSnap.forEach(ds => {
-      const c = ds.data();
-      if (c.phone) {
+    const projSnap = await getDocs(collection(db, "projects"));
+    projSnap.forEach(ds => {
+      const p = ds.data();
+      if (p.clientPhone) {
         const opt = document.createElement("option");
-        opt.value = c.phone; opt.textContent = "👤 " + (c.name || c.email) + " (" + c.phone + ")";
+        opt.value = p.clientPhone;
+        opt.textContent = "👤 " + p.name + " — " + p.clientPhone;
         sel.appendChild(opt);
       }
     });
-  } catch {}
+    const crewSnap = await getDocs(collection(db, "crewMembers"));
+    let hasCrew = false;
+    crewSnap.forEach(ds => {
+      const c = ds.data();
+      if (c.phone) {
+        if (!hasCrew) { const sep=document.createElement("option"); sep.disabled=true; sep.textContent="── Crew ──"; sel.appendChild(sep); hasCrew=true; }
+        const opt = document.createElement("option");
+        opt.value = c.phone;
+        opt.textContent = "👷 " + c.name + " — " + c.phone;
+        sel.appendChild(opt);
+      }
+    });
+  } catch(e) { console.log("contacts:", e.message); }
 }
 
 async function autoSendSMS(phone, lang, key, name, address) {
-  const srv = localStorage.getItem("asc_sms_server") || "";
-  if (!srv || !phone) return;
+  if (!phone) return;
   const msgs = AUTO_SMS[lang] || AUTO_SMS.en;
   const tmpl = msgs[key]; if (!tmpl) return;
   const body = tmpl.replace(/{name}/g, name || "there").replace(/{address}/g, address || "your property");
   try {
-    const res = await fetch(srv + "/api/send-sms", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({to:phone, body, language:lang}) });
-    const d   = await res.json();
-    if (d.success) showToast("✅ SMS sent to client!");
-  } catch(e) { console.log("autoSMS error:", e.message); }
+    await twilioSend(phone, body);
+    showToast("✅ Text sent to client from (302) 202-2204!");
+  } catch(e) {
+    console.log("autoSMS error:", e.message);
+    showToast("⚠️ Auto-text failed: " + e.message);
+  }
 }
 
 function showToast(msg) {
