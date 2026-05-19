@@ -193,6 +193,46 @@
     .msg-ok{font-size:.82rem;color:var(--green);margin-top:.5rem}
     .msg-err{font-size:.82rem;color:#e08080;margin-top:.5rem}
 
+
+    /* WEATHER WIDGET */
+    .weather-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+    .weather-icon{font-size:2rem;flex-shrink:0}
+    .weather-temp{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:.02em;line-height:1}
+    .weather-desc{font-size:.82rem;color:var(--light);margin-top:.1rem;text-transform:capitalize}
+    .weather-details{display:flex;gap:1rem;flex-wrap:wrap;margin-left:auto}
+    .weather-detail{font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:.3rem}
+    .weather-loc{font-size:.72rem;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+    .weather-alert{background:rgba(232,148,74,.1);border:1px solid rgba(232,148,74,.3);border-radius:6px;padding:.4rem .8rem;font-size:.76rem;color:var(--orange);margin-left:auto}
+
+    /* SMS NOTIFICATION */
+    .sms-panel{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
+    .sms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
+    .sms-title{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);display:flex;align-items:center;gap:.5rem}
+    .sms-title::before{content:'';display:block;width:3px;height:13px;background:var(--accent);border-radius:2px}
+    .sms-lang-row{display:flex;gap:.4rem;flex-wrap:wrap}
+    .lang-btn{background:var(--surface);border:1px solid var(--border);color:var(--mid);font-size:.72rem;font-weight:600;padding:.28rem .75rem;border-radius:99px;cursor:pointer;transition:all .15s}
+    .lang-btn.active{background:var(--accent);border-color:var(--accent);color:var(--black)}
+    .sms-compose{display:flex;flex-direction:column;gap:.65rem}
+    .sms-to-row{display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap}
+    .sms-phone{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.55rem .85rem;flex:1;min-width:160px;transition:border-color .2s}
+    .sms-phone:focus{outline:none;border-color:var(--accent)}
+    .sms-textarea{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.62rem .9rem;width:100%;min-height:90px;resize:vertical;transition:border-color .2s}
+    .sms-textarea:focus{outline:none;border-color:var(--accent)}
+    .sms-char-count{font-size:.72rem;color:var(--mid);text-align:right;margin-top:-.4rem}
+    .sms-actions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
+    .sms-send-btn{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.6rem 1.3rem;cursor:pointer;transition:background .2s}
+    .sms-send-btn:hover{background:var(--accent2)}
+    .sms-send-btn:disabled{opacity:.5;cursor:not-allowed}
+    .sms-template-btn{background:var(--surface);border:1px solid var(--border);color:var(--light);font-size:.74rem;padding:.35rem .8rem;border-radius:5px;cursor:pointer;transition:all .15s}
+    .sms-template-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .sms-msg{font-size:.8rem;margin-top:.35rem;min-height:1rem}
+    .sms-msg.ok{color:var(--green)}.sms-msg.err{color:#e08080}
+    .sms-history{margin-top:1rem;border-top:1px solid var(--border);padding-top:.85rem}
+    .sms-history-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.6rem}
+    .sms-item{background:var(--surface);border-radius:6px;padding:.55rem .8rem;margin-bottom:.4rem;font-size:.8rem;color:var(--light)}
+    .sms-item-meta{font-size:.7rem;color:var(--mid);margin-top:.2rem;display:flex;gap:.75rem}
+    .sms-item-lang{font-size:.65rem;font-weight:600;text-transform:uppercase;background:rgba(200,169,110,.1);color:var(--accent);padding:.1rem .45rem;border-radius:99px}
+
     @media(max-width:680px){
       .grid2,.grid3{grid-template-columns:1fr}
       .summary-grid{grid-template-columns:1fr 1fr}
@@ -261,6 +301,62 @@
   </div>
 
   <div class="pbody">
+    
+    <!-- WEATHER BAR (admin + crew see this) -->
+    <div id="weatherBar" style="display:none">
+      <div class="weather-bar" id="weatherWidget">
+        <div style="font-size:.82rem;color:var(--mid)">Loading weather...</div>
+      </div>
+    </div>
+
+    <!-- SMS NOTIFICATION PANEL (admin only) -->
+    <div id="smsPanel" style="display:none">
+      <div class="sms-panel">
+        <div class="sms-header">
+          <div class="sms-title">Send SMS Notification</div>
+          <div class="sms-lang-row">
+            <button class="lang-btn active" onclick="setLang('en',this)">🇺🇸 English</button>
+            <button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Spanish</button>
+            <button class="lang-btn" onclick="setLang('ar',this)">🇸🇦 Arabic</button>
+          </div>
+        </div>
+        <div class="sms-compose">
+          <div class="sms-to-row">
+            <div style="flex:1;min-width:160px">
+              <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem">Send To</div>
+              <input class="sms-phone" type="tel" id="smsTo" placeholder="+1 (302) 000-0000" />
+            </div>
+            <div style="flex:1;min-width:160px">
+              <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem">Or Select</div>
+              <select class="sms-phone" id="smsToSelect" onchange="document.getElementById('smsTo').value=this.value">
+                <option value="">Pick client or crew...</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem">
+              <button class="sms-template-btn" onclick="useTemplate('update')">📋 Project Update</button>
+              <button class="sms-template-btn" onclick="useTemplate('schedule')">📅 Schedule</button>
+              <button class="sms-template-btn" onclick="useTemplate('weather')">🌤️ Weather Delay</button>
+              <button class="sms-template-btn" onclick="useTemplate('complete')">✅ Job Complete</button>
+              <button class="sms-template-btn" onclick="useTemplate('reminder')">🔔 Reminder</button>
+            </div>
+            <textarea class="sms-textarea" id="smsBody" placeholder="Type your message..." oninput="updateCharCount()"></textarea>
+            <div class="sms-char-count"><span id="charCount">0</span> / 160 characters</div>
+          </div>
+          <div class="sms-actions">
+            <button class="sms-send-btn" id="smsSendBtn" onclick="sendSMS()">📤 Send SMS</button>
+            <span style="font-size:.76rem;color:var(--mid)">Powered by Twilio • ~$0.01/message</span>
+          </div>
+          <div class="sms-msg" id="smsMsg"></div>
+        </div>
+        <div class="sms-history">
+          <div class="sms-history-label">Recent Messages Sent</div>
+          <div id="smsHistory"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- PROJECTS -->
     <div class="psection active" id="section-projects">
       <div id="listView">
@@ -271,6 +367,16 @@
               <div class="fg"><label>Project Name *</label><input id="newName" placeholder="Johnson Kitchen Remodel" /></div>
               <div class="fg"><label>Property Address *</label><input id="newAddress" placeholder="123 Main St, Wilmington, DE" /></div>
               <div class="fg"><label>Contract Value ($)</label><input type="number" id="newContract" placeholder="0.00" min="0" step="0.01" /></div>
+            </div>
+            <div class="grid2" style="margin-bottom:.8rem">
+              <div class="fg"><label>Client Phone Number (for SMS updates)</label><input type="tel" id="newPhone" placeholder="+1 (302) 000-0000" /></div>
+              <div class="fg"><label>Client Language Preference</label>
+                <select id="newLang">
+                  <option value="en">🇺🇸 English</option>
+                  <option value="es">🇪🇸 Spanish</option>
+                  <option value="ar">🇸🇦 Arabic</option>
+                </select>
+              </div>
             </div>
             <div class="fg" style="margin-bottom:.8rem"><label>Description / Scope Notes</label><textarea id="newDesc" placeholder="Scope of work, materials, special notes..."></textarea></div>
             <button class="btn-p" id="createBtn" onclick="createProject()">Create Project</button>
@@ -333,6 +439,14 @@
                     <option value="paused">Paused</option>
                     <option value="complete">Complete</option>
                     <option value="cancelled">Cancelled</option>
+                  </select>
+                </div>
+                <div class="fg"><label>Client Phone (SMS updates)</label><input type="tel" id="ePhone" placeholder="+1 (302) 000-0000" /></div>
+                <div class="fg"><label>Client Language</label>
+                  <select id="eLang">
+                    <option value="en">🇺🇸 English</option>
+                    <option value="es">🇪🇸 Spanish</option>
+                    <option value="ar">🇸🇦 Arabic</option>
                   </select>
                 </div>
               </div>
@@ -529,6 +643,15 @@ function showPortal() {
   document.getElementById('adminNav').style.display = isAdmin ? 'flex' : 'none';
   document.getElementById('createArea').style.display = isAdmin ? 'block' : 'none';
   document.getElementById('listTitle').textContent  = isAdmin ? 'All Projects' : 'My Project';
+  // Show weather for everyone
+  document.getElementById('weatherBar').style.display = 'block';
+  loadWeather();
+  // Show SMS panel and load contacts for admin only
+  if (isAdmin) {
+    document.getElementById('smsPanel').style.display = 'block';
+    renderSmsHistory();
+    loadSmsContacts();
+  }
   loadProjects();
 }
 
@@ -589,6 +712,8 @@ window.createProject = async () => {
       name, address:addr,
       contractValue:parseFloat(document.getElementById('newContract').value||0),
       description:document.getElementById('newDesc').value.trim(),
+      clientPhone:document.getElementById('newPhone').value.trim(),
+      clientLang: document.getElementById('newLang').value,
       progress:0, status:'active', checklist:{},
       createdAt:serverTimestamp(),
     });
@@ -626,6 +751,8 @@ window.openProject = async pid => {
     document.getElementById('eContract').value = p.contractValue||'';
     document.getElementById('eDesc').value     = p.description||'';
     document.getElementById('eStatus').value   = p.status||'active';
+    document.getElementById('ePhone').value    = p.clientPhone||'';
+    document.getElementById('eLang').value     = p.clientLang||'en';
     switchAdminTab('progress');
     renderAdminChecklist();
     loadExpenses();
@@ -656,13 +783,27 @@ window.saveEdit = async () => {
   const btn=document.getElementById('saveEditBtn'); const msg=document.getElementById('editMsg');
   btn.disabled=true; btn.textContent='Saving...';
   try {
+    const newStatus = document.getElementById('eStatus').value;
+    const oldSnap   = await getDoc(doc(db,'projects',currentPid));
+    const oldStatus = oldSnap.exists() ? oldSnap.data().status : '';
     await updateDoc(doc(db,'projects',currentPid),{
       name:document.getElementById('eName').value.trim(),
       address:document.getElementById('eAddr').value.trim(),
       contractValue:parseFloat(document.getElementById('eContract').value||0),
       description:document.getElementById('eDesc').value.trim(),
-      status:document.getElementById('eStatus').value,
+      status:newStatus,
+      clientPhone:document.getElementById('ePhone').value.trim(),
+      clientLang: document.getElementById('eLang').value,
     });
+    // Auto-send SMS if status changed
+    if (newStatus !== oldStatus) {
+      const phone = document.getElementById('ePhone').value.trim();
+      const lang  = document.getElementById('eLang').value;
+      if (phone) {
+        await autoSendStatusSMS(phone, lang, newStatus,
+          document.getElementById('eAddr').value.trim());
+      }
+    }
     msg.className='msg-ok'; msg.textContent='✅ Saved.';
     openProject(currentPid);
   } catch(e){msg.className='msg-err';msg.textContent='Error: '+e.message;}
@@ -752,6 +893,14 @@ window.saveChecklist = async () => {
   setTimeout(()=>msg.textContent='',3000);
   btn.disabled=false; btn.textContent='Save Checklist';
   renderAdminChecklist();
+  // Auto-send progress SMS at milestones
+  const projSnap2 = await getDoc(doc(db,'projects',currentPid));
+  if (projSnap2.exists()) {
+    const pd = projSnap2.data();
+    if (pd.clientPhone) {
+      await autoSendProgressSMS(pd.clientPhone, pd.clientLang||'en', progress, pd.address);
+    }
+  }
 };
 
 /* EXPENSES */
@@ -914,6 +1063,365 @@ window.switchClientTab=id=>{
     document.getElementById('cpanel-'+t).classList.toggle('active',t===id);
   });
 };
+
+
+
+/* ══════════════════════════════════
+   WEATHER
+══════════════════════════════════ */
+const WEATHER_ICONS = {
+  0:'☀️',1:'☀️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
+  51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',
+  71:'🌨️',73:'🌨️',75:'❄️',77:'❄️',80:'🌦️',81:'🌦️',
+  82:'⛈️',85:'🌨️',86:'🌨️',95:'⛈️',96:'⛈️',99:'⛈️'
+};
+const WEATHER_DESC = {
+  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
+  45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
+  61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
+  80:'Rain showers',81:'Rain showers',82:'Violent showers',95:'Thunderstorm',99:'Heavy thunderstorm'
+};
+
+async function loadWeather() {
+  const bar = document.getElementById('weatherWidget');
+  try {
+    // Get user location
+    const pos = await new Promise((res,rej) =>
+      navigator.geolocation.getCurrentPosition(res, rej, {timeout:8000})
+    );
+    const {latitude:lat, longitude:lon} = pos.coords;
+    // Fetch weather from Open-Meteo (100% free, no API key needed)
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&forecast_days=1`;
+    const res  = await fetch(url);
+    const data = await res.json();
+    const c    = data.current;
+    const code = c.weather_code;
+    const icon = WEATHER_ICONS[code] || '🌤️';
+    const desc = WEATHER_DESC[code] || 'Unknown';
+    const temp = Math.round(c.temperature_2m);
+    const feel = Math.round(c.apparent_temperature);
+    const wind = Math.round(c.wind_speed_10m);
+    const gust = Math.round(c.wind_gusts_10m);
+    const hum  = c.relative_humidity_2m;
+    const rain = c.precipitation;
+
+    // Weather alert for construction
+    let alertHtml = '';
+    if (wind > 25 || gust > 35) alertHtml = '<div class="weather-alert">⚠️ High winds — check roofing safety</div>';
+    if (rain > 0.1) alertHtml = '<div class="weather-alert">⚠️ Rain today — plan accordingly</div>';
+    if (temp < 32) alertHtml = '<div class="weather-alert">⚠️ Freezing temps — protect materials</div>';
+
+    bar.innerHTML = `
+      <div class="weather-icon">${icon}</div>
+      <div>
+        <div class="weather-temp">${temp}°F</div>
+        <div class="weather-desc">${desc} · Feels like ${feel}°F</div>
+        <div class="weather-loc">📍 Current Location</div>
+      </div>
+      <div class="weather-details">
+        <div class="weather-detail">💧 ${hum}% humidity</div>
+        <div class="weather-detail">💨 ${wind} mph wind</div>
+        <div class="weather-detail">🌪️ ${gust} mph gusts</div>
+        ${rain > 0 ? `<div class="weather-detail">🌧️ ${rain}" rain</div>` : ''}
+      </div>
+      ${alertHtml}`;
+  } catch(e) {
+    bar.innerHTML = '<div style="font-size:.8rem;color:var(--mid)">📍 Enable location to see weather</div>';
+  }
+}
+
+/* ══════════════════════════════════
+   SMS NOTIFICATIONS
+══════════════════════════════════ */
+let currentLang  = 'en';
+let smsHistory   = JSON.parse(localStorage.getItem('asc_sms_history') || '[]');
+
+// Twilio credentials — set these (or use your server endpoint)
+// For GitHub Pages (static site) you need a small proxy.
+// SIMPLEST: Use Twilio's free trial and set up a serverless function,
+// OR add your Railway server from the phone assistant to handle SMS too.
+// Set this to your Railway server URL once deployed:
+const SMS_SERVER = localStorage.getItem('asc_sms_server') || '';
+
+const SMS_TEMPLATES = {
+  en: {
+    update:   'Hi! This is Ali Signature Construction. Your project at {address} is {progress}% complete. Status: {status}. Mohamed will be in touch soon.',
+    schedule: 'Hi! Ali Signature Construction here. We are scheduled to work at your property on {date}. Please ensure access is available. Questions? Call (302) 257-8521.',
+    weather:  'Hi! Ali Signature Construction here. Due to today's weather conditions, work at {address} has been rescheduled. We will contact you with a new date shortly.',
+    complete: 'Great news! Ali Signature Construction has completed work at {address}. Thank you for choosing us! Please call Mohamed at (302) 257-8521 with any questions.',
+    reminder: 'Reminder from Ali Signature Construction: We have a scheduled appointment at {address} tomorrow. Please call (302) 257-8521 to confirm.',
+  },
+  es: {
+    update:   'Hola! Le escribe Ali Signature Construction. Su proyecto en {address} está {progress}% completado. Estado: {status}. Mohamed se pondrá en contacto pronto.',
+    schedule: 'Hola! Ali Signature Construction aquí. Estamos programados para trabajar en su propiedad el {date}. Asegúrese de que haya acceso disponible. ¿Preguntas? Llame al (302) 257-8521.',
+    weather:  'Hola! Ali Signature Construction aquí. Debido a las condiciones climáticas de hoy, el trabajo en {address} ha sido reprogramado. Le contactaremos con una nueva fecha.',
+    complete: 'Buenas noticias! Ali Signature Construction ha completado el trabajo en {address}. ¡Gracias por elegirnos! Llame a Mohamed al (302) 257-8521 si tiene preguntas.',
+    reminder: 'Recordatorio de Ali Signature Construction: Tenemos una cita programada en {address} mañana. Llame al (302) 257-8521 para confirmar.',
+  },
+  ar: {
+    update:   'مرحباً! هذا من شركة علي سيغنتشر للإنشاءات. مشروعكم في {address} مكتمل بنسبة {progress}%. الحالة: {status}. سيتواصل معكم محمد قريباً.',
+    schedule: 'مرحباً! شركة علي سيغنتشر للإنشاءات. لدينا موعد مجدول للعمل في عقاركم يوم {date}. يرجى التأكد من إمكانية الوصول. للاستفسار: (302) 257-8521.',
+    weather:  'مرحباً! شركة علي سيغنتشر للإنشاءات. بسبب الأحوال الجوية اليوم، تم تأجيل العمل في {address}. سنتواصل معكم بموعد جديد قريباً.',
+    complete: 'أخبار رائعة! أتمت شركة علي سيغنتشر للإنشاءات العمل في {address}. شكراً لاختياركم لنا! للاستفسار اتصل بمحمد: (302) 257-8521.',
+    reminder: 'تذكير من شركة علي سيغنتشر للإنشاءات: لدينا موعد مجدول في {address} غداً. يرجى الاتصال على (302) 257-8521 للتأكيد.',
+  }
+};
+
+window.setLang = (lang, btn) => {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  // Update textarea direction for Arabic
+  const ta = document.getElementById('smsBody');
+  ta.dir = lang === 'ar' ? 'rtl' : 'ltr';
+};
+
+window.useTemplate = type => {
+  const tmpl = SMS_TEMPLATES[currentLang][type] || SMS_TEMPLATES.en[type];
+  // Auto-fill project details if a project is open
+  let msg = tmpl
+    .replace('{address}', document.getElementById('dAddr')?.textContent || '[address]')
+    .replace('{progress}', document.getElementById('sumProgress')?.textContent || '[progress]')
+    .replace('{status}', document.getElementById('sumStatus')?.textContent || '[status]')
+    .replace('{date}', new Date(Date.now() + 86400000).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
+  document.getElementById('smsBody').value = msg;
+  document.getElementById('smsBody').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  updateCharCount();
+};
+
+window.updateCharCount = () => {
+  const len = document.getElementById('smsBody').value.length;
+  document.getElementById('charCount').textContent = len;
+  document.getElementById('charCount').style.color = len > 160 ? 'var(--red)' : 'var(--mid)';
+};
+
+window.sendSMS = async () => {
+  const to   = document.getElementById('smsTo').value.trim();
+  const body = document.getElementById('smsBody').value.trim();
+  const msg  = document.getElementById('smsMsg');
+
+  if (!to)   { msg.className='sms-msg err'; msg.textContent='Enter a phone number.'; return; }
+  if (!body) { msg.className='sms-msg err'; msg.textContent='Enter a message.'; return; }
+
+  if (!SMS_SERVER) {
+    // Show setup instructions
+    msg.className='sms-msg err';
+    msg.textContent='Set your SMS server URL in localStorage: localStorage.setItem("asc_sms_server","https://your-railway-url.railway.app")';
+    return;
+  }
+
+  const btn = document.getElementById('smsSendBtn');
+  btn.disabled = true; btn.textContent = 'Sending...';
+  msg.className='sms-msg'; msg.textContent='';
+
+  try {
+    const res = await fetch(SMS_SERVER + '/api/send-sms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to, body, language: currentLang }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      msg.className='sms-msg ok'; msg.textContent='✅ Message sent successfully!';
+      // Save to history
+      const entry = { to, body, lang: currentLang, at: new Date().toLocaleString() };
+      smsHistory.unshift(entry);
+      smsHistory = smsHistory.slice(0,20);
+      localStorage.setItem('asc_sms_history', JSON.stringify(smsHistory));
+      renderSmsHistory();
+      document.getElementById('smsBody').value = '';
+      updateCharCount();
+    } else {
+      throw new Error(data.error || 'Send failed');
+    }
+  } catch(e) {
+    msg.className='sms-msg err'; msg.textContent='Error: ' + e.message;
+  }
+  btn.disabled=false; btn.textContent='📤 Send SMS';
+};
+
+function renderSmsHistory() {
+  const hist = document.getElementById('smsHistory');
+  if (!hist) return;
+  if (!smsHistory.length) { hist.innerHTML='<div style="font-size:.8rem;color:var(--mid)">No messages sent yet.</div>'; return; }
+  hist.innerHTML = smsHistory.slice(0,5).map(s =>
+    `<div class="sms-item">
+      ${s.body.substring(0,100)}${s.body.length>100?'...':''}
+      <div class="sms-item-meta">
+        <span>📱 ${s.to}</span>
+        <span>🕐 ${s.at}</span>
+        <span class="sms-item-lang">${s.lang==='ar'?'Arabic':s.lang==='es'?'Spanish':'English'}</span>
+      </div>
+    </div>`
+  ).join('');
+}
+
+async function loadSmsContacts() {
+  // Load clients and crew into the SMS dropdown
+  const sel = document.getElementById('smsToSelect');
+  if (!sel) return;
+  try {
+    const clientSnap = await getDocs(collection(db,'clients'));
+    clientSnap.forEach(ds => {
+      const c = ds.data();
+      if (c.email) {
+        const opt = document.createElement('option');
+        // Use phone if available, otherwise show email as label
+        opt.value = c.phone || '';
+        opt.textContent = '👤 ' + (c.name||c.email) + (c.phone?' ('+c.phone+')':' (no phone on file)');
+        sel.appendChild(opt);
+      }
+    });
+    // Add a separator
+    const sep = document.createElement('option'); sep.disabled=true; sep.textContent='── Crew ──'; sel.appendChild(sep);
+    const crewSnap = await getDocs(collection(db,'crewMembers'));
+    crewSnap.forEach(ds => {
+      const c = ds.data();
+      const opt = document.createElement('option');
+      opt.value = c.phone || '';
+      opt.textContent = '👷 ' + c.name + (c.phone?' ('+c.phone+')':' (no phone on file)');
+      sel.appendChild(opt);
+    });
+  } catch(e) { console.log('SMS contacts error:', e); }
+}
+
+
+/* ══════════════════════════════════
+   AUTO SMS ON PROJECT UPDATES
+══════════════════════════════════ */
+
+const AUTO_SMS_MESSAGES = {
+  en: {
+    active:    'Hi {name}! Your project at {address} with Ali Signature Construction is now ACTIVE. Mohamed will be in touch with your schedule soon. Questions? Call (302) 257-8521.',
+    paused:    'Hi {name}! Work at {address} has been temporarily paused. Mohamed will contact you shortly to discuss next steps. Call (302) 257-8521 anytime.',
+    complete:  'Great news {name}! Your project at {address} is now COMPLETE. Thank you for choosing Ali Signature Construction! Call Mohamed at (302) 257-8521 with any questions.',
+    cancelled: 'Hi {name}, Ali Signature Construction has cancelled the project at {address}. Please call Mohamed at (302) 257-8521 to discuss.',
+    progress:  'Hi {name}! Project update for {address}: {progress}% complete. {milestone} Ali Signature Construction — (302) 257-8521.',
+  },
+  es: {
+    active:    'Hola {name}! Su proyecto en {address} con Ali Signature Construction está ahora ACTIVO. Mohamed se pondrá en contacto pronto con su cronograma. Llame al (302) 257-8521.',
+    paused:    'Hola {name}! El trabajo en {address} ha sido pausado temporalmente. Mohamed le contactará pronto. Llame al (302) 257-8521 cuando quiera.',
+    complete:  'Buenas noticias {name}! Su proyecto en {address} está COMPLETO. ¡Gracias por elegir Ali Signature Construction! Llame al (302) 257-8521.',
+    cancelled: 'Hola {name}, Ali Signature Construction ha cancelado el proyecto en {address}. Llame a Mohamed al (302) 257-8521.',
+    progress:  'Hola {name}! Actualización del proyecto en {address}: {progress}% completado. {milestone} Ali Signature Construction — (302) 257-8521.',
+  },
+  ar: {
+    active:    'مرحباً {name}! مشروعكم في {address} مع شركة علي سيغنتشر للإنشاءات أصبح نشطاً الآن. سيتواصل محمد معكم قريباً بالجدول الزمني. للاستفسار: (302) 257-8521.',
+    paused:    'مرحباً {name}! تم إيقاف العمل في {address} مؤقتاً. سيتواصل محمد معكم قريباً. يمكنكم الاتصال بـ (302) 257-8521 في أي وقت.',
+    complete:  'أخبار رائعة {name}! اكتمل مشروعكم في {address}. شكراً لاختياركم شركة علي سيغنتشر للإنشاءات! للاستفسار: (302) 257-8521.',
+    cancelled: 'مرحباً {name}، تم إلغاء مشروع {address}. يرجى الاتصال بمحمد على (302) 257-8521.',
+    progress:  'مرحباً {name}! تحديث مشروع {address}: مكتمل {progress}%. {milestone} شركة علي سيغنتشر — (302) 257-8521.',
+  }
+};
+
+const MILESTONE_MSGS = {
+  en: {
+    25:  'We are a quarter of the way through!',
+    50:  'Halfway done!',
+    75:  'Almost there — 3/4 complete!',
+    100: 'Project is 100% complete!',
+  },
+  es: {
+    25:  '¡Estamos a un cuarto del camino!',
+    50:  '¡A mitad de camino!',
+    75:  '¡Casi listos — ¾ completo!',
+    100: '¡Proyecto 100% completado!',
+  },
+  ar: {
+    25:  'اكتمل ربع المشروع!',
+    50:  'اكتمل نصف المشروع!',
+    75:  'اكتملت ثلاثة أرباع المشروع!',
+    100: 'اكتمل المشروع بالكامل!',
+  }
+};
+
+function formatSMS(template, vars) {
+  return template
+    .replace(/{name}/g,     vars.name     || 'there')
+    .replace(/{address}/g,  vars.address  || 'your property')
+    .replace(/{progress}/g, vars.progress || '0')
+    .replace(/{milestone}/g,vars.milestone|| '')
+    .replace(/{status}/g,   vars.status   || '')
+    .trim();
+}
+
+async function autoSendStatusSMS(phone, lang, status, address) {
+  const smsServer = localStorage.getItem('asc_sms_server') || '';
+  if (!smsServer || !phone) return;
+
+  const templates = AUTO_SMS_MESSAGES[lang] || AUTO_SMS_MESSAGES.en;
+  const template  = templates[status];
+  if (!template) return;
+
+  // Get client name from Firestore
+  let clientName = 'there';
+  try {
+    const cSnap = await getDocs(collection(db,'clients'));
+    cSnap.forEach(ds => {
+      if (ds.data().projectId === currentPid && ds.data().name) {
+        clientName = ds.data().name.split(' ')[0];
+      }
+    });
+  } catch {}
+
+  const body = formatSMS(template, { name: clientName, address, status });
+
+  try {
+    const res = await fetch(smsServer + '/api/send-sms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to: phone, body, language: lang }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      console.log('Auto SMS sent:', body.substring(0,60));
+      showSmsToast('✅ SMS sent to client automatically!');
+    }
+  } catch(e) { console.log('Auto SMS error:', e); }
+}
+
+async function autoSendProgressSMS(phone, lang, progress, address) {
+  const smsServer = localStorage.getItem('asc_sms_server') || '';
+  if (!smsServer || !phone) return;
+
+  // Only send at milestones: 25, 50, 75, 100
+  if (![25, 50, 75, 100].includes(progress)) return;
+
+  const templates  = AUTO_SMS_MESSAGES[lang] || AUTO_SMS_MESSAGES.en;
+  const milestones = MILESTONE_MSGS[lang]    || MILESTONE_MSGS.en;
+  const template   = templates.progress;
+  const milestone  = milestones[progress] || '';
+
+  let clientName = 'there';
+  try {
+    const cSnap = await getDocs(collection(db,'clients'));
+    cSnap.forEach(ds => {
+      if (ds.data().projectId === currentPid && ds.data().name) {
+        clientName = ds.data().name.split(' ')[0];
+      }
+    });
+  } catch {}
+
+  const body = formatSMS(template, { name:clientName, address, progress, milestone });
+
+  try {
+    const res = await fetch(smsServer + '/api/send-sms', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({ to:phone, body, language:lang }),
+    });
+    const data = await res.json();
+    if (data.success) showSmsToast('✅ Progress SMS sent to client!');
+  } catch(e) { console.log('Progress SMS error:', e); }
+}
+
+function showSmsToast(msg) {
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:.6rem 1.25rem;border-radius:8px;font-size:.84rem;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.4)';
+  toast.textContent = msg;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3500);
+}
 
 document.addEventListener('keydown',e=>{
   if (e.key==='Enter'&&document.getElementById('authScreen').style.display!=='none') doLogin();
