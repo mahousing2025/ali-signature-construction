@@ -156,4 +156,87 @@
 <script src="assets/js/main.js"></script>
 <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
 </body>
+</html>      <div class="form-card">
+        <h3>Request a Free Estimate</h3>
+
+        <div id="successMsg" style="display:none;background:rgba(100,200,120,.1);border:1px solid rgba(100,200,120,.3);border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1rem;">
+          <div style="font-size:2.5rem;margin-bottom:.5rem;">✅</div>
+          <strong style="color:#6ec87a;display:block;font-size:1.1rem;margin-bottom:.35rem;">Message Sent!</strong>
+          <span style="font-size:.9rem;color:var(--light);">We received your request and will be in touch within 24 hours.</span>
+        </div>
+        <div id="errorMsg" style="display:none;background:rgba(209,79,79,.1);border:1px solid rgba(209,79,79,.3);border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.85rem;color:#e08080;">
+          Something went wrong. Please email us at <a href="mailto:info@alisignatureconstruction.com" style="color:var(--accent);">info@alisignatureconstruction.com</a>
+        </div>
+
+        <!--
+        ════════════════════════════════════════════
+        FORMSPREE SETUP (5 min, free, no backend):
+        1. Go to https://formspree.io → Sign Up
+        2. New Form → name "Estimate Requests"
+        3. Settings → Notification Email →
+           info@alisignatureconstruction.com
+        4. Copy Form ID (e.g. xpzvwrqk)
+        5. Open assets/js/main.js → find
+           FORMSPREE_ID and replace YOUR_FORM_ID
+        ════════════════════════════════════════════
+        -->
+        <form class="form" id="contactForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="fname">Full Name *</label>
+              <input class="input" id="fname" name="name" type="text" placeholder="John Smith" required />
+            </div>
+            <div class="field">
+              <label for="fphone">Phone Number</label>
+              <input class="input" id="fphone" name="phone" type="tel" placeholder="(302) 000-0000" />
+            </div>
+          </div>
+          <div class="field">
+            <label for="femail">Email Address</label>
+            <input class="input" id="femail" name="email" type="email" placeholder="you@example.com" />
+          </div>
+          <div class="field">
+            <label for="faddress">Property Address</label>
+            <input class="input" id="faddress" name="address" type="text" placeholder="123 Main St, Wilmington, DE" />
+          </div>
+          <div class="field">
+            <label for="fservice">Type of Service</label>
+            <input class="input" id="fservice" name="service" type="text" placeholder="e.g. Roofing, Kitchen Remodel, Full Renovation" />
+          </div>
+          <div class="field">
+            <label for="fmessage">Project Details *</label>
+            <textarea class="input" id="fmessage" name="message" placeholder="Tell us about the project — scope, timeline, budget range…" required></textarea>
+          </div>
+          <div class="form-submit">
+            <button class="btn primary" type="submit" id="submitBtn">
+              <span id="submitText">Send Message</span>
+              <span id="submitSpinner" style="display:none;">Sending…</span>
+            </button>
+          </div>
+          <p class="form-note">We never share your info. Replies go to your email.</p>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <div class="footer-brand">
+        <img src="assets/img/logo.png" alt="Logo">
+        <strong>Ali Signature Construction LLC</strong>
+      </div>
+      <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
+    </div>
+    <div style="text-align:right;">
+      <small><a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a></small>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/main.js"></script>
+<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
 </html>
