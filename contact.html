@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Contact • Ali Signature Construction LLC</title>
-  <meta name="description" content="Contact Ali Signature Construction LLC for a free estimate in Delaware." />
+  <title>Services • Ali Signature Construction LLC</title>
+  <meta name="description" content="Construction services: renovations, roofing, flooring, drywall, painting, doors/windows, general contracting." />
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
@@ -18,11 +18,11 @@
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false">☰</button>
     <div class="nav-links" id="navLinks">
       <a href="index.html">Home</a>
-      <a href="services.html">Services</a>
+      <a href="services.html" class="active">Services</a>
       <a href="projects.html">Projects</a>
       <a href="team.html">Team</a>
       <a href="process.html">Process</a>
-      <a href="contact.html" class="active">Contact</a>
+      <a href="contact.html">Contact</a>
       <a href="portal.html" class="portal-link">Client Portal</a>
     </div>
     <div class="nav-cta">
@@ -34,189 +34,49 @@
 
 <header class="page-head">
   <div class="container">
-    <h1>Contact</h1>
-    <p>Send your project details and we'll respond within 24 hours. No account needed.</p>
+    <h1>Services</h1>
+    <p>High-quality construction with clear scope, clean workmanship, and professional project management. Licensed trade work is coordinated through trusted, insured partners.</p>
   </div>
 </header>
 
-<section class="section">
+<section class="services-section">
   <div class="container">
-    <div class="contact-grid">
-
-      <div>
-        <div class="contact-info-card">
-          <div class="contact-info-head">
-            <h3>Get in Touch</h3>
-            <p>Reach out any way that works for you.</p>
-          </div>
-          <div class="contact-info-body">
-            <div class="contact-item">
-              <div class="contact-icon">📍</div>
-              <div><strong>Service Area</strong><span>Delaware &amp; nearby areas</span></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">📞</div>
-              <div><strong>Phone</strong><a href="tel:3022578521">(302) 257-8521</a></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">✉️</div>
-              <div><strong>Email</strong><a href="mailto:info@alisignatureconstruction.com">info@alisignatureconstruction.com</a></div>
-            </div>
-            <div class="contact-item">
-              <div class="contact-icon">🕐</div>
-              <div><strong>Response Time</strong><span>Within 24 hours</span></div>
-            </div>
-          </div>
-        </div>
-        <div class="contact-tip">
-          💡 <strong>Tip:</strong> Include photos, measurements, and a description to get a faster, more accurate estimate.
-        </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>Full Renovations</h3>
+        <p>Whole-home remodels, structural upgrades, drywall, flooring, painting, finishing, and detailed punch list completion.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
       </div>
-
-      <div class="form-card">
-        <h3>Request a Free Estimate</h3>
-
-        <div id="successMsg" style="display:none;background:rgba(100,200,120,.1);border:1px solid rgba(100,200,120,.3);border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1rem;">
-          <div style="font-size:2.5rem;margin-bottom:.5rem;">✅</div>
-          <strong style="color:#6ec87a;display:block;font-size:1.1rem;margin-bottom:.35rem;">Message Sent!</strong>
-          <span style="font-size:.9rem;color:var(--light);">We received your request and will be in touch within 24 hours.</span>
-        </div>
-        <div id="errorMsg" style="display:none;background:rgba(209,79,79,.1);border:1px solid rgba(209,79,79,.3);border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.85rem;color:#e08080;">
-          Something went wrong. Please email us at <a href="mailto:info@alisignatureconstruction.com" style="color:var(--accent);">info@alisignatureconstruction.com</a>
-        </div>
-
-        <!--
-        ════════════════════════════════════════════
-        FORMSPREE SETUP (5 min, free, no backend):
-        1. Go to https://formspree.io → Sign Up
-        2. New Form → name "Estimate Requests"
-        3. Settings → Notification Email →
-           info@alisignatureconstruction.com
-        4. Copy Form ID (e.g. xpzvwrqk)
-        5. Open assets/js/main.js → find
-           FORMSPREE_ID and replace YOUR_FORM_ID
-        ════════════════════════════════════════════
-        -->
-        <form class="form" id="contactForm">
-          <div class="form-row">
-            <div class="field">
-              <label for="fname">Full Name *</label>
-              <input class="input" id="fname" name="name" type="text" placeholder="John Smith" required />
-            </div>
-            <div class="field">
-              <label for="fphone">Phone Number</label>
-              <input class="input" id="fphone" name="phone" type="tel" placeholder="(302) 000-0000" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="femail">Email Address</label>
-            <input class="input" id="femail" name="email" type="email" placeholder="you@example.com" />
-          </div>
-          <div class="field">
-            <label for="faddress">Property Address</label>
-            <input class="input" id="faddress" name="address" type="text" placeholder="123 Main St, Wilmington, DE" />
-          </div>
-          <div class="field">
-            <label for="fservice">Type of Service</label>
-            <input class="input" id="fservice" name="service" type="text" placeholder="e.g. Roofing, Kitchen Remodel, Full Renovation" />
-          </div>
-          <div class="field">
-            <label for="fmessage">Project Details *</label>
-            <textarea class="input" id="fmessage" name="message" placeholder="Tell us about the project — scope, timeline, budget range…" required></textarea>
-          </div>
-          <div class="form-submit">
-            <button class="btn primary" type="submit" id="submitBtn">
-              <span id="submitText">Send Message</span>
-              <span id="submitSpinner" style="display:none;">Sending…</span>
-            </button>
-          </div>
-          <p class="form-note">We never share your info. Replies go to your email.</p>
-        </form>
+      <div class="service-card">
+        <h3>Kitchen & Bathroom Remodels</h3>
+        <p>Modern finishes, tile installation, trim work, flooring, hardware installation, and full layout coordination.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
       </div>
-
-    </div>
-  </div>
-</section>
-
-<footer class="footer">
-  <div class="container footer-grid">
-    <div>
-      <div class="footer-brand">
-        <img src="assets/img/logo.png" alt="Logo">
-        <strong>Ali Signature Construction LLC</strong>
+      <div class="service-card">
+        <h3>Roofing — Repair & Replacement</h3>
+        <p>Leak repairs, flashing, shingles, full roof replacements, inspections, and clean professional installation.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
       </div>
-      <small>© <span id="year"></span> Ali Signature Construction LLC. All rights reserved.</small>
-    </div>
-    <div style="text-align:right;">
-      <small><a href="contact.html">Contact & Estimate</a> · <a href="portal.html">Client Portal</a></small>
-    </div>
-  </div>
-</footer>
-
-<script src="assets/js/main.js"></script>
-<script>document.getElementById("year").textContent = new Date().getFullYear();</script>
-</body>
-</html>      <div class="form-card">
-        <h3>Request a Free Estimate</h3>
-
-        <div id="successMsg" style="display:none;background:rgba(100,200,120,.1);border:1px solid rgba(100,200,120,.3);border-radius:8px;padding:1.5rem;text-align:center;margin-bottom:1rem;">
-          <div style="font-size:2.5rem;margin-bottom:.5rem;">✅</div>
-          <strong style="color:#6ec87a;display:block;font-size:1.1rem;margin-bottom:.35rem;">Message Sent!</strong>
-          <span style="font-size:.9rem;color:var(--light);">We received your request and will be in touch within 24 hours.</span>
-        </div>
-        <div id="errorMsg" style="display:none;background:rgba(209,79,79,.1);border:1px solid rgba(209,79,79,.3);border-radius:8px;padding:1rem;margin-bottom:1rem;font-size:.85rem;color:#e08080;">
-          Something went wrong. Please email us at <a href="mailto:info@alisignatureconstruction.com" style="color:var(--accent);">info@alisignatureconstruction.com</a>
-        </div>
-
-        <!--
-        ════════════════════════════════════════════
-        FORMSPREE SETUP (5 min, free, no backend):
-        1. Go to https://formspree.io → Sign Up
-        2. New Form → name "Estimate Requests"
-        3. Settings → Notification Email →
-           info@alisignatureconstruction.com
-        4. Copy Form ID (e.g. xpzvwrqk)
-        5. Open assets/js/main.js → find
-           FORMSPREE_ID and replace YOUR_FORM_ID
-        ════════════════════════════════════════════
-        -->
-        <form class="form" id="contactForm">
-          <div class="form-row">
-            <div class="field">
-              <label for="fname">Full Name *</label>
-              <input class="input" id="fname" name="name" type="text" placeholder="John Smith" required />
-            </div>
-            <div class="field">
-              <label for="fphone">Phone Number</label>
-              <input class="input" id="fphone" name="phone" type="tel" placeholder="(302) 000-0000" />
-            </div>
-          </div>
-          <div class="field">
-            <label for="femail">Email Address</label>
-            <input class="input" id="femail" name="email" type="email" placeholder="you@example.com" />
-          </div>
-          <div class="field">
-            <label for="faddress">Property Address</label>
-            <input class="input" id="faddress" name="address" type="text" placeholder="123 Main St, Wilmington, DE" />
-          </div>
-          <div class="field">
-            <label for="fservice">Type of Service</label>
-            <input class="input" id="fservice" name="service" type="text" placeholder="e.g. Roofing, Kitchen Remodel, Full Renovation" />
-          </div>
-          <div class="field">
-            <label for="fmessage">Project Details *</label>
-            <textarea class="input" id="fmessage" name="message" placeholder="Tell us about the project — scope, timeline, budget range…" required></textarea>
-          </div>
-          <div class="form-submit">
-            <button class="btn primary" type="submit" id="submitBtn">
-              <span id="submitText">Send Message</span>
-              <span id="submitSpinner" style="display:none;">Sending…</span>
-            </button>
-          </div>
-          <p class="form-note">We never share your info. Replies go to your email.</p>
-        </form>
+      <div class="service-card">
+        <h3>Flooring</h3>
+        <p>Tile, vinyl, hardwood installation, subfloor preparation, leveling, transitions, and trim coordination.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
       </div>
-
+      <div class="service-card">
+        <h3>Drywall & Painting</h3>
+        <p>Hanging, taping, sanding, texture matching, premium finishes, and full interior repaints.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
+      </div>
+      <div class="service-card">
+        <h3>Doors & Windows</h3>
+        <p>Energy-efficient installations with proper sealing, alignment, trim finishing, and hardware setup.</p>
+        <a href="contact.html" class="card-link">Get Estimate →</a>
+      </div>
+      <div class="service-card highlight">
+        <h3>General Contracting & Project Management</h3>
+        <p>Clear process from estimate to final walkthrough. We coordinate licensed HVAC, plumbing, and electrical trades so you don't have to.</p>
+        <a href="contact.html" class="card-link">Request a Free Estimate →</a>
+      </div>
     </div>
   </div>
 </section>
