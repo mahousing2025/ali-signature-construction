@@ -8,7 +8,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--black:#0a0a0a;--dark:#111;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;--muted:#3a3a3a;--mid:#6b6b6b;--light:#b0b0b0;--white:#f4f2ee;--accent:#c8a96e;--accent2:#e8c887;--green:#6ec87a;--red:#d14f4f;--blue:#5b9bd5}
+    :root{--black:#0a0a0a;--dark:#111;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;--muted:#3a3a3a;--mid:#6b6b6b;--light:#b0b0b0;--white:#f4f2ee;--accent:#c8a96e;--accent2:#e8c887;--green:#6ec87a;--red:#d14f4f;--blue:#5b9bd5;--orange:#e8944a}
     html,body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
     input,select,textarea,button{font-family:inherit}
     img{display:block;max-width:100%}
@@ -31,6 +31,7 @@
     .auth-btn:hover{background:var(--accent2)}
     .auth-btn:disabled{opacity:.5;cursor:not-allowed}
     .auth-err{font-size:.82rem;color:#e08080;text-align:center;margin-top:.75rem;min-height:1.1rem}
+    .auth-ok{font-size:.82rem;color:var(--green);text-align:center;margin-top:.75rem}
     .info-box{background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.2);border-radius:8px;padding:1rem 1.1rem;font-size:.82rem;color:var(--light);line-height:1.75;margin-bottom:1rem}
     .info-box strong{color:var(--accent)}
 
@@ -57,6 +58,36 @@
     .psection{display:none}.psection.active{display:block}
     .section-title{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.04em;margin-bottom:1.5rem}
 
+    /* WEATHER */
+    .weather-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+    .weather-temp{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:.02em;line-height:1}
+    .weather-desc{font-size:.82rem;color:var(--light);margin-top:.1rem}
+    .weather-detail{font-size:.76rem;color:var(--mid)}
+    .weather-alert{background:rgba(232,148,74,.1);border:1px solid rgba(232,148,74,.3);border-radius:6px;padding:.4rem .8rem;font-size:.76rem;color:var(--orange);margin-left:auto}
+
+    /* SMS PANEL */
+    .sms-panel{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
+    .sms-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.9rem;display:flex;align-items:center;gap:.5rem}
+    .sms-label::before{content:'';display:block;width:3px;height:13px;background:var(--accent);border-radius:2px}
+    .lang-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.85rem}
+    .lang-btn{background:var(--surface);border:1px solid var(--border);color:var(--mid);font-size:.72rem;font-weight:600;padding:.28rem .75rem;border-radius:99px;cursor:pointer;transition:all .15s}
+    .lang-btn.active{background:var(--accent);border-color:var(--accent);color:var(--black)}
+    .sms-row{display:flex;gap:.6rem;margin-bottom:.65rem;flex-wrap:wrap}
+    .sms-input{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.55rem .85rem;flex:1;min-width:160px;transition:border-color .2s}
+    .sms-input:focus{outline:none;border-color:var(--accent)}
+    .sms-select{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.82rem;padding:.55rem .75rem;flex:1;min-width:160px}
+    .sms-textarea{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.62rem .9rem;width:100%;min-height:80px;resize:vertical;transition:border-color .2s;margin-bottom:.4rem}
+    .sms-textarea:focus{outline:none;border-color:var(--accent)}
+    .tmpl-row{display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.6rem}
+    .tmpl-btn{background:var(--surface);border:1px solid var(--border);color:var(--light);font-size:.72rem;padding:.3rem .75rem;border-radius:5px;cursor:pointer;transition:all .15s}
+    .tmpl-btn:hover{border-color:var(--accent);color:var(--accent)}
+    .sms-send{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.6rem 1.3rem;cursor:pointer;transition:background .2s}
+    .sms-send:hover{background:var(--accent2)}
+    .sms-send:disabled{opacity:.5;cursor:not-allowed}
+    .sms-char{font-size:.7rem;color:var(--mid);text-align:right;margin-bottom:.5rem}
+    .sms-hist-item{background:var(--surface);border-radius:6px;padding:.5rem .8rem;margin-bottom:.35rem;font-size:.8rem;color:var(--light)}
+    .sms-hist-meta{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+
     /* PANELS */
     .panel{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.6rem;margin-bottom:1.25rem}
     .panel-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
@@ -73,7 +104,7 @@
     .btn-p:hover{background:var(--accent2)}
     .btn-p:disabled{opacity:.5;cursor:not-allowed}
 
-    /* PROJECT CARDS */
+    /* PROJECT LIST */
     .proj-card{background:var(--dark);border:1px solid var(--border);border-radius:10px;margin-bottom:.65rem;transition:border-color .2s}
     .proj-card:hover{border-color:var(--muted)}
     .proj-inner{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem}
@@ -109,7 +140,6 @@
     .pbar-wrap{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.5rem;margin:1.25rem 0}
     .pbar-track{background:var(--muted);border-radius:99px;height:8px;overflow:hidden;margin:.5rem 0 .35rem}
     .pbar-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px;transition:width .6s ease}
-    .pbar-lbl{font-size:.78rem;color:var(--mid)}
     .dtabs{display:flex;gap:.2rem;border-bottom:1px solid var(--border);margin-bottom:1.4rem;flex-wrap:wrap}
     .dtab{background:none;border:none;border-bottom:2px solid transparent;color:var(--mid);font-size:.84rem;font-weight:500;padding:.55rem 1.05rem;cursor:pointer;transition:all .15s;margin-bottom:-1px}
     .dtab.active,.dtab:hover{color:var(--white)}
@@ -127,7 +157,6 @@
     .cl-item.done .cl-box{background:var(--green);border-color:var(--green)}
     .cl-check{display:none;color:#000;font-size:.8rem;font-weight:900}
     .cl-item.done .cl-check{display:block}
-    .cl-text{flex:1}
     .cl-name{font-size:.9rem;font-weight:600;color:var(--white)}
     .cl-item.done .cl-name{color:var(--green)}
     .cl-sub{font-size:.75rem;color:var(--mid);margin-top:.1rem}
@@ -138,7 +167,6 @@
     .cl-client-cat-title{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);padding-bottom:.4rem;border-bottom:1px solid var(--border);margin-bottom:.6rem}
     .cl-client-item{display:flex;align-items:flex-start;gap:.75rem;padding:.72rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;margin-bottom:.35rem}
     .cl-client-item.done{border-color:rgba(110,200,122,.35);background:rgba(110,200,122,.05)}
-    .cl-client-icon{font-size:.95rem;flex-shrink:0;margin-top:.05rem}
     .cl-client-name{font-size:.88rem;font-weight:600;color:var(--light)}
     .cl-client-item.done .cl-client-name{color:var(--green)}
     .cl-client-note{font-size:.76rem;color:var(--mid);margin-top:.12rem;font-style:italic}
@@ -159,12 +187,10 @@
     /* PHOTOS */
     .photo-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:.75rem;margin-top:.75rem}
     .photo-item{position:relative;border-radius:8px;overflow:hidden;background:var(--card);border:1px solid var(--border);aspect-ratio:4/3}
-    .photo-item img{width:100%;height:100%;object-fit:cover;cursor:zoom-in;transition:transform .3s}
-    .photo-item:hover img{transform:scale(1.04)}
     .pbadge{position:absolute;top:6px;left:6px;font-size:.62rem;font-weight:700;text-transform:uppercase;padding:.18rem .55rem;border-radius:99px;z-index:2}
     .pbadge.before{background:rgba(200,169,110,.92);color:var(--black)}
     .pbadge.after{background:rgba(110,200,122,.92);color:var(--black)}
-    .del-photo{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.72);border:none;color:#fff;font-size:.62rem;width:22px;height:22px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .15s;z-index:3}
+    .del-photo{position:absolute;top:5px;right:5px;background:rgba(0,0,0,.72);border:none;color:#fff;font-size:.62rem;width:22px;height:22px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;z-index:3}
     .del-photo:hover{background:var(--red)}
     #photoOverlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:999;align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out}
     #photoOverlayImg{max-width:90vw;max-height:90vh;border-radius:8px;object-fit:contain}
@@ -179,8 +205,6 @@
     .cp-assigned{background:rgba(110,200,122,.15);color:var(--green);border:1px solid rgba(110,200,122,.3)}
     .client-actions{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
     .client-actions select{background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:.78rem;padding:.3rem .6rem}
-
-    /* DANGER */
     .danger-zone{border:1px solid rgba(209,79,79,.3);border-radius:10px;padding:1.2rem 1.5rem;margin-top:1rem}
     .danger-zone h4{font-size:.72rem;font-weight:600;text-transform:uppercase;color:var(--red);margin-bottom:.7rem}
     .btn-danger{background:none;border:1px solid var(--red);color:var(--red);font-size:.78rem;font-weight:600;text-transform:uppercase;padding:.45rem 1.1rem;border-radius:5px;cursor:pointer;transition:all .15s}
@@ -192,46 +216,6 @@
     @keyframes spin{to{transform:rotate(360deg)}}
     .msg-ok{font-size:.82rem;color:var(--green);margin-top:.5rem}
     .msg-err{font-size:.82rem;color:#e08080;margin-top:.5rem}
-
-
-    /* WEATHER WIDGET */
-    .weather-bar{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:.75rem 1.1rem;margin-bottom:1.25rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
-    .weather-icon{font-size:2rem;flex-shrink:0}
-    .weather-temp{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--accent);letter-spacing:.02em;line-height:1}
-    .weather-desc{font-size:.82rem;color:var(--light);margin-top:.1rem;text-transform:capitalize}
-    .weather-details{display:flex;gap:1rem;flex-wrap:wrap;margin-left:auto}
-    .weather-detail{font-size:.76rem;color:var(--mid);display:flex;align-items:center;gap:.3rem}
-    .weather-loc{font-size:.72rem;color:var(--mid);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
-    .weather-alert{background:rgba(232,148,74,.1);border:1px solid rgba(232,148,74,.3);border-radius:6px;padding:.4rem .8rem;font-size:.76rem;color:var(--orange);margin-left:auto}
-
-    /* SMS NOTIFICATION */
-    .sms-panel{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.5rem;margin-bottom:1.25rem}
-    .sms-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:.5rem}
-    .sms-title{font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);display:flex;align-items:center;gap:.5rem}
-    .sms-title::before{content:'';display:block;width:3px;height:13px;background:var(--accent);border-radius:2px}
-    .sms-lang-row{display:flex;gap:.4rem;flex-wrap:wrap}
-    .lang-btn{background:var(--surface);border:1px solid var(--border);color:var(--mid);font-size:.72rem;font-weight:600;padding:.28rem .75rem;border-radius:99px;cursor:pointer;transition:all .15s}
-    .lang-btn.active{background:var(--accent);border-color:var(--accent);color:var(--black)}
-    .sms-compose{display:flex;flex-direction:column;gap:.65rem}
-    .sms-to-row{display:flex;gap:.6rem;align-items:flex-end;flex-wrap:wrap}
-    .sms-phone{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.55rem .85rem;flex:1;min-width:160px;transition:border-color .2s}
-    .sms-phone:focus{outline:none;border-color:var(--accent)}
-    .sms-textarea{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.62rem .9rem;width:100%;min-height:90px;resize:vertical;transition:border-color .2s}
-    .sms-textarea:focus{outline:none;border-color:var(--accent)}
-    .sms-char-count{font-size:.72rem;color:var(--mid);text-align:right;margin-top:-.4rem}
-    .sms-actions{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-    .sms-send-btn{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;padding:.6rem 1.3rem;cursor:pointer;transition:background .2s}
-    .sms-send-btn:hover{background:var(--accent2)}
-    .sms-send-btn:disabled{opacity:.5;cursor:not-allowed}
-    .sms-template-btn{background:var(--surface);border:1px solid var(--border);color:var(--light);font-size:.74rem;padding:.35rem .8rem;border-radius:5px;cursor:pointer;transition:all .15s}
-    .sms-template-btn:hover{border-color:var(--accent);color:var(--accent)}
-    .sms-msg{font-size:.8rem;margin-top:.35rem;min-height:1rem}
-    .sms-msg.ok{color:var(--green)}.sms-msg.err{color:#e08080}
-    .sms-history{margin-top:1rem;border-top:1px solid var(--border);padding-top:.85rem}
-    .sms-history-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.6rem}
-    .sms-item{background:var(--surface);border-radius:6px;padding:.55rem .8rem;margin-bottom:.4rem;font-size:.8rem;color:var(--light)}
-    .sms-item-meta{font-size:.7rem;color:var(--mid);margin-top:.2rem;display:flex;gap:.75rem}
-    .sms-item-lang{font-size:.65rem;font-weight:600;text-transform:uppercase;background:rgba(200,169,110,.1);color:var(--accent);padding:.1rem .45rem;border-radius:99px}
 
     @media(max-width:680px){
       .grid2,.grid3{grid-template-columns:1fr}
@@ -263,7 +247,7 @@
       <p style="text-align:center;margin-top:.75rem"><a href="#" onclick="doReset()" style="font-size:.78rem;color:var(--accent)">Forgot password?</a></p>
     </div>
     <div id="signupForm" style="display:none">
-      <div class="info-box"><strong>New clients:</strong> Create your account. We will link your project and you will have full access shortly.</div>
+      <div class="info-box"><strong>New clients:</strong> Create your account below. Once registered we will link your project and you will have full access.</div>
       <div class="lfield"><label>Full Name</label><input type="text" id="signupName" placeholder="John Smith" /></div>
       <div class="lfield"><label>Email</label><input type="email" id="signupEmail" placeholder="you@email.com" /></div>
       <div class="lfield"><label>Password (min 6 chars)</label><input type="password" id="signupPass" placeholder="••••••••" /></div>
@@ -301,63 +285,51 @@
   </div>
 
   <div class="pbody">
-    
-    <!-- WEATHER BAR (admin + crew see this) -->
+
+    <!-- WEATHER (everyone sees this) -->
     <div id="weatherBar" style="display:none">
       <div class="weather-bar" id="weatherWidget">
         <div style="font-size:.82rem;color:var(--mid)">Loading weather...</div>
       </div>
     </div>
 
-    <!-- SMS NOTIFICATION PANEL (admin only) -->
+    <!-- SMS PANEL (admin only) -->
     <div id="smsPanel" style="display:none">
       <div class="sms-panel">
-        <div class="sms-header">
-          <div class="sms-title">Send SMS Notification</div>
-          <div class="sms-lang-row">
-            <button class="lang-btn active" onclick="setLang('en',this)">🇺🇸 English</button>
-            <button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Spanish</button>
-            <button class="lang-btn" onclick="setLang('ar',this)">🇸🇦 Arabic</button>
-          </div>
+        <div class="sms-label">Send SMS Notification</div>
+        <div class="lang-row">
+          <button class="lang-btn active" onclick="setLang('en',this)">🇺🇸 English</button>
+          <button class="lang-btn" onclick="setLang('es',this)">🇪🇸 Spanish</button>
+          <button class="lang-btn" onclick="setLang('ar',this)">🇸🇦 Arabic</button>
         </div>
-        <div class="sms-compose">
-          <div class="sms-to-row">
-            <div style="flex:1;min-width:160px">
-              <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem">Send To</div>
-              <input class="sms-phone" type="tel" id="smsTo" placeholder="+1 (302) 000-0000" />
-            </div>
-            <div style="flex:1;min-width:160px">
-              <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem">Or Select</div>
-              <select class="sms-phone" id="smsToSelect" onchange="document.getElementById('smsTo').value=this.value">
-                <option value="">Pick client or crew...</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            <div style="display:flex;gap:.4rem;flex-wrap:wrap;margin-bottom:.5rem">
-              <button class="sms-template-btn" onclick="useTemplate('update')">📋 Project Update</button>
-              <button class="sms-template-btn" onclick="useTemplate('schedule')">📅 Schedule</button>
-              <button class="sms-template-btn" onclick="useTemplate('weather')">🌤️ Weather Delay</button>
-              <button class="sms-template-btn" onclick="useTemplate('complete')">✅ Job Complete</button>
-              <button class="sms-template-btn" onclick="useTemplate('reminder')">🔔 Reminder</button>
-            </div>
-            <textarea class="sms-textarea" id="smsBody" placeholder="Type your message..." oninput="updateCharCount()"></textarea>
-            <div class="sms-char-count"><span id="charCount">0</span> / 160 characters</div>
-          </div>
-          <div class="sms-actions">
-            <button class="sms-send-btn" id="smsSendBtn" onclick="sendSMS()">📤 Send SMS</button>
-            <span style="font-size:.76rem;color:var(--mid)">Powered by Twilio • ~$0.01/message</span>
-          </div>
-          <div class="sms-msg" id="smsMsg"></div>
+        <div class="sms-row">
+          <input class="sms-input" type="tel" id="smsTo" placeholder="+1 (302) 000-0000" />
+          <select class="sms-select" id="smsToSelect" onchange="document.getElementById('smsTo').value=this.value">
+            <option value="">Pick contact...</option>
+          </select>
         </div>
-        <div class="sms-history">
-          <div class="sms-history-label">Recent Messages Sent</div>
+        <div class="tmpl-row">
+          <button class="tmpl-btn" onclick="useTemplate('update')">📋 Update</button>
+          <button class="tmpl-btn" onclick="useTemplate('schedule')">📅 Schedule</button>
+          <button class="tmpl-btn" onclick="useTemplate('weather')">🌤 Weather Delay</button>
+          <button class="tmpl-btn" onclick="useTemplate('complete')">✅ Complete</button>
+          <button class="tmpl-btn" onclick="useTemplate('reminder')">🔔 Reminder</button>
+        </div>
+        <textarea class="sms-textarea" id="smsBody" placeholder="Type your message..." oninput="updateCharCount()"></textarea>
+        <div class="sms-char"><span id="charCount">0</span>/160</div>
+        <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+          <button class="sms-send" id="smsSendBtn" onclick="sendSMS()">📤 Send SMS</button>
+          <span style="font-size:.74rem;color:var(--mid)">~$0.01/message via Twilio</span>
+        </div>
+        <div id="smsMsg" style="font-size:.8rem;margin-top:.4rem;min-height:1rem"></div>
+        <div style="margin-top:.85rem;border-top:1px solid var(--border);padding-top:.75rem">
+          <div style="font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.5rem">Recent Messages</div>
           <div id="smsHistory"></div>
         </div>
       </div>
     </div>
 
-    <!-- PROJECTS -->
+    <!-- PROJECTS SECTION -->
     <div class="psection active" id="section-projects">
       <div id="listView">
         <div id="createArea" style="display:none">
@@ -369,8 +341,8 @@
               <div class="fg"><label>Contract Value ($)</label><input type="number" id="newContract" placeholder="0.00" min="0" step="0.01" /></div>
             </div>
             <div class="grid2" style="margin-bottom:.8rem">
-              <div class="fg"><label>Client Phone Number (for SMS updates)</label><input type="tel" id="newPhone" placeholder="+1 (302) 000-0000" /></div>
-              <div class="fg"><label>Client Language Preference</label>
+              <div class="fg"><label>Client Phone (for auto SMS)</label><input type="tel" id="newPhone" placeholder="+1 (302) 000-0000" /></div>
+              <div class="fg"><label>Client Language</label>
                 <select id="newLang">
                   <option value="en">🇺🇸 English</option>
                   <option value="es">🇪🇸 Spanish</option>
@@ -387,6 +359,7 @@
         <div id="projectList"></div>
       </div>
 
+      <!-- DETAIL VIEW -->
       <div id="detailView">
         <button class="back-btn" onclick="backToList()">Back to Projects</button>
         <div class="detail-title" id="dName"></div>
@@ -404,7 +377,7 @@
             <span id="pbarLbl" style="font-size:.84rem;color:var(--accent);font-weight:600"></span>
           </div>
           <div class="pbar-track"><div class="pbar-fill" id="pbarFill" style="width:0%"></div></div>
-          <div class="pbar-lbl" id="pbarSub"></div>
+          <div style="font-size:.78rem;color:var(--mid)" id="pbarSub"></div>
         </div>
 
         <!-- ADMIN TABS -->
@@ -418,7 +391,7 @@
           <div class="dtab-panel active" id="apanel-progress">
             <div class="panel">
               <div class="panel-label">Construction Checklist</div>
-              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.25rem">Check off each item. Add notes for the client. Progress updates automatically.</p>
+              <p style="font-size:.82rem;color:var(--mid);margin-bottom:1.25rem">Check off each item. Add notes for the client. Progress and SMS updates send automatically.</p>
               <div id="adminChecklistBody"></div>
               <div style="margin-top:1.25rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap">
                 <button class="btn-p" style="margin-top:0" id="saveClBtn" onclick="saveChecklist()">Save Checklist</button>
@@ -441,7 +414,7 @@
                     <option value="cancelled">Cancelled</option>
                   </select>
                 </div>
-                <div class="fg"><label>Client Phone (SMS updates)</label><input type="tel" id="ePhone" placeholder="+1 (302) 000-0000" /></div>
+                <div class="fg"><label>Client Phone (auto SMS)</label><input type="tel" id="ePhone" placeholder="+1 (302) 000-0000" /></div>
                 <div class="fg"><label>Client Language</label>
                   <select id="eLang">
                     <option value="en">🇺🇸 English</option>
@@ -480,12 +453,9 @@
             <div class="panel">
               <div class="panel-label">Upload Photo or PDF</div>
               <div style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
-                <div class="fg"><label>Type</label>
-                  <select id="photoType"><option value="before">Before</option><option value="after">After</option></select>
-                </div>
-                <div class="fg" style="flex:1;min-width:200px"><label>Select File (images up to 1.5MB, PDFs up to 3MB)</label>
-                  <input type="file" id="photoFile" accept="image/*,.pdf" style="background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--light);font-size:.85rem;padding:.55rem .9rem;width:100%" />
-                </div>
+                <div class="fg"><label>Type</label><select id="photoType"><option value="before">Before</option><option value="after">After</option></select></div>
+                <div class="fg" style="flex:1;min-width:200px"><label>Select File (images max 1.5MB, PDFs max 3MB)</label>
+                  <input type="file" id="photoFile" accept="image/*,.pdf" style="background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--light);font-size:.85rem;padding:.55rem .9rem;width:100%" /></div>
                 <button class="btn-p" id="uploadBtn" onclick="uploadPhoto()" style="margin-top:0">Upload</button>
               </div>
               <div id="uploadMsg" style="font-size:.8rem;color:var(--mid);margin-top:.5rem"></div>
@@ -506,38 +476,37 @@
             <div id="clientExpList"></div>
             <div class="exp-total">Total: <strong id="clientExpTotal">$0.00</strong></div>
           </div>
-          <div class="dtab-panel" id="cpanel-photos">
-            <div class="photo-grid" id="clientPhotoGrid"></div>
-          </div>
+          <div class="dtab-panel" id="cpanel-photos"><div class="photo-grid" id="clientPhotoGrid"></div></div>
         </div>
       </div>
     </div>
 
-    <!-- CLIENTS -->
+    <!-- CLIENTS SECTION -->
     <div class="psection" id="section-clients">
       <h2 class="section-title">Client Accounts</h2>
       <div class="info-box" style="margin-bottom:1.25rem">
-        <strong>How it works:</strong> Client creates their own account on the portal. They appear below as Pending. Pick their project and click Assign. They instantly see their full project.<br><br>
+        <strong>How it works:</strong> Client creates their account on the portal. They appear below as Pending. Pick their project and click Assign. They instantly see their project.<br><br>
         <strong>Portal URL:</strong> <code>alisignatureconstruction.com/portal.html</code>
       </div>
       <div class="panel"><div class="panel-label">Pending &amp; Active Clients</div><div id="clientList"></div></div>
     </div>
+
   </div>
 </div>
 
 <div id="photoOverlay" onclick="closeOverlay()"><img id="photoOverlayImg" src="" alt="" /></div>
 
 <script type="module">
-import { initializeApp }                       from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp }                      from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword,
          createUserWithEmailAndPassword,
          sendPasswordResetEmail,
-         signOut, onAuthStateChanged }         from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+         signOut, onAuthStateChanged }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import { getFirestore, collection, doc,
          addDoc, updateDoc, deleteDoc,
-         getDocs, getDoc, serverTimestamp }    from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+         getDocs, getDoc, serverTimestamp }   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const firebaseConfig = {
+const FB = {
   apiKey:            "AIzaSyD5TrqFQQo-FyIQ8u7CZf01zgXokS5W130",
   authDomain:        "ali-signature-construction.firebaseapp.com",
   projectId:         "ali-signature-construction",
@@ -545,912 +514,647 @@ const firebaseConfig = {
   messagingSenderId: "1042515859712",
   appId:             "1:1042515859712:web:9178f6fe04c46d08357be5",
 };
-const ADMIN_EMAIL = "info@alisignatureconstruction.com";
-
-const app  = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db   = getFirestore(app);
-
-// Verify Firebase is configured
-if (!firebaseConfig.apiKey || firebaseConfig.apiKey === 'YOUR_API_KEY') {
-  document.getElementById('loginErr').textContent = 'Firebase not configured. Contact support.';
-}
+const ADMIN = "info@alisignatureconstruction.com";
+const app   = initializeApp(FB);
+const auth  = getAuth(app);
+const db    = getFirestore(app);
 
 let currentUser = null;
 let isAdmin     = false;
 let currentPid  = null;
 let checklistData = {};
+let currentLang = "en";
+let smsHistory  = JSON.parse(localStorage.getItem("asc_sms_hist") || "[]");
 
-/* AUTH STATE */
+/* ── SMS TEMPLATES (all double-quoted, no apostrophes) ── */
+const TMPLS = {
+  en: {
+    update:   "Hi! This is Ali Signature Construction. Your project at {address} is {pct}% complete. Status: {status}. Mohamed will be in touch soon. Call (302) 257-8521.",
+    schedule: "Hi! Ali Signature Construction here. We are scheduled to work at your property on {date}. Please ensure access is available. Questions? Call (302) 257-8521.",
+    weather:  "Hi! Ali Signature Construction here. Due to weather conditions today, work at {address} has been rescheduled. We will contact you with a new date. Call (302) 257-8521.",
+    complete: "Great news! Ali Signature Construction has completed work at {address}. Thank you for choosing us! Call Mohamed at (302) 257-8521 with any questions.",
+    reminder: "Reminder from Ali Signature Construction: We have a scheduled appointment at {address} tomorrow. Please call (302) 257-8521 to confirm.",
+  },
+  es: {
+    update:   "Hola! Le escribe Ali Signature Construction. Su proyecto en {address} esta {pct}% completado. Estado: {status}. Mohamed se pondra en contacto pronto. Llame al (302) 257-8521.",
+    schedule: "Hola! Ali Signature Construction aqui. Estamos programados para trabajar en su propiedad el {date}. Asegurese de que haya acceso. Preguntas? Llame al (302) 257-8521.",
+    weather:  "Hola! Ali Signature Construction. Debido al clima de hoy, el trabajo en {address} ha sido reprogramado. Le contactaremos con nueva fecha. (302) 257-8521.",
+    complete: "Buenas noticias! Su proyecto en {address} esta COMPLETO. Gracias por elegir Ali Signature Construction! Llame al (302) 257-8521.",
+    reminder: "Recordatorio de Ali Signature Construction: Tenemos cita en {address} manana. Llame al (302) 257-8521 para confirmar.",
+  },
+  ar: {
+    update:   "\u0645\u0631\u062d\u0628\u0627\u064b! \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address} \u0645\u0643\u062a\u0645\u0644 {pct}%. \u0633\u064a\u062a\u0648\u0627\u0635\u0644 \u0645\u062d\u0645\u062f \u0645\u0639\u0643\u0645 \u0642\u0631\u064a\u0628\u0627\u064b. (302) 257-8521.",
+    schedule: "\u0645\u0631\u062d\u0628\u0627\u064b! \u0644\u062f\u064a\u0646\u0627 \u0645\u0648\u0639\u062f \u0644\u0644\u0639\u0645\u0644 \u0641\u064a \u0639\u0642\u0627\u0631\u0643\u0645 \u064a\u0648\u0645 {date}. \u064a\u0631\u062c\u0649 \u0636\u0645\u0627\u0646 \u0625\u0645\u0643\u0627\u0646\u064a\u0629 \u0627\u0644\u0648\u0635\u0648\u0644. (302) 257-8521.",
+    weather:  "\u0645\u0631\u062d\u0628\u0627\u064b! \u0628\u0633\u0628\u0628 \u0627\u0644\u0623\u062d\u0648\u0627\u0644 \u0627\u0644\u062c\u0648\u064a\u0629\u060c \u062a\u0645 \u062a\u0623\u062c\u064a\u0644 \u0627\u0644\u0639\u0645\u0644 \u0641\u064a {address}. \u0633\u0646\u062a\u0648\u0627\u0635\u0644 \u0645\u0639\u0643\u0645 \u0628\u0645\u0648\u0639\u062f \u062c\u062f\u064a\u062f.",
+    complete: "\u0623\u062e\u0628\u0627\u0631 \u0631\u0627\u0626\u0639\u0629! \u0627\u0643\u062a\u0645\u0644 \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address}. \u0634\u0643\u0631\u0627\u064b \u0644\u0627\u062e\u062a\u064a\u0627\u0631\u0643\u0645 \u0634\u0631\u0643\u0629 \u0639\u0644\u064a \u0633\u064a\u063a\u0646\u062a\u0634\u0631! (302) 257-8521.",
+    reminder: "\u062a\u0630\u0643\u064a\u0631: \u0644\u062f\u064a\u0646\u0627 \u0645\u0648\u0639\u062f \u0641\u064a {address} \u063a\u062f\u0627\u064b. \u0627\u062a\u0635\u0644 \u0639\u0644\u0649 (302) 257-8521 \u0644\u0644\u062a\u0623\u0643\u064a\u062f.",
+  }
+};
+const AUTO_SMS = {
+  en: {
+    active:    "Hi {name}! Your project at {address} with Ali Signature Construction is now ACTIVE. Mohamed will contact you soon with your schedule. Call (302) 257-8521.",
+    paused:    "Hi {name}! Work at {address} has been temporarily paused. Mohamed will contact you shortly to discuss next steps. Call (302) 257-8521 anytime.",
+    complete:  "Great news {name}! Your project at {address} is COMPLETE. Thank you for choosing Ali Signature Construction! Call Mohamed at (302) 257-8521 with any questions.",
+    cancelled: "Hi {name}, your project at {address} has been cancelled. Please call Mohamed at (302) 257-8521 to discuss.",
+    p25:       "Hi {name}! Project update for {address}: 25% complete. We are a quarter of the way there! Ali Signature Construction (302) 257-8521.",
+    p50:       "Hi {name}! Project update for {address}: 50% complete. Halfway done! Ali Signature Construction (302) 257-8521.",
+    p75:       "Hi {name}! Project update for {address}: 75% complete. Almost there! Ali Signature Construction (302) 257-8521.",
+    p100:      "Great news {name}! Your project at {address} is 100% complete! Ali Signature Construction (302) 257-8521.",
+  },
+  es: {
+    active:    "Hola {name}! Su proyecto en {address} esta ahora ACTIVO. Mohamed se pondra en contacto pronto. Llame al (302) 257-8521.",
+    paused:    "Hola {name}! El trabajo en {address} ha sido pausado temporalmente. Mohamed le contactara pronto. Llame al (302) 257-8521.",
+    complete:  "Buenas noticias {name}! Su proyecto en {address} esta COMPLETO. Gracias por elegirnos! Llame al (302) 257-8521.",
+    cancelled: "Hola {name}, su proyecto en {address} ha sido cancelado. Llame a Mohamed al (302) 257-8521.",
+    p25:       "Hola {name}! Actualizacion del proyecto en {address}: 25% completado. Ali Signature Construction (302) 257-8521.",
+    p50:       "Hola {name}! Actualizacion del proyecto en {address}: 50% completado. A mitad de camino! (302) 257-8521.",
+    p75:       "Hola {name}! Actualizacion del proyecto en {address}: 75% completado. Casi listos! (302) 257-8521.",
+    p100:      "Buenas noticias {name}! Su proyecto en {address} esta 100% completo! Ali Signature Construction (302) 257-8521.",
+  },
+  ar: {
+    active:    "\u0645\u0631\u062d\u0628\u0627\u064b {name}! \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address} \u0623\u0635\u0628\u062d \u0646\u0634\u0637\u0627\u064b \u0627\u0644\u0622\u0646. \u0633\u064a\u062a\u0648\u0627\u0635\u0644 \u0645\u062d\u0645\u062f \u0645\u0639\u0643\u0645 \u0642\u0631\u064a\u0628\u0627\u064b. (302) 257-8521.",
+    paused:    "\u0645\u0631\u062d\u0628\u0627\u064b {name}! \u062a\u0645 \u0625\u064a\u0642\u0627\u0641 \u0627\u0644\u0639\u0645\u0644 \u0641\u064a {address} \u0645\u0624\u0642\u062a\u0627\u064b. \u0633\u064a\u062a\u0648\u0627\u0635\u0644 \u0645\u062d\u0645\u062f \u0645\u0639\u0643\u0645 \u0642\u0631\u064a\u0628\u0627\u064b. (302) 257-8521.",
+    complete:  "\u0623\u062e\u0628\u0627\u0631 \u0631\u0627\u0626\u0639\u0629 {name}! \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address} \u0645\u0643\u062a\u0645\u0644. \u0634\u0643\u0631\u0627\u064b \u0644\u0627\u062e\u062a\u064a\u0627\u0631\u0643\u0645! (302) 257-8521.",
+    cancelled: "\u0645\u0631\u062d\u0628\u0627\u064b {name}\u060c \u062a\u0645 \u0625\u0644\u063a\u0627\u0621 \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address}. \u0627\u062a\u0635\u0644 \u0628\u0645\u062d\u0645\u062f \u0639\u0644\u0649 (302) 257-8521.",
+    p25:       "\u0645\u0631\u062d\u0628\u0627\u064b {name}! \u0645\u0634\u0631\u0648\u0639 {address}: 25% \u0645\u0643\u062a\u0645\u0644. (302) 257-8521.",
+    p50:       "\u0645\u0631\u062d\u0628\u0627\u064b {name}! \u0645\u0634\u0631\u0648\u0639 {address}: 50% \u0645\u0643\u062a\u0645\u0644. \u0646\u0635\u0641 \u0627\u0644\u0637\u0631\u064a\u0642! (302) 257-8521.",
+    p75:       "\u0645\u0631\u062d\u0628\u0627\u064b {name}! \u0645\u0634\u0631\u0648\u0639 {address}: 75% \u0645\u0643\u062a\u0645\u0644. \u0627\u0642\u062a\u0631\u0628\u0646\u0627 \u0645\u0646 \u0627\u0644\u0646\u0647\u0627\u064a\u0629! (302) 257-8521.",
+    p100:      "\u0623\u062e\u0628\u0627\u0631 \u0631\u0627\u0626\u0639\u0629 {name}! \u0645\u0634\u0631\u0648\u0639\u0643\u0645 \u0641\u064a {address} \u0645\u0643\u062a\u0645\u0644 100%! (302) 257-8521.",
+  }
+};
+
+/* ── AUTH STATE ── */
 onAuthStateChanged(auth, async user => {
   currentUser = user;
-  if (!user) { showScreen('auth'); return; }
-  isAdmin = user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+  if (!user) { showScreen("auth"); return; }
+  isAdmin = user.email.toLowerCase() === ADMIN.toLowerCase();
   if (isAdmin) { showPortal(); return; }
-  // Client - check if assigned
   try {
-    const snap = await getDocs(collection(db,'clients'));
+    const snap = await getDocs(collection(db, "clients"));
     let found = null;
     snap.forEach(ds => { if (ds.data().uid === user.uid) found = ds.data(); });
-    if (found && found.projectId) {
-      showPortal();
-    } else {
-      document.getElementById('pendingEmail').textContent = 'We will notify you at ' + user.email;
-      showScreen('pending');
-    }
-  } catch(e) {
-    console.log('Client check error:', e.message);
-    // If we can't read clients collection, just show portal — admin will see all projects
-    showPortal();
-  }
+    if (found && found.projectId) { showPortal(); }
+    else { document.getElementById("pendingEmail").textContent = "We will notify you at " + user.email; showScreen("pending"); }
+  } catch(e) { console.log("client check:", e.message); showPortal(); }
 });
 
-function showScreen(name) {
-  document.getElementById('authScreen').style.display    = name==='auth'    ? 'flex'  : 'none';
-  document.getElementById('pendingScreen').style.display = name==='pending' ? 'flex'  : 'none';
-  document.getElementById('portalScreen').style.display  = name==='portal'  ? 'block' : 'none';
+function showScreen(n) {
+  document.getElementById("authScreen").style.display    = n === "auth"    ? "flex"  : "none";
+  document.getElementById("pendingScreen").style.display = n === "pending" ? "flex"  : "none";
+  document.getElementById("portalScreen").style.display  = n === "portal"  ? "block" : "none";
 }
 
-/* AUTH ACTIONS */
+/* ── AUTH ACTIONS ── */
 window.showAuthTab = tab => {
-  document.getElementById('tabLogin').classList.toggle('active',  tab==='login');
-  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
-  document.getElementById('loginForm').style.display  = tab==='login'  ? 'block' : 'none';
-  document.getElementById('signupForm').style.display = tab==='signup' ? 'block' : 'none';
+  document.getElementById("tabLogin").classList.toggle("active",  tab === "login");
+  document.getElementById("tabSignup").classList.toggle("active", tab === "signup");
+  document.getElementById("loginForm").style.display  = tab === "login"  ? "block" : "none";
+  document.getElementById("signupForm").style.display = tab === "signup" ? "block" : "none";
 };
 
 window.doLogin = async () => {
-  const email = document.getElementById('loginEmail').value.trim();
-  const pass  = document.getElementById('loginPass').value;
-  const err   = document.getElementById('loginErr');
-  const btn   = document.getElementById('loginBtn');
-  err.textContent = '';
-  if (!email) { err.textContent = 'Please enter your email.'; return; }
-  if (!pass)  { err.textContent = 'Please enter your password.'; return; }
-  btn.disabled = true; btn.textContent = 'Signing in...';
+  const email = document.getElementById("loginEmail").value.trim();
+  const pass  = document.getElementById("loginPass").value;
+  const err   = document.getElementById("loginErr");
+  const btn   = document.getElementById("loginBtn");
+  err.textContent = "";
+  if (!email) { err.textContent = "Enter your email."; return; }
+  if (!pass)  { err.textContent = "Enter your password."; return; }
+  btn.disabled = true; btn.textContent = "Signing in...";
   try {
     await signInWithEmailAndPassword(auth, email, pass);
   } catch(e) {
-    let msg = 'Login failed. Please try again.';
-    if (e.code === 'auth/user-not-found')      msg = 'No account found with that email.';
-    if (e.code === 'auth/wrong-password')       msg = 'Wrong password. Try again.';
-    if (e.code === 'auth/invalid-credential')   msg = 'Wrong email or password.';
-    if (e.code === 'auth/invalid-email')        msg = 'Invalid email address.';
-    if (e.code === 'auth/too-many-requests')    msg = 'Too many attempts. Wait a minute and try again.';
-    if (e.code === 'auth/network-request-failed') msg = 'Network error. Check your connection.';
-    if (e.code === 'auth/configuration-not-found') msg = 'Firebase not configured yet. Add your admin user in Firebase Authentication.';
-    err.textContent = msg + ' (Code: ' + e.code + ')';
-    btn.disabled = false; btn.textContent = 'Sign In';
+    const codes = {
+      "auth/user-not-found":       "No account found with that email.",
+      "auth/wrong-password":       "Wrong password. Try again.",
+      "auth/invalid-credential":   "Wrong email or password.",
+      "auth/invalid-email":        "Invalid email address.",
+      "auth/too-many-requests":    "Too many attempts. Wait a minute and try again.",
+      "auth/network-request-failed": "Network error. Check your connection.",
+    };
+    err.textContent = codes[e.code] || "Login failed: " + e.message;
+    btn.disabled = false; btn.textContent = "Sign In";
   }
 };
 
 window.doSignup = async () => {
-  const name  = document.getElementById('signupName').value.trim();
-  const email = document.getElementById('signupEmail').value.trim();
-  const pass  = document.getElementById('signupPass').value;
-  const err   = document.getElementById('signupErr');
-  const btn   = document.getElementById('signupBtn');
-  err.textContent = '';
-  if (!name||!email||!pass) { err.textContent='All fields required.'; return; }
-  if (pass.length<6) { err.textContent='Password must be at least 6 characters.'; return; }
-  btn.disabled=true; btn.textContent='Creating...';
+  const name  = document.getElementById("signupName").value.trim();
+  const email = document.getElementById("signupEmail").value.trim();
+  const pass  = document.getElementById("signupPass").value;
+  const err   = document.getElementById("signupErr");
+  const btn   = document.getElementById("signupBtn");
+  err.textContent = "";
+  if (!name || !email || !pass) { err.textContent = "All fields required."; return; }
+  if (pass.length < 6) { err.textContent = "Password must be at least 6 characters."; return; }
+  btn.disabled = true; btn.textContent = "Creating...";
   try {
     const cred = await createUserWithEmailAndPassword(auth, email, pass);
-    await addDoc(collection(db,'clients'), { email, name, uid:cred.user.uid, projectId:null, projectName:null, createdAt:serverTimestamp() });
-  } catch(e) { err.textContent=e.message; btn.disabled=false; btn.textContent='Create Account'; }
+    await addDoc(collection(db, "clients"), { email, name, uid: cred.user.uid, projectId: null, projectName: null, createdAt: serverTimestamp() });
+  } catch(e) { err.textContent = e.message; btn.disabled = false; btn.textContent = "Create Account"; }
 };
 
 window.doReset = async () => {
-  const email = document.getElementById('loginEmail').value.trim();
-  const err   = document.getElementById('loginErr');
-  if (!email) { err.textContent='Enter your email above first.'; return; }
-  try { await sendPasswordResetEmail(auth, email); err.style.color='var(--green)'; err.textContent='Reset email sent!'; }
-  catch(e) { err.textContent=e.message; }
+  const email = document.getElementById("loginEmail").value.trim();
+  const err   = document.getElementById("loginErr");
+  if (!email) { err.textContent = "Enter your email above first."; return; }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    err.style.color = "var(--green)"; err.textContent = "Reset email sent! Check your inbox.";
+  } catch(e) { err.textContent = e.message; }
 };
 
 window.doLogout = () => signOut(auth);
 
 window.checkAccess = async () => {
   if (!currentUser) return;
-  const snap = await getDocs(collection(db,'clients'));
+  const snap = await getDocs(collection(db, "clients"));
   let found = null;
   snap.forEach(ds => { if (ds.data().uid === currentUser.uid) found = ds.data(); });
   if (found && found.projectId) showPortal();
-  else alert('Your project has not been assigned yet. We will be in touch soon!');
+  else alert("Your project has not been assigned yet. We will be in touch soon!");
 };
 
-/* PORTAL */
+/* ── PORTAL SETUP ── */
 function showPortal() {
-  showScreen('portal');
-  document.getElementById('userLabel').textContent  = currentUser.email;
-  document.getElementById('rolePill').textContent   = isAdmin ? 'Admin' : 'Client';
-  document.getElementById('rolePill').className     = 'role-pill '+(isAdmin?'role-admin':'role-client');
-  document.getElementById('adminNav').style.display = isAdmin ? 'flex' : 'none';
-  document.getElementById('createArea').style.display = isAdmin ? 'block' : 'none';
-  document.getElementById('listTitle').textContent  = isAdmin ? 'All Projects' : 'My Project';
-  // Show weather for everyone
-  document.getElementById('weatherBar').style.display = 'block';
+  showScreen("portal");
+  document.getElementById("userLabel").textContent  = currentUser.email;
+  document.getElementById("rolePill").textContent   = isAdmin ? "Admin" : "Client";
+  document.getElementById("rolePill").className     = "role-pill " + (isAdmin ? "role-admin" : "role-client");
+  document.getElementById("adminNav").style.display = isAdmin ? "flex" : "none";
+  document.getElementById("createArea").style.display = isAdmin ? "block" : "none";
+  document.getElementById("listTitle").textContent  = isAdmin ? "All Projects" : "My Project";
+  document.getElementById("weatherBar").style.display = "block";
   loadWeather();
-  // Show SMS panel and load contacts for admin only
   if (isAdmin) {
-    document.getElementById('smsPanel').style.display = 'block';
+    document.getElementById("smsPanel").style.display = "block";
     renderSmsHistory();
     loadSmsContacts();
   }
   loadProjects();
 }
 
-/* PROJECTS */
-async function loadProjects() {
-  backToList();
-  const list = document.getElementById('projectList');
-  list.innerHTML = '<div class="spin-wrap"><div class="spinner"></div> Loading...</div>';
-  try {
-    let projects = [];
-    if (isAdmin) {
-      // Get ALL projects - no orderBy needed
-      const snap = await getDocs(collection(db,'projects'));
-      snap.forEach(ds => projects.push({ id:ds.id, ...ds.data() }));
-      // Sort by createdAt in JavaScript
-      projects.sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
-    } else {
-      // Get this client's assigned project
-      const clientSnap = await getDocs(collection(db,'clients'));
-      let pid = null;
-      clientSnap.forEach(ds => { if (ds.data().uid===currentUser.uid && ds.data().projectId) pid=ds.data().projectId; });
-      if (pid) {
-        const pSnap = await getDoc(doc(db,'projects',pid));
-        if (pSnap.exists()) projects.push({ id:pSnap.id, ...pSnap.data() });
-      }
-    }
-    list.innerHTML = '';
-    if (!projects.length) {
-      list.innerHTML = '<p class="empty-txt">'+(isAdmin?'No projects yet. Create one above.':'No project assigned to your account yet.')+'</p>';
-      return;
-    }
-    projects.forEach(p => {
-      const div = document.createElement('div'); div.className='proj-card';
-      div.innerHTML = '<div class="proj-inner">'+
-        '<div class="sdot s-'+(p.status||'active')+'"></div>'+
-        '<div class="proj-info"><div class="proj-name">'+p.name+'</div><div class="proj-addr">📍 '+p.address+'</div></div>'+
-        '<div class="proj-right">'+
-          '<div class="pmini"><div class="pmini-bar" style="width:'+(p.progress||0)+'%"></div></div>'+
-          '<span class="pmini-lbl">'+(p.progress||0)+'%</span>'+
-          '<button class="btn-open" onclick="openProject(\''+p.id+'\')">Open →</button>'+
-        '</div></div>';
-      list.appendChild(div);
-    });
-  } catch(e) {
-    list.innerHTML = '<p class="empty-txt" style="color:#e08080">Error loading projects: '+e.message+'</p>';
-  }
-}
-
-window.createProject = async () => {
-  const name = document.getElementById('newName').value.trim();
-  const addr = document.getElementById('newAddress').value.trim();
-  const msg  = document.getElementById('createMsg');
-  if (!name||!addr) { msg.innerHTML='<span class="msg-err">Name and address required.</span>'; return; }
-  const btn = document.getElementById('createBtn');
-  btn.disabled=true; btn.textContent='Creating...';
-  try {
-    await addDoc(collection(db,'projects'), {
-      name, address:addr,
-      contractValue:parseFloat(document.getElementById('newContract').value||0),
-      description:document.getElementById('newDesc').value.trim(),
-      clientPhone:document.getElementById('newPhone').value.trim(),
-      clientLang: document.getElementById('newLang').value,
-      progress:0, status:'active', checklist:{},
-      createdAt:serverTimestamp(),
-    });
-    ['newName','newAddress','newContract','newDesc'].forEach(id=>document.getElementById(id).value='');
-    msg.innerHTML='<span class="msg-ok">✅ Project created!</span>';
-    setTimeout(()=>msg.innerHTML='',3000);
-    loadProjects();
-  } catch(e) { msg.innerHTML='<span class="msg-err">Error: '+e.message+'</span>'; }
-  btn.disabled=false; btn.textContent='Create Project';
-};
-
-/* DETAIL */
-window.openProject = async pid => {
-  currentPid=pid;
-  const snap = await getDoc(doc(db,'projects',pid));
-  if (!snap.exists()) { alert('Project not found.'); return; }
-  const p=snap.data();
-  document.getElementById('listView').style.display   = 'none';
-  document.getElementById('detailView').style.display = 'block';
-  document.getElementById('dName').textContent = p.name;
-  document.getElementById('dAddr').textContent = p.address;
-  document.getElementById('dDesc').textContent = p.description||'';
-  const sb=document.getElementById('dStatus');
-  sb.textContent=p.status||'active'; sb.className='sbadge sb-'+(p.status||'active');
-  setProgressUI(p.progress||0);
-  document.getElementById('sumProgress').textContent = (p.progress||0)+'%';
-  document.getElementById('sumStatus').textContent   = p.status||'active';
-  document.getElementById('sumContract').textContent = p.contractValue?'$'+parseFloat(p.contractValue).toLocaleString():'-';
-  checklistData=p.checklist||{};
-  if (isAdmin) {
-    document.getElementById('adminTabs').style.display  = 'block';
-    document.getElementById('clientView').style.display = 'none';
-    document.getElementById('eName').value     = p.name;
-    document.getElementById('eAddr').value     = p.address;
-    document.getElementById('eContract').value = p.contractValue||'';
-    document.getElementById('eDesc').value     = p.description||'';
-    document.getElementById('eStatus').value   = p.status||'active';
-    document.getElementById('ePhone').value    = p.clientPhone||'';
-    document.getElementById('eLang').value     = p.clientLang||'en';
-    switchAdminTab('progress');
-    renderAdminChecklist();
-    loadExpenses();
-    loadPhotos('adminPhotoGrid',true);
-  } else {
-    document.getElementById('adminTabs').style.display  = 'none';
-    document.getElementById('clientView').style.display = 'block';
-    switchClientTab('status');
-    renderClientChecklist();
-    loadClientExpenses();
-    loadPhotos('clientPhotoGrid',false);
-  }
-};
-
-window.backToList = () => {
-  currentPid=null;
-  document.getElementById('listView').style.display   = 'block';
-  document.getElementById('detailView').style.display = 'none';
-};
-
-function setProgressUI(val) {
-  document.getElementById('pbarFill').style.width = val+'%';
-  document.getElementById('pbarLbl').textContent  = val+'% Complete';
-  document.getElementById('pbarSub').textContent  = val===100?'✅ Project complete!':val===0?'Not yet started':'In progress';
-}
-
-window.saveEdit = async () => {
-  const btn=document.getElementById('saveEditBtn'); const msg=document.getElementById('editMsg');
-  btn.disabled=true; btn.textContent='Saving...';
-  try {
-    const newStatus = document.getElementById('eStatus').value;
-    const oldSnap   = await getDoc(doc(db,'projects',currentPid));
-    const oldStatus = oldSnap.exists() ? oldSnap.data().status : '';
-    await updateDoc(doc(db,'projects',currentPid),{
-      name:document.getElementById('eName').value.trim(),
-      address:document.getElementById('eAddr').value.trim(),
-      contractValue:parseFloat(document.getElementById('eContract').value||0),
-      description:document.getElementById('eDesc').value.trim(),
-      status:newStatus,
-      clientPhone:document.getElementById('ePhone').value.trim(),
-      clientLang: document.getElementById('eLang').value,
-    });
-    // Auto-send SMS if status changed
-    if (newStatus !== oldStatus) {
-      const phone = document.getElementById('ePhone').value.trim();
-      const lang  = document.getElementById('eLang').value;
-      if (phone) {
-        await autoSendStatusSMS(phone, lang, newStatus,
-          document.getElementById('eAddr').value.trim());
-      }
-    }
-    msg.className='msg-ok'; msg.textContent='✅ Saved.';
-    openProject(currentPid);
-  } catch(e){msg.className='msg-err';msg.textContent='Error: '+e.message;}
-  btn.disabled=false; btn.textContent='Save Changes';
-};
-
-window.deleteProject = async () => {
-  if (!confirm('Delete this project and ALL its data? This cannot be undone.')) return;
-  const expSnap=await getDocs(collection(db,'projects',currentPid,'expenses'));
-  for (const d of expSnap.docs) await deleteDoc(d.ref);
-  const phSnap=await getDocs(collection(db,'projects',currentPid,'photos'));
-  for (const d of phSnap.docs) await deleteDoc(d.ref);
-  await deleteDoc(doc(db,'projects',currentPid));
-  loadProjects();
-};
-
-/* CHECKLIST */
-const CHECKLIST=[
-  {cat:'Site & Permits',items:[{id:'permits',name:'Permits & Approvals',sub:'Building permits pulled and approved'},{id:'site_prep',name:'Site Preparation & Demo',sub:'Cleanup, demolition, debris removal'}]},
-  {cat:'Structural / Framing',items:[{id:'foundation',name:'Foundation Work',sub:'Footings, slab, or crawlspace'},{id:'framing',name:'Framing',sub:'Wall, floor, and roof framing'},{id:'sheathing',name:'Sheathing / Decking',sub:'OSB or plywood installed'},{id:'struct_insp',name:'Structural Inspection',sub:'Framing inspection passed'}]},
-  {cat:'Roofing & Exterior',items:[{id:'roof_tear',name:'Roof Tear-Off',sub:'Old roofing materials removed'},{id:'roof_install',name:'Roof Installation',sub:'New shingles, membrane, or metal'},{id:'flashing',name:'Flashing & Gutters',sub:'Flashing, drip edge, gutters installed'},{id:'siding',name:'Siding / Exterior Wrap',sub:'House wrap and siding installed'},{id:'windows',name:'Windows',sub:'Windows installed and sealed'},{id:'doors_ext',name:'Exterior Doors',sub:'Entry and exterior doors hung'},{id:'ext_paint',name:'Exterior Paint / Finish',sub:'Paint, stucco, or finish coat applied'}]},
-  {cat:'Rough-In Trades',items:[{id:'plumb_rough',name:'Plumbing Rough-In',sub:'Supply and drain lines installed'},{id:'elec_rough',name:'Electrical Rough-In',sub:'Wiring, panel, and boxes installed'},{id:'hvac_rough',name:'HVAC Rough-In',sub:'Ducts, lines, and units installed'},{id:'rough_insp',name:'Rough-In Inspections',sub:'All trade inspections passed'}]},
-  {cat:'Insulation',items:[{id:'insulation',name:'Insulation',sub:'Walls, attic, and crawlspace insulated'},{id:'insul_insp',name:'Insulation Inspection',sub:'Inspection passed'}]},
-  {cat:'Drywall',items:[{id:'drywall_hang',name:'Drywall Hanging',sub:'Drywall sheets hung throughout'},{id:'drywall_tape',name:'Taping & Mudding',sub:'Tape, mud, and finish coats applied'},{id:'drywall_sand',name:'Sanding & Priming',sub:'Smooth finish and primer coat'}]},
-  {cat:'Flooring',items:[{id:'subfloor',name:'Subfloor Preparation',sub:'Leveling, patching, underlayment'},{id:'tile_floor',name:'Tile Installation',sub:'Tile flooring and grouting'},{id:'hardwood',name:'Hardwood / LVP Flooring',sub:'Wood or LVP planks installed'},{id:'carpet',name:'Carpet',sub:'Carpet and padding installed'},{id:'floor_trim',name:'Floor Transitions & Trim',sub:'Transition strips and base trim'}]},
-  {cat:'Kitchen',items:[{id:'kitchen_cab',name:'Kitchen Cabinets',sub:'Upper and lower cabinets installed'},{id:'countertops',name:'Countertops',sub:'Stone, laminate, or butcher block'},{id:'backsplash',name:'Backsplash',sub:'Tile or panel backsplash installed'},{id:'kitchen_sink',name:'Kitchen Sink & Faucet',sub:'Sink, faucet, and disposal installed'},{id:'appliances',name:'Appliances',sub:'Stove, fridge, dishwasher, microwave'}]},
-  {cat:'Bathrooms',items:[{id:'bath_tile',name:'Bathroom Tile',sub:'Floor and shower / tub tile'},{id:'bath_vanity',name:'Vanity & Sink',sub:'Vanity, sink, and faucet installed'},{id:'toilet',name:'Toilet',sub:'Toilet installed and operational'},{id:'shower_tub',name:'Shower / Tub',sub:'Shower or tub installed'},{id:'bath_access',name:'Mirror & Accessories',sub:'Mirror, towel bars, toilet paper holder'}]},
-  {cat:'Interior Finishes',items:[{id:'int_doors',name:'Interior Doors',sub:'All interior doors hung and trimmed'},{id:'trim_base',name:'Trim & Baseboards',sub:'Window / door casings and baseboards'},{id:'int_paint',name:'Interior Painting',sub:'All rooms painted and finished'},{id:'closets',name:'Closet Shelving',sub:'Shelves, rods, and organizers installed'}]},
-  {cat:'Mechanical Finishes',items:[{id:'plumb_fin',name:'Plumbing Finish',sub:'All fixtures, valves, and connections'},{id:'elec_fin',name:'Electrical Finish',sub:'Outlets, switches, and fixtures installed'},{id:'hvac_fin',name:'HVAC Finish',sub:'Vents, thermostats, equipment startup'}]},
-  {cat:'Final Steps',items:[{id:'cleaning',name:'Final Cleaning',sub:'Deep clean of entire space'},{id:'punch_list',name:'Punch List Completion',sub:'All final items corrected'},{id:'final_insp',name:'Final Inspection',sub:'Certificate of occupancy or sign-off'},{id:'client_walk',name:'Client Walkthrough',sub:'Owner walkthrough and approval'},{id:'handoff',name:'Project Complete',sub:'Keys and handoff to client'}]},
-];
-
-function renderAdminChecklist() {
-  const body=document.getElementById('adminChecklistBody'); body.innerHTML='';
-  CHECKLIST.forEach(sec=>{
-    const catDiv=document.createElement('div'); catDiv.className='cl-category';
-    const done=sec.items.filter(i=>checklistData[i.id]&&checklistData[i.id].done).length;
-    const hdr=document.createElement('div'); hdr.className='cl-cat-header';
-    hdr.innerHTML='<span>'+sec.cat+'</span><span class="cl-cat-count">'+done+' / '+sec.items.length+'</span>';
-    catDiv.appendChild(hdr);
-    sec.items.forEach(item=>{
-      const state=checklistData[item.id]||{done:false,note:''};
-      const el=document.createElement('div'); el.className='cl-item'+(state.done?' done':''); el.id='clitem-'+item.id;
-      el.innerHTML='<div class="cl-item-row" onclick="toggleItem(\''+item.id+'\')">'+'<div class="cl-box"><span class="cl-check">✓</span></div>'+'<div class="cl-text"><div class="cl-name">'+item.name+'</div><div class="cl-sub">'+item.sub+'</div></div></div>'+'<div class="cl-note-row"><input type="text" id="clnote-'+item.id+'" placeholder="Add a note for the client (optional)" value="'+(state.note||'')+'"></div>';
-      catDiv.appendChild(el);
-    });
-    body.appendChild(catDiv);
-  });
-}
-
-function renderClientChecklist() {
-  const body=document.getElementById('clientChecklistBody'); body.innerHTML='';
-  CHECKLIST.forEach(sec=>{
-    const catDiv=document.createElement('div'); catDiv.className='cl-client-category';
-    catDiv.innerHTML='<div class="cl-client-cat-title">'+sec.cat+'</div>';
-    sec.items.forEach(item=>{
-      const state=checklistData[item.id]||{done:false,note:''};
-      const div=document.createElement('div'); div.className='cl-client-item'+(state.done?' done':'');
-      div.innerHTML='<div class="cl-client-icon">'+(state.done?'✅':'⬜')+'</div><div><div class="cl-client-name">'+item.name+'</div>'+(state.note?'<div class="cl-client-note">📝 '+state.note+'</div>':'')+'</div>';
-      catDiv.appendChild(div);
-    });
-    body.appendChild(catDiv);
-  });
-}
-
-window.toggleItem = id => {
-  if (!checklistData[id]) checklistData[id]={done:false,note:''};
-  checklistData[id].done=!checklistData[id].done;
-  const el=document.getElementById('clitem-'+id);
-  if (el) el.className='cl-item'+(checklistData[id].done?' done':'');
-};
-
-window.saveChecklist = async () => {
-  const btn=document.getElementById('saveClBtn'); const msg=document.getElementById('clSaveMsg');
-  btn.disabled=true; btn.textContent='Saving...';
-  CHECKLIST.forEach(sec=>sec.items.forEach(item=>{
-    const noteEl=document.getElementById('clnote-'+item.id);
-    if (noteEl){if(!checklistData[item.id])checklistData[item.id]={done:false,note:''};checklistData[item.id].note=noteEl.value.trim();}
-  }));
-  let total=0,done=0;
-  CHECKLIST.forEach(sec=>sec.items.forEach(item=>{total++;if(checklistData[item.id]&&checklistData[item.id].done)done++;}));
-  const progress=Math.round((done/total)*100);
-  await updateDoc(doc(db,'projects',currentPid),{checklist:checklistData,progress});
-  setProgressUI(progress);
-  document.getElementById('sumProgress').textContent=progress+'%';
-  msg.textContent='✅ Saved! Progress: '+progress+'%';
-  setTimeout(()=>msg.textContent='',3000);
-  btn.disabled=false; btn.textContent='Save Checklist';
-  renderAdminChecklist();
-  // Auto-send progress SMS at milestones
-  const projSnap2 = await getDoc(doc(db,'projects',currentPid));
-  if (projSnap2.exists()) {
-    const pd = projSnap2.data();
-    if (pd.clientPhone) {
-      await autoSendProgressSMS(pd.clientPhone, pd.clientLang||'en', progress, pd.address);
-    }
-  }
-};
-
-/* EXPENSES */
-async function loadExpenses() {
-  const list=document.getElementById('expList');
-  list.innerHTML='<div class="spin-wrap"><div class="spinner"></div></div>';
-  try { const snap=await getDocs(collection(db,'projects',currentPid,'expenses')); renderExpenses(snap,'expList','expTotal',true); }
-  catch(e) { document.getElementById('expList').innerHTML='<p class="empty-txt" style="color:#e08080">Error: '+e.message+'</p>'; }
-}
-
-async function loadClientExpenses() {
-  const list=document.getElementById('clientExpList');
-  list.innerHTML='<div class="spin-wrap"><div class="spinner"></div></div>';
-  try { const snap=await getDocs(collection(db,'projects',currentPid,'expenses')); renderExpenses(snap,'clientExpList','clientExpTotal',false); }
-  catch(e) { document.getElementById('clientExpList').innerHTML='<p class="empty-txt">Error loading.</p>'; }
-}
-
-function renderExpenses(snap,listId,totalId,canDelete) {
-  const list=document.getElementById(listId); list.innerHTML='';
-  if (!snap||snap.empty){list.innerHTML='<p class="empty-txt">No expenses yet.</p>';document.getElementById(totalId).textContent='$0.00';return;}
-  let total=0;
-  const docs=[...snap.docs].sort((a,b)=>(b.data().date||'')>(a.data().date||'')?-1:1).reverse();
-  docs.forEach(ds=>{
-    const e=ds.data(); total+=parseFloat(e.amount||0);
-    const div=document.createElement('div'); div.className='exp-row';
-    div.innerHTML='<div class="exp-info"><span class="exp-cat">'+e.category+'</span><span class="exp-desc">'+e.description+'</span><span class="exp-date">'+e.date+'</span></div>'+'<div class="exp-right"><span class="exp-amt">$'+parseFloat(e.amount).toFixed(2)+'</span>'+(canDelete?'<button class="del-sm" onclick="deleteExpense(\''+ds.id+'\')">✕</button>':'')+'</div>';
-    list.appendChild(div);
-  });
-  document.getElementById(totalId).textContent='$'+total.toFixed(2);
-}
-
-window.addExpense = async () => {
-  const desc=document.getElementById('expDesc').value.trim();
-  const amt=document.getElementById('expAmt').value;
-  const date=document.getElementById('expDate').value;
-  if (!desc||!amt||!date){alert('Please fill all expense fields.');return;}
-  const btn=document.getElementById('addExpBtn'); btn.disabled=true; btn.textContent='Adding...';
-  await addDoc(collection(db,'projects',currentPid,'expenses'),{category:document.getElementById('expCat').value,description:desc,amount:parseFloat(amt),date,createdAt:serverTimestamp()});
-  document.getElementById('expDesc').value=document.getElementById('expAmt').value=document.getElementById('expDate').value='';
-  btn.disabled=false; btn.textContent='Add Expense';
-  loadExpenses();
-};
-
-window.deleteExpense = async id=>{if(!confirm('Remove this expense?'))return;await deleteDoc(doc(db,'projects',currentPid,'expenses',id));loadExpenses();};
-
-/* PHOTOS */
-async function loadPhotos(gridId,canDelete) {
-  const grid=document.getElementById(gridId);
-  grid.innerHTML='<div class="spin-wrap"><div class="spinner"></div></div>';
-  try {
-    const snap=await getDocs(collection(db,'projects',currentPid,'photos'));
-    grid.innerHTML='';
-    if (snap.empty){grid.innerHTML='<p class="empty-txt">No photos yet.</p>';return;}
-    snap.forEach(ds=>{
-      const ph=ds.data();
-      const isPDF=ph.name&&ph.name.toLowerCase().endsWith('.pdf');
-      const div=document.createElement('div'); div.className='photo-item';
-      if (isPDF) {
-        div.innerHTML='<div class="pbadge '+ph.type+'">'+ph.type+'</div>'+'<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;cursor:pointer;background:var(--surface)" onclick="downloadFile(\''+ds.id+'\')">'+'<div style="font-size:2rem">📄</div>'+'<div style="font-size:.7rem;color:var(--mid);text-align:center;padding:0 .5rem;word-break:break-all">'+(ph.name||'document.pdf')+'</div>'+'<div style="font-size:.68rem;color:var(--accent)">Tap to download</div></div>'+(canDelete?'<button class="del-photo" onclick="deletePhoto(\''+ds.id+'\')">✕</button>':'');
-      } else {
-        const badge=document.createElement('div'); badge.className='pbadge '+ph.type; badge.textContent=ph.type;
-        const img=document.createElement('img'); img.alt=ph.type; img.loading='lazy';
-        img.style.cssText='width:100%;height:100%;object-fit:cover;cursor:zoom-in;transition:transform .3s';
-        if (ph.data) img.src=ph.data;
-        img.onclick=()=>{document.getElementById('photoOverlayImg').src=ph.data||'';document.getElementById('photoOverlay').style.display='flex';};
-        div.appendChild(badge); div.appendChild(img);
-        if (canDelete){const d=document.createElement('button');d.className='del-photo';d.textContent='✕';d.onclick=()=>deletePhoto(ds.id);div.appendChild(d);}
-      }
-      grid.appendChild(div);
-    });
-  } catch(e){grid.innerHTML='<p class="empty-txt" style="color:#e08080">Error: '+e.message+'</p>';}
-}
-
-window.uploadPhoto = async () => {
-  const file=document.getElementById('photoFile').files[0];
-  const type=document.getElementById('photoType').value;
-  const msg=document.getElementById('uploadMsg');
-  if (!file){alert('Select a file first.');return;}
-  const isPDF=file.name.toLowerCase().endsWith('.pdf');
-  const maxSize=isPDF?3000000:1500000;
-  if (file.size>maxSize){alert(isPDF?'PDF must be under 3MB.':'Image must be under 1.5MB. Compress at squoosh.app');return;}
-  const btn=document.getElementById('uploadBtn'); btn.disabled=true; btn.textContent='Uploading...'; msg.textContent='Reading file...';
-  const reader=new FileReader();
-  reader.onload=async e=>{
-    try {
-      await addDoc(collection(db,'projects',currentPid,'photos'),{type,data:e.target.result,name:file.name,isPDF,createdAt:serverTimestamp()});
-      document.getElementById('photoFile').value='';
-      msg.textContent=isPDF?'✅ PDF uploaded!':'✅ Photo uploaded!';
-      loadPhotos('adminPhotoGrid',true);
-    } catch(err){msg.textContent='Error: '+err.message;}
-    btn.disabled=false; btn.textContent='Upload';
-  };
-  reader.readAsDataURL(file);
-};
-
-window.downloadFile = async id=>{
-  const snap=await getDoc(doc(db,'projects',currentPid,'photos',id));
-  if (!snap.exists())return;
-  const ph=snap.data(); const a=document.createElement('a');
-  a.href=ph.data; a.download=ph.name||'document.pdf';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-};
-
-window.deletePhoto = async id=>{if(!confirm('Delete this photo?'))return;await deleteDoc(doc(db,'projects',currentPid,'photos',id));loadPhotos('adminPhotoGrid',true);};
-
-window.closeOverlay=()=>{document.getElementById('photoOverlay').style.display='none';};
-
-/* CLIENTS */
-async function loadClients() {
-  const list=document.getElementById('clientList');
-  list.innerHTML='<div class="spin-wrap"><div class="spinner"></div></div>';
-  const projSnap=await getDocs(collection(db,'projects'));
-  const projects=[];
-  projSnap.forEach(ds=>projects.push({id:ds.id,name:ds.data().name}));
-  projects.sort((a,b)=>a.name.localeCompare(b.name));
-  const clientSnap=await getDocs(collection(db,'clients'));
-  list.innerHTML='';
-  if (clientSnap.empty){list.innerHTML='<p class="empty-txt">No client accounts yet. Share the portal URL so clients can sign up.</p>';return;}
-  clientSnap.forEach(ds=>{
-    const c=ds.data(); const cid=ds.id; const assigned=!!c.projectId;
-    const opts=projects.map(p=>'<option value="'+p.id+'"'+(c.projectId===p.id?' selected':'')+'>'+p.name+'</option>').join('');
-    const div=document.createElement('div'); div.className='client-row';
-    div.innerHTML='<div class="client-info"><div class="client-email">'+(c.name||'')+' <span style="font-weight:400;color:var(--mid)">&lt;'+c.email+'&gt;</span></div><div class="client-sub">'+(assigned?'📁 '+c.projectName:'⏳ Awaiting project assignment')+'</div></div>'+'<span class="client-pill '+(assigned?'cp-assigned':'cp-pending')+'">'+(assigned?'Assigned':'Pending')+'</span>'+'<div class="client-actions"><select id="psel-'+cid+'"><option value="">Select project</option>'+opts+'</select>'+'<button class="btn-p" style="margin-top:0;padding:.35rem .9rem" onclick="assignProject(\''+cid+'\',\''+c.email+'\')">Assign</button>'+'<button class="btn-p" style="margin-top:0;padding:.35rem .9rem;background:var(--red)" onclick="removeClient(\''+cid+'\')">Remove</button></div>';
-    list.appendChild(div);
-  });
-}
-
-window.assignProject = async (cid,email)=>{
-  const sel=document.getElementById('psel-'+cid); const pid=sel.value;
-  if (!pid){alert('Select a project first.');return;}
-  const pSnap=await getDoc(doc(db,'projects',pid));
-  if (!pSnap.exists()){alert('Project not found.');return;}
-  const pName=pSnap.data().name;
-  await updateDoc(doc(db,'clients',cid),{projectId:pid,projectName:pName});
-  alert('✅ Project "'+pName+'" assigned to '+email+'. They can now log in and see their project.');
-  loadClients();
-};
-
-window.removeClient = async id=>{if(!confirm('Remove this client record?'))return;await deleteDoc(doc(db,'clients',id));loadClients();};
-
-/* UI */
-window.showSection=(id,btn)=>{
-  document.querySelectorAll('.psection').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.pnav-btn').forEach(b=>b.classList.remove('active'));
-  document.getElementById('section-'+id).classList.add('active');
-  if (btn) btn.classList.add('active');
-  if (id==='clients') loadClients();
-};
-
-window.switchAdminTab=id=>{
-  ['progress','edit','expenses','photos'].forEach(t=>{
-    document.getElementById('atab-'+t).classList.toggle('active',t===id);
-    document.getElementById('apanel-'+t).classList.toggle('active',t===id);
-  });
-};
-
-window.switchClientTab=id=>{
-  ['status','expenses','photos'].forEach(t=>{
-    document.getElementById('ctab-'+t).classList.toggle('active',t===id);
-    document.getElementById('cpanel-'+t).classList.toggle('active',t===id);
-  });
-};
-
-
-
-/* ══════════════════════════════════
-   WEATHER
-══════════════════════════════════ */
-const WEATHER_ICONS = {
-  0:'☀️',1:'☀️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',
-  51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',
-  71:'🌨️',73:'🌨️',75:'❄️',77:'❄️',80:'🌦️',81:'🌦️',
-  82:'⛈️',85:'🌨️',86:'🌨️',95:'⛈️',96:'⛈️',99:'⛈️'
-};
-const WEATHER_DESC = {
-  0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',
-  45:'Foggy',48:'Icy fog',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',
-  61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',75:'Heavy snow',
-  80:'Rain showers',81:'Rain showers',82:'Violent showers',95:'Thunderstorm',99:'Heavy thunderstorm'
-};
+/* ── WEATHER ── */
+const W_ICON = {0:"☀️",1:"☀️",2:"⛅",3:"☁️",45:"🌫️",48:"🌫️",51:"🌦️",53:"🌦️",55:"🌧️",61:"🌧️",63:"🌧️",65:"🌧️",71:"🌨️",73:"🌨️",75:"❄️",80:"🌦️",82:"⛈️",95:"⛈️"};
+const W_DESC = {0:"Clear sky",1:"Mainly clear",2:"Partly cloudy",3:"Overcast",45:"Foggy",51:"Light drizzle",53:"Drizzle",55:"Heavy drizzle",61:"Light rain",63:"Rain",65:"Heavy rain",71:"Light snow",73:"Snow",80:"Showers",82:"Heavy showers",95:"Thunderstorm"};
 
 async function loadWeather() {
-  const bar = document.getElementById('weatherWidget');
+  const bar = document.getElementById("weatherWidget");
   try {
-    // Get user location
-    const pos = await new Promise((res,rej) =>
-      navigator.geolocation.getCurrentPosition(res, rej, {timeout:8000})
-    );
+    const pos  = await new Promise((res, rej) => navigator.geolocation.getCurrentPosition(res, rej, {timeout:8000}));
     const {latitude:lat, longitude:lon} = pos.coords;
-    // Fetch weather from Open-Meteo (100% free, no API key needed)
-    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch&forecast_days=1`;
-    const res  = await fetch(url);
-    const data = await res.json();
-    const c    = data.current;
+    const r    = await fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch");
+    const d    = await r.json();
+    const c    = d.current;
     const code = c.weather_code;
-    const icon = WEATHER_ICONS[code] || '🌤️';
-    const desc = WEATHER_DESC[code] || 'Unknown';
     const temp = Math.round(c.temperature_2m);
     const feel = Math.round(c.apparent_temperature);
     const wind = Math.round(c.wind_speed_10m);
     const gust = Math.round(c.wind_gusts_10m);
-    const hum  = c.relative_humidity_2m;
-    const rain = c.precipitation;
-
-    // Weather alert for construction
-    let alertHtml = '';
-    if (wind > 25 || gust > 35) alertHtml = '<div class="weather-alert">⚠️ High winds — check roofing safety</div>';
-    if (rain > 0.1) alertHtml = '<div class="weather-alert">⚠️ Rain today — plan accordingly</div>';
-    if (temp < 32) alertHtml = '<div class="weather-alert">⚠️ Freezing temps — protect materials</div>';
-
-    bar.innerHTML = `
-      <div class="weather-icon">${icon}</div>
-      <div>
-        <div class="weather-temp">${temp}°F</div>
-        <div class="weather-desc">${desc} · Feels like ${feel}°F</div>
-        <div class="weather-loc">📍 Current Location</div>
-      </div>
-      <div class="weather-details">
-        <div class="weather-detail">💧 ${hum}% humidity</div>
-        <div class="weather-detail">💨 ${wind} mph wind</div>
-        <div class="weather-detail">🌪️ ${gust} mph gusts</div>
-        ${rain > 0 ? `<div class="weather-detail">🌧️ ${rain}" rain</div>` : ''}
-      </div>
-      ${alertHtml}`;
-  } catch(e) {
-    bar.innerHTML = '<div style="font-size:.8rem;color:var(--mid)">📍 Enable location to see weather</div>';
-  }
+    let alert  = "";
+    if (wind > 25 || gust > 35) alert = "<div class='weather-alert'>⚠️ High winds — roofing caution</div>";
+    if (c.precipitation > 0.1)  alert = "<div class='weather-alert'>⚠️ Rain today — plan work accordingly</div>";
+    if (temp < 32)               alert = "<div class='weather-alert'>⚠️ Freezing — protect materials</div>";
+    bar.innerHTML = "<div style='font-size:2rem'>" + (W_ICON[code] || "🌤️") + "</div>" +
+      "<div><div class='weather-temp'>" + temp + "°F</div><div class='weather-desc'>" + (W_DESC[code] || "") + " · Feels like " + feel + "°F</div></div>" +
+      "<div style='display:flex;gap:1rem;flex-wrap:wrap;margin-left:auto'><div class='weather-detail'>💨 " + wind + " mph</div><div class='weather-detail'>🌪️ " + gust + " mph gusts</div></div>" + alert;
+  } catch { bar.innerHTML = "<div style='font-size:.82rem;color:var(--mid)'>📍 Allow location for weather</div>"; }
 }
 
-/* ══════════════════════════════════
-   SMS NOTIFICATIONS
-══════════════════════════════════ */
-let currentLang  = 'en';
-let smsHistory   = JSON.parse(localStorage.getItem('asc_sms_history') || '[]');
-
-// Twilio credentials — set these (or use your server endpoint)
-// For GitHub Pages (static site) you need a small proxy.
-// SIMPLEST: Use Twilio's free trial and set up a serverless function,
-// OR add your Railway server from the phone assistant to handle SMS too.
-// Set this to your Railway server URL once deployed:
-const SMS_SERVER = localStorage.getItem('asc_sms_server') || '';
-
-const SMS_TEMPLATES = {
-  en: {
-    update:   'Hi! This is Ali Signature Construction. Your project at {address} is {progress}% complete. Status: {status}. Mohamed will be in touch soon.',
-    schedule: 'Hi! Ali Signature Construction here. We are scheduled to work at your property on {date}. Please ensure access is available. Questions? Call (302) 257-8521.',
-    weather:  'Hi! Ali Signature Construction here. Due to today's weather conditions, work at {address} has been rescheduled. We will contact you with a new date shortly.',
-    complete: 'Great news! Ali Signature Construction has completed work at {address}. Thank you for choosing us! Please call Mohamed at (302) 257-8521 with any questions.',
-    reminder: 'Reminder from Ali Signature Construction: We have a scheduled appointment at {address} tomorrow. Please call (302) 257-8521 to confirm.',
-  },
-  es: {
-    update:   'Hola! Le escribe Ali Signature Construction. Su proyecto en {address} está {progress}% completado. Estado: {status}. Mohamed se pondrá en contacto pronto.',
-    schedule: 'Hola! Ali Signature Construction aquí. Estamos programados para trabajar en su propiedad el {date}. Asegúrese de que haya acceso disponible. ¿Preguntas? Llame al (302) 257-8521.',
-    weather:  'Hola! Ali Signature Construction aquí. Debido a las condiciones climáticas de hoy, el trabajo en {address} ha sido reprogramado. Le contactaremos con una nueva fecha.',
-    complete: 'Buenas noticias! Ali Signature Construction ha completado el trabajo en {address}. ¡Gracias por elegirnos! Llame a Mohamed al (302) 257-8521 si tiene preguntas.',
-    reminder: 'Recordatorio de Ali Signature Construction: Tenemos una cita programada en {address} mañana. Llame al (302) 257-8521 para confirmar.',
-  },
-  ar: {
-    update:   'مرحباً! هذا من شركة علي سيغنتشر للإنشاءات. مشروعكم في {address} مكتمل بنسبة {progress}%. الحالة: {status}. سيتواصل معكم محمد قريباً.',
-    schedule: 'مرحباً! شركة علي سيغنتشر للإنشاءات. لدينا موعد مجدول للعمل في عقاركم يوم {date}. يرجى التأكد من إمكانية الوصول. للاستفسار: (302) 257-8521.',
-    weather:  'مرحباً! شركة علي سيغنتشر للإنشاءات. بسبب الأحوال الجوية اليوم، تم تأجيل العمل في {address}. سنتواصل معكم بموعد جديد قريباً.',
-    complete: 'أخبار رائعة! أتمت شركة علي سيغنتشر للإنشاءات العمل في {address}. شكراً لاختياركم لنا! للاستفسار اتصل بمحمد: (302) 257-8521.',
-    reminder: 'تذكير من شركة علي سيغنتشر للإنشاءات: لدينا موعد مجدول في {address} غداً. يرجى الاتصال على (302) 257-8521 للتأكيد.',
-  }
-};
-
+/* ── SMS FUNCTIONS ── */
 window.setLang = (lang, btn) => {
   currentLang = lang;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  // Update textarea direction for Arabic
-  const ta = document.getElementById('smsBody');
-  ta.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll(".lang-btn").forEach(b => b.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById("smsBody").dir = lang === "ar" ? "rtl" : "ltr";
 };
 
 window.useTemplate = type => {
-  const tmpl = SMS_TEMPLATES[currentLang][type] || SMS_TEMPLATES.en[type];
-  // Auto-fill project details if a project is open
-  let msg = tmpl
-    .replace('{address}', document.getElementById('dAddr')?.textContent || '[address]')
-    .replace('{progress}', document.getElementById('sumProgress')?.textContent || '[progress]')
-    .replace('{status}', document.getElementById('sumStatus')?.textContent || '[status]')
-    .replace('{date}', new Date(Date.now() + 86400000).toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric'}));
-  document.getElementById('smsBody').value = msg;
-  document.getElementById('smsBody').dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+  const t = (TMPLS[currentLang] || TMPLS.en)[type] || "";
+  const addr   = document.getElementById("dAddr")?.textContent || "[address]";
+  const pct    = document.getElementById("sumProgress")?.textContent || "0%";
+  const status = document.getElementById("sumStatus")?.textContent || "active";
+  const date   = new Date(Date.now() + 86400000).toLocaleDateString("en-US", {weekday:"long", month:"long", day:"numeric"});
+  document.getElementById("smsBody").value = t.replace("{address}", addr).replace("{pct}", pct).replace("{status}", status).replace("{date}", date);
+  document.getElementById("smsBody").dir   = currentLang === "ar" ? "rtl" : "ltr";
   updateCharCount();
 };
 
 window.updateCharCount = () => {
-  const len = document.getElementById('smsBody').value.length;
-  document.getElementById('charCount').textContent = len;
-  document.getElementById('charCount').style.color = len > 160 ? 'var(--red)' : 'var(--mid)';
+  const len = document.getElementById("smsBody").value.length;
+  const el  = document.getElementById("charCount");
+  el.textContent = len;
+  el.style.color = len > 160 ? "var(--red)" : "var(--mid)";
 };
 
 window.sendSMS = async () => {
-  const to   = document.getElementById('smsTo').value.trim();
-  const body = document.getElementById('smsBody').value.trim();
-  const msg  = document.getElementById('smsMsg');
-
-  if (!to)   { msg.className='sms-msg err'; msg.textContent='Enter a phone number.'; return; }
-  if (!body) { msg.className='sms-msg err'; msg.textContent='Enter a message.'; return; }
-
-  if (!SMS_SERVER) {
-    // Show setup instructions
-    msg.className='sms-msg err';
-    msg.textContent='Set your SMS server URL in localStorage: localStorage.setItem("asc_sms_server","https://your-railway-url.railway.app")';
+  const to   = document.getElementById("smsTo").value.trim();
+  const body = document.getElementById("smsBody").value.trim();
+  const msg  = document.getElementById("smsMsg");
+  if (!to)   { msg.style.color = "#e08080"; msg.textContent = "Enter a phone number."; return; }
+  if (!body) { msg.style.color = "#e08080"; msg.textContent = "Enter a message."; return; }
+  const srv = localStorage.getItem("asc_sms_server") || "";
+  if (!srv) {
+    msg.style.color = "#e08080";
+    msg.textContent = "Set your server URL: open browser console and run: localStorage.setItem(\"asc_sms_server\",\"https://your-railway-url.railway.app\")";
     return;
   }
-
-  const btn = document.getElementById('smsSendBtn');
-  btn.disabled = true; btn.textContent = 'Sending...';
-  msg.className='sms-msg'; msg.textContent='';
-
+  const btn = document.getElementById("smsSendBtn");
+  btn.disabled = true; btn.textContent = "Sending...";
+  msg.textContent = "";
   try {
-    const res = await fetch(SMS_SERVER + '/api/send-sms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ to, body, language: currentLang }),
-    });
+    const res  = await fetch(srv + "/api/send-sms", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({to, body, language: currentLang}) });
     const data = await res.json();
     if (data.success) {
-      msg.className='sms-msg ok'; msg.textContent='✅ Message sent successfully!';
-      // Save to history
-      const entry = { to, body, lang: currentLang, at: new Date().toLocaleString() };
-      smsHistory.unshift(entry);
-      smsHistory = smsHistory.slice(0,20);
-      localStorage.setItem('asc_sms_history', JSON.stringify(smsHistory));
+      msg.style.color = "var(--green)"; msg.textContent = "✅ Message sent!";
+      smsHistory.unshift({to, body, lang: currentLang, at: new Date().toLocaleString()});
+      smsHistory = smsHistory.slice(0, 20);
+      localStorage.setItem("asc_sms_hist", JSON.stringify(smsHistory));
       renderSmsHistory();
-      document.getElementById('smsBody').value = '';
+      document.getElementById("smsBody").value = "";
       updateCharCount();
-    } else {
-      throw new Error(data.error || 'Send failed');
-    }
-  } catch(e) {
-    msg.className='sms-msg err'; msg.textContent='Error: ' + e.message;
-  }
-  btn.disabled=false; btn.textContent='📤 Send SMS';
+    } else { throw new Error(data.error || "Send failed"); }
+  } catch(e) { msg.style.color = "#e08080"; msg.textContent = "Error: " + e.message; }
+  btn.disabled = false; btn.textContent = "📤 Send SMS";
 };
 
 function renderSmsHistory() {
-  const hist = document.getElementById('smsHistory');
-  if (!hist) return;
-  if (!smsHistory.length) { hist.innerHTML='<div style="font-size:.8rem;color:var(--mid)">No messages sent yet.</div>'; return; }
-  hist.innerHTML = smsHistory.slice(0,5).map(s =>
-    `<div class="sms-item">
-      ${s.body.substring(0,100)}${s.body.length>100?'...':''}
-      <div class="sms-item-meta">
-        <span>📱 ${s.to}</span>
-        <span>🕐 ${s.at}</span>
-        <span class="sms-item-lang">${s.lang==='ar'?'Arabic':s.lang==='es'?'Spanish':'English'}</span>
-      </div>
-    </div>`
-  ).join('');
+  const el = document.getElementById("smsHistory");
+  if (!el) return;
+  if (!smsHistory.length) { el.innerHTML = "<div style='font-size:.8rem;color:var(--mid)'>No messages sent yet.</div>"; return; }
+  el.innerHTML = smsHistory.slice(0, 5).map(s =>
+    "<div class='sms-hist-item'>" + s.body.substring(0, 100) + (s.body.length > 100 ? "..." : "") +
+    "<div class='sms-hist-meta'>📱 " + s.to + " &nbsp;·&nbsp; 🕐 " + s.at + " &nbsp;·&nbsp; " + (s.lang === "ar" ? "Arabic" : s.lang === "es" ? "Spanish" : "English") + "</div></div>"
+  ).join("");
 }
 
 async function loadSmsContacts() {
-  // Load clients and crew into the SMS dropdown
-  const sel = document.getElementById('smsToSelect');
+  const sel = document.getElementById("smsToSelect");
   if (!sel) return;
   try {
-    const clientSnap = await getDocs(collection(db,'clients'));
-    clientSnap.forEach(ds => {
+    const cSnap = await getDocs(collection(db, "clients"));
+    cSnap.forEach(ds => {
       const c = ds.data();
-      if (c.email) {
-        const opt = document.createElement('option');
-        // Use phone if available, otherwise show email as label
-        opt.value = c.phone || '';
-        opt.textContent = '👤 ' + (c.name||c.email) + (c.phone?' ('+c.phone+')':' (no phone on file)');
+      if (c.phone) {
+        const opt = document.createElement("option");
+        opt.value = c.phone; opt.textContent = "👤 " + (c.name || c.email) + " (" + c.phone + ")";
         sel.appendChild(opt);
       }
     });
-    // Add a separator
-    const sep = document.createElement('option'); sep.disabled=true; sep.textContent='── Crew ──'; sel.appendChild(sep);
-    const crewSnap = await getDocs(collection(db,'crewMembers'));
-    crewSnap.forEach(ds => {
-      const c = ds.data();
-      const opt = document.createElement('option');
-      opt.value = c.phone || '';
-      opt.textContent = '👷 ' + c.name + (c.phone?' ('+c.phone+')':' (no phone on file)');
-      sel.appendChild(opt);
-    });
-  } catch(e) { console.log('SMS contacts error:', e); }
-}
-
-
-/* ══════════════════════════════════
-   AUTO SMS ON PROJECT UPDATES
-══════════════════════════════════ */
-
-const AUTO_SMS_MESSAGES = {
-  en: {
-    active:    'Hi {name}! Your project at {address} with Ali Signature Construction is now ACTIVE. Mohamed will be in touch with your schedule soon. Questions? Call (302) 257-8521.',
-    paused:    'Hi {name}! Work at {address} has been temporarily paused. Mohamed will contact you shortly to discuss next steps. Call (302) 257-8521 anytime.',
-    complete:  'Great news {name}! Your project at {address} is now COMPLETE. Thank you for choosing Ali Signature Construction! Call Mohamed at (302) 257-8521 with any questions.',
-    cancelled: 'Hi {name}, Ali Signature Construction has cancelled the project at {address}. Please call Mohamed at (302) 257-8521 to discuss.',
-    progress:  'Hi {name}! Project update for {address}: {progress}% complete. {milestone} Ali Signature Construction — (302) 257-8521.',
-  },
-  es: {
-    active:    'Hola {name}! Su proyecto en {address} con Ali Signature Construction está ahora ACTIVO. Mohamed se pondrá en contacto pronto con su cronograma. Llame al (302) 257-8521.',
-    paused:    'Hola {name}! El trabajo en {address} ha sido pausado temporalmente. Mohamed le contactará pronto. Llame al (302) 257-8521 cuando quiera.',
-    complete:  'Buenas noticias {name}! Su proyecto en {address} está COMPLETO. ¡Gracias por elegir Ali Signature Construction! Llame al (302) 257-8521.',
-    cancelled: 'Hola {name}, Ali Signature Construction ha cancelado el proyecto en {address}. Llame a Mohamed al (302) 257-8521.',
-    progress:  'Hola {name}! Actualización del proyecto en {address}: {progress}% completado. {milestone} Ali Signature Construction — (302) 257-8521.',
-  },
-  ar: {
-    active:    'مرحباً {name}! مشروعكم في {address} مع شركة علي سيغنتشر للإنشاءات أصبح نشطاً الآن. سيتواصل محمد معكم قريباً بالجدول الزمني. للاستفسار: (302) 257-8521.',
-    paused:    'مرحباً {name}! تم إيقاف العمل في {address} مؤقتاً. سيتواصل محمد معكم قريباً. يمكنكم الاتصال بـ (302) 257-8521 في أي وقت.',
-    complete:  'أخبار رائعة {name}! اكتمل مشروعكم في {address}. شكراً لاختياركم شركة علي سيغنتشر للإنشاءات! للاستفسار: (302) 257-8521.',
-    cancelled: 'مرحباً {name}، تم إلغاء مشروع {address}. يرجى الاتصال بمحمد على (302) 257-8521.',
-    progress:  'مرحباً {name}! تحديث مشروع {address}: مكتمل {progress}%. {milestone} شركة علي سيغنتشر — (302) 257-8521.',
-  }
-};
-
-const MILESTONE_MSGS = {
-  en: {
-    25:  'We are a quarter of the way through!',
-    50:  'Halfway done!',
-    75:  'Almost there — 3/4 complete!',
-    100: 'Project is 100% complete!',
-  },
-  es: {
-    25:  '¡Estamos a un cuarto del camino!',
-    50:  '¡A mitad de camino!',
-    75:  '¡Casi listos — ¾ completo!',
-    100: '¡Proyecto 100% completado!',
-  },
-  ar: {
-    25:  'اكتمل ربع المشروع!',
-    50:  'اكتمل نصف المشروع!',
-    75:  'اكتملت ثلاثة أرباع المشروع!',
-    100: 'اكتمل المشروع بالكامل!',
-  }
-};
-
-function formatSMS(template, vars) {
-  return template
-    .replace(/{name}/g,     vars.name     || 'there')
-    .replace(/{address}/g,  vars.address  || 'your property')
-    .replace(/{progress}/g, vars.progress || '0')
-    .replace(/{milestone}/g,vars.milestone|| '')
-    .replace(/{status}/g,   vars.status   || '')
-    .trim();
-}
-
-async function autoSendStatusSMS(phone, lang, status, address) {
-  const smsServer = localStorage.getItem('asc_sms_server') || '';
-  if (!smsServer || !phone) return;
-
-  const templates = AUTO_SMS_MESSAGES[lang] || AUTO_SMS_MESSAGES.en;
-  const template  = templates[status];
-  if (!template) return;
-
-  // Get client name from Firestore
-  let clientName = 'there';
-  try {
-    const cSnap = await getDocs(collection(db,'clients'));
-    cSnap.forEach(ds => {
-      if (ds.data().projectId === currentPid && ds.data().name) {
-        clientName = ds.data().name.split(' ')[0];
-      }
-    });
   } catch {}
+}
 
-  const body = formatSMS(template, { name: clientName, address, status });
-
+async function autoSendSMS(phone, lang, key, name, address) {
+  const srv = localStorage.getItem("asc_sms_server") || "";
+  if (!srv || !phone) return;
+  const msgs = AUTO_SMS[lang] || AUTO_SMS.en;
+  const tmpl = msgs[key]; if (!tmpl) return;
+  const body = tmpl.replace(/{name}/g, name || "there").replace(/{address}/g, address || "your property");
   try {
-    const res = await fetch(smsServer + '/api/send-sms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ to: phone, body, language: lang }),
-    });
-    const data = await res.json();
-    if (data.success) {
-      console.log('Auto SMS sent:', body.substring(0,60));
-      showSmsToast('✅ SMS sent to client automatically!');
+    const res = await fetch(srv + "/api/send-sms", { method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify({to:phone, body, language:lang}) });
+    const d   = await res.json();
+    if (d.success) showToast("✅ SMS sent to client!");
+  } catch(e) { console.log("autoSMS error:", e.message); }
+}
+
+function showToast(msg) {
+  const t = document.createElement("div");
+  t.style.cssText = "position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:.6rem 1.25rem;border-radius:8px;font-size:.84rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.4)";
+  t.textContent = msg; document.body.appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+
+/* ── PROJECTS ── */
+async function loadProjects() {
+  backToList();
+  const list = document.getElementById("projectList");
+  list.innerHTML = "<div class='spin-wrap'><div class='spinner'></div> Loading...</div>";
+  try {
+    let projects = [];
+    if (isAdmin) {
+      const snap = await getDocs(collection(db, "projects"));
+      snap.forEach(ds => projects.push({id: ds.id, ...ds.data()}));
+      projects.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    } else {
+      const cSnap = await getDocs(collection(db, "clients"));
+      let pid = null;
+      cSnap.forEach(ds => { if (ds.data().uid === currentUser.uid && ds.data().projectId) pid = ds.data().projectId; });
+      if (pid) { const p = await getDoc(doc(db, "projects", pid)); if (p.exists()) projects.push({id:p.id, ...p.data()}); }
     }
-  } catch(e) { console.log('Auto SMS error:', e); }
+    list.innerHTML = "";
+    if (!projects.length) { list.innerHTML = "<p class='empty-txt'>" + (isAdmin ? "No projects yet. Create one above." : "No project assigned to your account yet.") + "</p>"; return; }
+    projects.forEach(p => {
+      const div = document.createElement("div"); div.className = "proj-card";
+      div.innerHTML = "<div class='proj-inner'><div class='sdot s-" + (p.status || "active") + "'></div><div class='proj-info'><div class='proj-name'>" + p.name + "</div><div class='proj-addr'>📍 " + p.address + "</div></div><div class='proj-right'><div class='pmini'><div class='pmini-bar' style='width:" + (p.progress || 0) + "%'></div></div><span class='pmini-lbl'>" + (p.progress || 0) + "%</span><button class='btn-open' onclick=\"openProject('" + p.id + "')\">Open →</button></div></div>";
+      list.appendChild(div);
+    });
+  } catch(e) { list.innerHTML = "<p class='empty-txt' style='color:#e08080'>Error: " + e.message + "</p>"; }
 }
 
-async function autoSendProgressSMS(phone, lang, progress, address) {
-  const smsServer = localStorage.getItem('asc_sms_server') || '';
-  if (!smsServer || !phone) return;
-
-  // Only send at milestones: 25, 50, 75, 100
-  if (![25, 50, 75, 100].includes(progress)) return;
-
-  const templates  = AUTO_SMS_MESSAGES[lang] || AUTO_SMS_MESSAGES.en;
-  const milestones = MILESTONE_MSGS[lang]    || MILESTONE_MSGS.en;
-  const template   = templates.progress;
-  const milestone  = milestones[progress] || '';
-
-  let clientName = 'there';
+window.createProject = async () => {
+  const name = document.getElementById("newName").value.trim();
+  const addr = document.getElementById("newAddress").value.trim();
+  const msg  = document.getElementById("createMsg");
+  if (!name || !addr) { msg.innerHTML = "<span class='msg-err'>Name and address required.</span>"; return; }
+  const btn = document.getElementById("createBtn"); btn.disabled = true; btn.textContent = "Creating...";
   try {
-    const cSnap = await getDocs(collection(db,'clients'));
-    cSnap.forEach(ds => {
-      if (ds.data().projectId === currentPid && ds.data().name) {
-        clientName = ds.data().name.split(' ')[0];
+    await addDoc(collection(db, "projects"), {
+      name, address: addr,
+      contractValue: parseFloat(document.getElementById("newContract").value || 0),
+      description:   document.getElementById("newDesc").value.trim(),
+      clientPhone:   document.getElementById("newPhone").value.trim(),
+      clientLang:    document.getElementById("newLang").value,
+      progress: 0, status: "active", checklist: {}, createdAt: serverTimestamp(),
+    });
+    ["newName","newAddress","newContract","newDesc","newPhone"].forEach(id => document.getElementById(id).value = "");
+    msg.innerHTML = "<span class='msg-ok'>✅ Project created!</span>";
+    setTimeout(() => msg.innerHTML = "", 3000);
+    loadProjects();
+  } catch(e) { msg.innerHTML = "<span class='msg-err'>Error: " + e.message + "</span>"; }
+  btn.disabled = false; btn.textContent = "Create Project";
+};
+
+/* ── DETAIL ── */
+window.openProject = async pid => {
+  currentPid = pid;
+  const snap = await getDoc(doc(db, "projects", pid));
+  if (!snap.exists()) { alert("Project not found."); return; }
+  const p = snap.data();
+  document.getElementById("listView").style.display   = "none";
+  document.getElementById("detailView").style.display = "block";
+  document.getElementById("dName").textContent = p.name;
+  document.getElementById("dAddr").textContent = p.address;
+  document.getElementById("dDesc").textContent = p.description || "";
+  const sb = document.getElementById("dStatus"); sb.textContent = p.status || "active"; sb.className = "sbadge sb-" + (p.status || "active");
+  setProgressUI(p.progress || 0);
+  document.getElementById("sumProgress").textContent = (p.progress || 0) + "%";
+  document.getElementById("sumStatus").textContent   = p.status || "active";
+  document.getElementById("sumContract").textContent = p.contractValue ? "$" + parseFloat(p.contractValue).toLocaleString() : "-";
+  checklistData = p.checklist || {};
+  if (isAdmin) {
+    document.getElementById("adminTabs").style.display  = "block";
+    document.getElementById("clientView").style.display = "none";
+    document.getElementById("eName").value     = p.name;
+    document.getElementById("eAddr").value     = p.address;
+    document.getElementById("eContract").value = p.contractValue || "";
+    document.getElementById("eDesc").value     = p.description || "";
+    document.getElementById("eStatus").value   = p.status || "active";
+    document.getElementById("ePhone").value    = p.clientPhone || "";
+    document.getElementById("eLang").value     = p.clientLang || "en";
+    switchAdminTab("progress"); renderAdminChecklist(); loadExpenses(); loadPhotos("adminPhotoGrid", true);
+  } else {
+    document.getElementById("adminTabs").style.display  = "none";
+    document.getElementById("clientView").style.display = "block";
+    switchClientTab("status"); renderClientChecklist(); loadClientExpenses(); loadPhotos("clientPhotoGrid", false);
+  }
+};
+
+window.backToList = () => { currentPid = null; document.getElementById("listView").style.display = "block"; document.getElementById("detailView").style.display = "none"; };
+
+function setProgressUI(val) {
+  document.getElementById("pbarFill").style.width = val + "%";
+  document.getElementById("pbarLbl").textContent  = val + "% Complete";
+  document.getElementById("pbarSub").textContent  = val === 100 ? "✅ Project complete!" : val === 0 ? "Not yet started" : "In progress";
+}
+
+window.saveEdit = async () => {
+  const btn = document.getElementById("saveEditBtn"); const msg = document.getElementById("editMsg");
+  btn.disabled = true; btn.textContent = "Saving...";
+  try {
+    const newStatus = document.getElementById("eStatus").value;
+    const oldSnap   = await getDoc(doc(db, "projects", currentPid));
+    const oldStatus = oldSnap.exists() ? oldSnap.data().status : "";
+    const phone     = document.getElementById("ePhone").value.trim();
+    const lang      = document.getElementById("eLang").value;
+    const addr      = document.getElementById("eAddr").value.trim();
+    await updateDoc(doc(db, "projects", currentPid), {
+      name:          document.getElementById("eName").value.trim(),
+      address:       addr,
+      contractValue: parseFloat(document.getElementById("eContract").value || 0),
+      description:   document.getElementById("eDesc").value.trim(),
+      status:        newStatus, clientPhone: phone, clientLang: lang,
+    });
+    if (newStatus !== oldStatus && phone) {
+      let cname = "there";
+      try { const cs = await getDocs(collection(db,"clients")); cs.forEach(d => { if(d.data().projectId===currentPid&&d.data().name) cname=d.data().name.split(" ")[0]; }); } catch{}
+      await autoSendSMS(phone, lang, newStatus, cname, addr);
+    }
+    msg.className = "msg-ok"; msg.textContent = "✅ Saved.";
+    openProject(currentPid);
+  } catch(e) { msg.className = "msg-err"; msg.textContent = "Error: " + e.message; }
+  btn.disabled = false; btn.textContent = "Save Changes";
+};
+
+window.deleteProject = async () => {
+  if (!confirm("Delete this project and ALL its data? Cannot be undone.")) return;
+  const e = await getDocs(collection(db,"projects",currentPid,"expenses")); for(const d of e.docs) await deleteDoc(d.ref);
+  const h = await getDocs(collection(db,"projects",currentPid,"photos"));   for(const d of h.docs) await deleteDoc(d.ref);
+  await deleteDoc(doc(db,"projects",currentPid)); loadProjects();
+};
+
+/* ── CHECKLIST ── */
+const CL = [
+  {cat:"Site & Permits",items:[{id:"permits",name:"Permits & Approvals",sub:"Building permits pulled and approved"},{id:"site_prep",name:"Site Preparation & Demo",sub:"Cleanup, demolition, debris removal"}]},
+  {cat:"Structural / Framing",items:[{id:"foundation",name:"Foundation Work",sub:"Footings, slab, or crawlspace"},{id:"framing",name:"Framing",sub:"Wall, floor, and roof framing"},{id:"sheathing",name:"Sheathing / Decking",sub:"OSB or plywood installed"},{id:"struct_insp",name:"Structural Inspection",sub:"Framing inspection passed"}]},
+  {cat:"Roofing & Exterior",items:[{id:"roof_tear",name:"Roof Tear-Off",sub:"Old roofing removed"},{id:"roof_install",name:"Roof Installation",sub:"New shingles, membrane, or metal"},{id:"flashing",name:"Flashing & Gutters",sub:"Flashing, drip edge, gutters installed"},{id:"siding",name:"Siding / Exterior Wrap",sub:"House wrap and siding installed"},{id:"windows",name:"Windows",sub:"Windows installed and sealed"},{id:"doors_ext",name:"Exterior Doors",sub:"Entry and exterior doors hung"},{id:"ext_paint",name:"Exterior Paint / Finish",sub:"Paint, stucco, or finish coat applied"}]},
+  {cat:"Rough-In Trades",items:[{id:"plumb_rough",name:"Plumbing Rough-In",sub:"Supply and drain lines installed"},{id:"elec_rough",name:"Electrical Rough-In",sub:"Wiring, panel, and boxes installed"},{id:"hvac_rough",name:"HVAC Rough-In",sub:"Ducts, lines, and units installed"},{id:"rough_insp",name:"Rough-In Inspections",sub:"All trade inspections passed"}]},
+  {cat:"Insulation",items:[{id:"insulation",name:"Insulation",sub:"Walls, attic, and crawlspace insulated"},{id:"insul_insp",name:"Insulation Inspection",sub:"Inspection passed"}]},
+  {cat:"Drywall",items:[{id:"drywall_hang",name:"Drywall Hanging",sub:"Drywall sheets hung throughout"},{id:"drywall_tape",name:"Taping & Mudding",sub:"Tape, mud, and finish coats applied"},{id:"drywall_sand",name:"Sanding & Priming",sub:"Smooth finish and primer coat"}]},
+  {cat:"Flooring",items:[{id:"subfloor",name:"Subfloor Preparation",sub:"Leveling, patching, underlayment"},{id:"tile_floor",name:"Tile Installation",sub:"Tile flooring and grouting"},{id:"hardwood",name:"Hardwood / LVP Flooring",sub:"Wood or LVP planks installed"},{id:"carpet",name:"Carpet",sub:"Carpet and padding installed"},{id:"floor_trim",name:"Floor Transitions & Trim",sub:"Transition strips and base trim"}]},
+  {cat:"Kitchen",items:[{id:"kitchen_cab",name:"Kitchen Cabinets",sub:"Upper and lower cabinets installed"},{id:"countertops",name:"Countertops",sub:"Stone, laminate, or butcher block"},{id:"backsplash",name:"Backsplash",sub:"Tile or panel backsplash installed"},{id:"kitchen_sink",name:"Kitchen Sink & Faucet",sub:"Sink, faucet, and disposal installed"},{id:"appliances",name:"Appliances",sub:"Stove, fridge, dishwasher, microwave"}]},
+  {cat:"Bathrooms",items:[{id:"bath_tile",name:"Bathroom Tile",sub:"Floor and shower / tub tile"},{id:"bath_vanity",name:"Vanity & Sink",sub:"Vanity, sink, and faucet installed"},{id:"toilet",name:"Toilet",sub:"Toilet installed and operational"},{id:"shower_tub",name:"Shower / Tub",sub:"Shower or tub installed"},{id:"bath_access",name:"Mirror & Accessories",sub:"Mirror, towel bars, toilet paper holder"}]},
+  {cat:"Interior Finishes",items:[{id:"int_doors",name:"Interior Doors",sub:"All interior doors hung and trimmed"},{id:"trim_base",name:"Trim & Baseboards",sub:"Window / door casings and baseboards"},{id:"int_paint",name:"Interior Painting",sub:"All rooms painted and finished"},{id:"closets",name:"Closet Shelving",sub:"Shelves, rods, and organizers installed"}]},
+  {cat:"Mechanical Finishes",items:[{id:"plumb_fin",name:"Plumbing Finish",sub:"All fixtures, valves, and connections"},{id:"elec_fin",name:"Electrical Finish",sub:"Outlets, switches, and fixtures installed"},{id:"hvac_fin",name:"HVAC Finish",sub:"Vents, thermostats, equipment startup"}]},
+  {cat:"Final Steps",items:[{id:"cleaning",name:"Final Cleaning",sub:"Deep clean of entire space"},{id:"punch_list",name:"Punch List Completion",sub:"All final items corrected"},{id:"final_insp",name:"Final Inspection",sub:"Certificate of occupancy or sign-off"},{id:"client_walk",name:"Client Walkthrough",sub:"Owner walkthrough and approval"},{id:"handoff",name:"Project Complete",sub:"Keys and handoff to client"}]},
+];
+
+function renderAdminChecklist() {
+  const body = document.getElementById("adminChecklistBody"); body.innerHTML = "";
+  CL.forEach(sec => {
+    const cat  = document.createElement("div"); cat.className = "cl-category";
+    const done = sec.items.filter(i => checklistData[i.id] && checklistData[i.id].done).length;
+    cat.innerHTML = "<div class='cl-cat-header'><span>" + sec.cat + "</span><span class='cl-cat-count'>" + done + " / " + sec.items.length + "</span></div>";
+    sec.items.forEach(item => {
+      const s  = checklistData[item.id] || {done:false,note:""};
+      const el = document.createElement("div"); el.className = "cl-item" + (s.done ? " done" : ""); el.id = "ci-" + item.id;
+      el.innerHTML = "<div class='cl-item-row' onclick=\"toggleItem('" + item.id + "')\">" + "<div class='cl-box'><span class='cl-check'>✓</span></div>" + "<div><div class='cl-name'>" + item.name + "</div><div class='cl-sub'>" + item.sub + "</div></div></div>" + "<div class='cl-note-row'><input type='text' id='cn-" + item.id + "' placeholder='Add a note for the client (optional)' value='" + (s.note || "").replace(/'/g, "&#39;") + "'></div>";
+      cat.appendChild(el);
+    });
+    body.appendChild(cat);
+  });
+}
+
+function renderClientChecklist() {
+  const body = document.getElementById("clientChecklistBody"); body.innerHTML = "";
+  CL.forEach(sec => {
+    const cat = document.createElement("div"); cat.className = "cl-client-category";
+    cat.innerHTML = "<div class='cl-client-cat-title'>" + sec.cat + "</div>";
+    sec.items.forEach(item => {
+      const s   = checklistData[item.id] || {done:false,note:""};
+      const div = document.createElement("div"); div.className = "cl-client-item" + (s.done ? " done" : "");
+      div.innerHTML = "<div style='font-size:.95rem;flex-shrink:0;margin-top:.05rem'>" + (s.done ? "✅" : "⬜") + "</div><div><div class='cl-client-name'>" + item.name + "</div>" + (s.note ? "<div class='cl-client-note'>📝 " + s.note + "</div>" : "") + "</div>";
+      cat.appendChild(div);
+    });
+    body.appendChild(cat);
+  });
+}
+
+window.toggleItem = id => {
+  if (!checklistData[id]) checklistData[id] = {done:false,note:""};
+  checklistData[id].done = !checklistData[id].done;
+  const el = document.getElementById("ci-" + id);
+  if (el) el.className = "cl-item" + (checklistData[id].done ? " done" : "");
+};
+
+window.saveChecklist = async () => {
+  const btn = document.getElementById("saveClBtn"); const msg = document.getElementById("clSaveMsg");
+  btn.disabled = true; btn.textContent = "Saving...";
+  CL.forEach(sec => sec.items.forEach(item => {
+    const noteEl = document.getElementById("cn-" + item.id);
+    if (noteEl) { if (!checklistData[item.id]) checklistData[item.id] = {done:false,note:""}; checklistData[item.id].note = noteEl.value.trim(); }
+  }));
+  let total = 0, done = 0;
+  CL.forEach(sec => sec.items.forEach(item => { total++; if (checklistData[item.id] && checklistData[item.id].done) done++; }));
+  const progress = Math.round((done / total) * 100);
+  await updateDoc(doc(db, "projects", currentPid), {checklist: checklistData, progress});
+  setProgressUI(progress);
+  document.getElementById("sumProgress").textContent = progress + "%";
+  msg.textContent = "✅ Saved! Progress: " + progress + "%";
+  setTimeout(() => msg.textContent = "", 3000);
+  btn.disabled = false; btn.textContent = "Save Checklist";
+  renderAdminChecklist();
+  // Auto SMS at milestones
+  try {
+    const ps = await getDoc(doc(db, "projects", currentPid));
+    if (ps.exists()) {
+      const pd = ps.data();
+      if (pd.clientPhone && [25,50,75,100].includes(progress)) {
+        let cname = "there";
+        try { const cs = await getDocs(collection(db,"clients")); cs.forEach(d => { if(d.data().projectId===currentPid&&d.data().name) cname=d.data().name.split(" ")[0]; }); } catch{}
+        await autoSendSMS(pd.clientPhone, pd.clientLang || "en", "p" + progress, cname, pd.address);
       }
-    });
-  } catch {}
+    }
+  } catch{}
+};
 
-  const body = formatSMS(template, { name:clientName, address, progress, milestone });
+/* ── EXPENSES ── */
+async function loadExpenses() {
+  const list = document.getElementById("expList"); list.innerHTML = "<div class='spin-wrap'><div class='spinner'></div></div>";
+  try { const s = await getDocs(collection(db,"projects",currentPid,"expenses")); renderExp(s,"expList","expTotal",true); } catch(e) { document.getElementById("expList").innerHTML="<p class='empty-txt' style='color:#e08080'>Error: "+e.message+"</p>"; }
+}
+async function loadClientExpenses() {
+  const list = document.getElementById("clientExpList"); list.innerHTML = "<div class='spin-wrap'><div class='spinner'></div></div>";
+  try { const s = await getDocs(collection(db,"projects",currentPid,"expenses")); renderExp(s,"clientExpList","clientExpTotal",false); } catch{}
+}
+function renderExp(snap,listId,totId,canDel) {
+  const list = document.getElementById(listId); list.innerHTML = "";
+  if (!snap||snap.empty){list.innerHTML="<p class='empty-txt'>No expenses yet.</p>";document.getElementById(totId).textContent="$0.00";return;}
+  let total=0;
+  const docs=[...snap.docs].sort((a,b)=>(b.data().date||"")>(a.data().date||"")?-1:1).reverse();
+  docs.forEach(ds=>{
+    const e=ds.data(); total+=parseFloat(e.amount||0);
+    const div=document.createElement("div"); div.className="exp-row";
+    div.innerHTML="<div class='exp-info'><span class='exp-cat'>"+e.category+"</span><span class='exp-desc'>"+e.description+"</span><span class='exp-date'>"+e.date+"</span></div><div class='exp-right'><span class='exp-amt'>$"+parseFloat(e.amount).toFixed(2)+"</span>"+(canDel?"<button class='del-sm' onclick=\"deleteExpense('"+ds.id+"')\">✕</button>":"")+"</div>";
+    list.appendChild(div);
+  });
+  document.getElementById(totId).textContent="$"+total.toFixed(2);
+}
+window.addExpense = async () => {
+  const desc=document.getElementById("expDesc").value.trim(),amt=document.getElementById("expAmt").value,date=document.getElementById("expDate").value;
+  if(!desc||!amt||!date){alert("Fill all expense fields.");return;}
+  const btn=document.getElementById("addExpBtn"); btn.disabled=true; btn.textContent="Adding...";
+  await addDoc(collection(db,"projects",currentPid,"expenses"),{category:document.getElementById("expCat").value,description:desc,amount:parseFloat(amt),date,createdAt:serverTimestamp()});
+  document.getElementById("expDesc").value=document.getElementById("expAmt").value=document.getElementById("expDate").value="";
+  btn.disabled=false; btn.textContent="Add Expense"; loadExpenses();
+};
+window.deleteExpense = async id=>{if(!confirm("Remove this expense?"))return;await deleteDoc(doc(db,"projects",currentPid,"expenses",id));loadExpenses();};
 
+/* ── PHOTOS ── */
+async function loadPhotos(gridId,canDel) {
+  const grid=document.getElementById(gridId); grid.innerHTML="<div class='spin-wrap'><div class='spinner'></div></div>";
   try {
-    const res = await fetch(smsServer + '/api/send-sms', {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ to:phone, body, language:lang }),
+    const snap=await getDocs(collection(db,"projects",currentPid,"photos"));
+    grid.innerHTML="";
+    if(snap.empty){grid.innerHTML="<p class='empty-txt'>No photos yet.</p>";return;}
+    snap.forEach(ds=>{
+      const ph=ds.data(); const isPDF=ph.name&&ph.name.toLowerCase().endsWith(".pdf");
+      const div=document.createElement("div"); div.className="photo-item";
+      if(isPDF){
+        div.innerHTML="<div class='pbadge "+ph.type+"'>"+ph.type+"</div><div style='width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.4rem;cursor:pointer' onclick=\"downloadFile('"+ds.id+"')\"><div style='font-size:2rem'>📄</div><div style='font-size:.7rem;color:var(--mid);text-align:center;padding:0 .5rem'>"+( ph.name||"document.pdf")+"</div><div style='font-size:.68rem;color:var(--accent)'>Tap to download</div></div>"+(canDel?"<button class='del-photo' onclick=\"deletePhoto('"+ds.id+"')\">✕</button>":"");
+      } else {
+        const badge=document.createElement("div"); badge.className="pbadge "+ph.type; badge.textContent=ph.type;
+        const img=document.createElement("img"); img.alt=ph.type; img.loading="lazy"; img.style.cssText="width:100%;height:100%;object-fit:cover;cursor:zoom-in";
+        if(ph.data) img.src=ph.data;
+        img.onclick=()=>{document.getElementById("photoOverlayImg").src=ph.data||"";document.getElementById("photoOverlay").style.display="flex";};
+        div.appendChild(badge); div.appendChild(img);
+        if(canDel){const d=document.createElement("button");d.className="del-photo";d.textContent="✕";d.onclick=()=>deletePhoto(ds.id);div.appendChild(d);}
+      }
+      grid.appendChild(div);
     });
-    const data = await res.json();
-    if (data.success) showSmsToast('✅ Progress SMS sent to client!');
-  } catch(e) { console.log('Progress SMS error:', e); }
+  } catch(e){grid.innerHTML="<p class='empty-txt' style='color:#e08080'>Error: "+e.message+"</p>";}
 }
+window.uploadPhoto = async()=>{
+  const file=document.getElementById("photoFile").files[0]; const type=document.getElementById("photoType").value; const msg=document.getElementById("uploadMsg");
+  if(!file){alert("Select a file first.");return;}
+  const isPDF=file.name.toLowerCase().endsWith(".pdf"); const maxSize=isPDF?3000000:1500000;
+  if(file.size>maxSize){alert(isPDF?"PDF must be under 3MB.":"Image must be under 1.5MB. Compress at squoosh.app");return;}
+  const btn=document.getElementById("uploadBtn"); btn.disabled=true; btn.textContent="Uploading..."; msg.textContent="Reading file...";
+  const reader=new FileReader();
+  reader.onload=async e=>{
+    try{
+      await addDoc(collection(db,"projects",currentPid,"photos"),{type,data:e.target.result,name:file.name,isPDF,createdAt:serverTimestamp()});
+      document.getElementById("photoFile").value=""; msg.textContent=isPDF?"✅ PDF uploaded!":"✅ Photo uploaded!";
+      loadPhotos("adminPhotoGrid",true);
+    }catch(err){msg.textContent="Error: "+err.message;}
+    btn.disabled=false; btn.textContent="Upload";
+  };
+  reader.readAsDataURL(file);
+};
+window.downloadFile=async id=>{const s=await getDoc(doc(db,"projects",currentPid,"photos",id));if(!s.exists())return;const ph=s.data();const a=document.createElement("a");a.href=ph.data;a.download=ph.name||"document.pdf";document.body.appendChild(a);a.click();document.body.removeChild(a);};
+window.deletePhoto=async id=>{if(!confirm("Delete this photo?"))return;await deleteDoc(doc(db,"projects",currentPid,"photos",id));loadPhotos("adminPhotoGrid",true);};
+window.closeOverlay=()=>{document.getElementById("photoOverlay").style.display="none";};
 
-function showSmsToast(msg) {
-  const toast = document.createElement('div');
-  toast.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--green);color:#000;padding:.6rem 1.25rem;border-radius:8px;font-size:.84rem;font-weight:600;z-index:999;box-shadow:0 4px 20px rgba(0,0,0,.4)';
-  toast.textContent = msg;
-  document.body.appendChild(toast);
-  setTimeout(() => toast.remove(), 3500);
+/* ── CLIENTS ── */
+async function loadClients() {
+  const list=document.getElementById("clientList"); list.innerHTML="<div class='spin-wrap'><div class='spinner'></div></div>";
+  const projSnap=await getDocs(collection(db,"projects")); const projects=[];
+  projSnap.forEach(ds=>projects.push({id:ds.id,name:ds.data().name})); projects.sort((a,b)=>a.name.localeCompare(b.name));
+  const clientSnap=await getDocs(collection(db,"clients")); list.innerHTML="";
+  if(clientSnap.empty){list.innerHTML="<p class='empty-txt'>No client accounts yet.</p>";return;}
+  clientSnap.forEach(ds=>{
+    const c=ds.data(); const cid=ds.id; const assigned=!!c.projectId;
+    const opts=projects.map(p=>"<option value='"+p.id+"'"+(c.projectId===p.id?" selected":"")+">"+p.name+"</option>").join("");
+    const div=document.createElement("div"); div.className="client-row";
+    div.innerHTML="<div class='client-info'><div class='client-email'>"+(c.name||"")+" <span style='font-weight:400;color:var(--mid)'>&lt;"+c.email+"&gt;</span></div><div class='client-sub'>"+(assigned?"📁 "+c.projectName:"⏳ Awaiting project assignment")+"</div></div>"+"<span class='client-pill "+(assigned?"cp-assigned":"cp-pending")+"'>"+(assigned?"Assigned":"Pending")+"</span>"+"<div class='client-actions'><select id='psel-"+cid+"'><option value=''>Select project</option>"+opts+"</select>"+"<button class='btn-p' style='margin-top:0;padding:.35rem .9rem' onclick=\"assignProject('"+cid+"','"+c.email+"')\">Assign</button>"+"<button class='btn-p' style='margin-top:0;padding:.35rem .9rem;background:var(--red)' onclick=\"removeClient('"+cid+"')\">Remove</button></div>";
+    list.appendChild(div);
+  });
 }
+window.assignProject=async(cid,email)=>{
+  const sel=document.getElementById("psel-"+cid); const pid=sel.value;
+  if(!pid){alert("Select a project first.");return;}
+  const ps=await getDoc(doc(db,"projects",pid)); if(!ps.exists()){alert("Project not found.");return;}
+  await updateDoc(doc(db,"clients",cid),{projectId:pid,projectName:ps.data().name});
+  alert("✅ Project assigned to "+email+".");
+  loadClients();
+};
+window.removeClient=async id=>{if(!confirm("Remove this client?"))return;await deleteDoc(doc(db,"clients",id));loadClients();};
 
-document.addEventListener('keydown',e=>{
-  if (e.key==='Enter'&&document.getElementById('authScreen').style.display!=='none') doLogin();
-  if (e.key==='Escape') closeOverlay();
+/* ── UI ── */
+window.showSection=(id,btn)=>{
+  document.querySelectorAll(".psection").forEach(s=>s.classList.remove("active"));
+  document.querySelectorAll(".pnav-btn").forEach(b=>b.classList.remove("active"));
+  document.getElementById("section-"+id).classList.add("active");
+  if(btn)btn.classList.add("active");
+  if(id==="clients")loadClients();
+};
+window.switchAdminTab=id=>{
+  ["progress","edit","expenses","photos"].forEach(t=>{document.getElementById("atab-"+t).classList.toggle("active",t===id);document.getElementById("apanel-"+t).classList.toggle("active",t===id);});
+};
+window.switchClientTab=id=>{
+  ["status","expenses","photos"].forEach(t=>{document.getElementById("ctab-"+t).classList.toggle("active",t===id);document.getElementById("cpanel-"+t).classList.toggle("active",t===id);});
+};
+document.addEventListener("keydown", e => {
+  if (e.key === "Enter" && document.getElementById("authScreen").style.display !== "none") doLogin();
+  if (e.key === "Escape") closeOverlay();
 });
 </script>
 </body>
