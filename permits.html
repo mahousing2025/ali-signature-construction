@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Permit Agent • Ali Signature Construction LLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--black:#0a0a0a;--dark:#111;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;--mid:#6b6b6b;--light:#b0b0b0;--white:#f4f2ee;--accent:#c8a96e;--accent2:#e8c887;--green:#6ec87a;--red:#d14f4f;--blue:#5b9bd5;--orange:#e8944a}
+    html,body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+    input,select,textarea,button{font-family:inherit}
+
+    .header{height:60px;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:.75rem;position:sticky;top:0;z-index:100}
+    .header-logo{width:36px;height:36px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--black);flex-shrink:0}
+    .header-brand{font-size:.85rem;font-weight:600}
+    .header-sub{font-size:.7rem;color:var(--mid)}
+    .header-right{margin-left:auto;display:flex;gap:.75rem;align-items:center}
+    .back-link{font-size:.78rem;color:var(--accent);text-decoration:none}
+
+    .body{max-width:960px;margin:0 auto;padding:2rem 1.5rem}
+    .page-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.04em;margin-bottom:.35rem}
+    .page-sub{font-size:.88rem;color:var(--mid);margin-bottom:2rem;line-height:1.6}
+
+    /* INPUT FORM */
+    .input-card{background:var(--dark);border:1px solid var(--border);border-radius:14px;padding:1.75rem;margin-bottom:1.5rem}
+    .card-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
+    .card-label::before{content:'';display:block;width:3px;height:13px;background:var(--accent);border-radius:2px}
+    .fg{display:flex;flex-direction:column;gap:.35rem;margin-bottom:.85rem}
+    .fg label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid)}
+    .fg input,.fg select,.fg textarea{background:var(--surface);border:1.5px solid var(--border);border-radius:6px;color:var(--white);font-size:.88rem;padding:.62rem .9rem;transition:border-color .2s;width:100%}
+    .fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--accent)}
+    .fg select option{background:var(--dark)}
+    .fg textarea{resize:vertical;min-height:80px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+    /* CHECKBOXES */
+    .scope-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:.85rem}
+    .scope-check{display:flex;align-items:center;gap:.5rem;background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:.55rem .8rem;cursor:pointer;transition:all .15s;font-size:.82rem;color:var(--light)}
+    .scope-check:hover{border-color:var(--accent)}
+    .scope-check input{width:15px;height:15px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+    .scope-check.checked{border-color:var(--accent);background:rgba(200,169,110,.08);color:var(--white)}
+
+    .analyze-btn{width:100%;background:var(--accent);color:var(--black);border:none;border-radius:8px;font-size:.92rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.9rem;cursor:pointer;transition:background .2s;margin-top:.5rem;display:flex;align-items:center;justify-content:center;gap:.75rem}
+    .analyze-btn:hover{background:var(--accent2)}
+    .analyze-btn:disabled{opacity:.5;cursor:not-allowed}
+
+    /* RESULTS */
+    #resultsSection{display:none}
+    .jurisdiction-banner{background:linear-gradient(135deg,rgba(200,169,110,.12),rgba(200,169,110,.04));border:1px solid rgba(200,169,110,.3);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;gap:1rem;flex-wrap:wrap}
+    .jb-icon{font-size:2rem;flex-shrink:0}
+    .jb-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:var(--accent)}
+    .jb-sub{font-size:.82rem;color:var(--light);margin-top:.15rem}
+    .jb-link{margin-left:auto;background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.76rem;font-weight:700;padding:.45rem 1rem;text-decoration:none;white-space:nowrap;cursor:pointer}
+
+    /* PERMIT CARDS */
+    .permits-grid{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+    .permit-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .permit-header{display:flex;align-items:center;gap:1rem;padding:1.1rem 1.25rem;cursor:pointer}
+    .permit-icon{font-size:1.5rem;flex-shrink:0}
+    .permit-info{flex:1;min-width:0}
+    .permit-name{font-size:.96rem;font-weight:600;color:var(--white)}
+    .permit-authority{font-size:.76rem;color:var(--mid);margin-top:.15rem}
+    .permit-required{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:.2rem .65rem;border-radius:99px;flex-shrink:0}
+    .pr-required{background:rgba(209,79,79,.15);color:var(--red);border:1px solid rgba(209,79,79,.3)}
+    .pr-maybe{background:rgba(232,148,74,.15);color:var(--orange);border:1px solid rgba(232,148,74,.3)}
+    .pr-notneeded{background:rgba(110,200,122,.15);color:var(--green);border:1px solid rgba(110,200,122,.3)}
+    .permit-expand{font-size:.8rem;color:var(--mid);flex-shrink:0}
+    .permit-body{display:none;border-top:1px solid var(--border);padding:1.1rem 1.25rem}
+    .permit-body.open{display:block}
+    .permit-section{margin-bottom:1rem}
+    .permit-section:last-child{margin-bottom:0}
+    .permit-section-title{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:.5rem}
+    .permit-section ul{list-style:none;display:flex;flex-direction:column;gap:.35rem}
+    .permit-section ul li{font-size:.83rem;color:var(--light);display:flex;align-items:flex-start;gap:.5rem;line-height:1.5}
+    .permit-section ul li::before{content:'→';color:var(--accent);flex-shrink:0;font-size:.78rem;margin-top:.15rem}
+    .code-tag{background:var(--surface);border:1px solid var(--border);border-radius:4px;font-size:.72rem;color:var(--accent);padding:.1rem .45rem;font-family:monospace;white-space:nowrap}
+    .permit-fee{background:var(--surface);border-radius:6px;padding:.6rem .85rem;font-size:.82rem;color:var(--light);display:flex;align-items:center;justify-content:space-between}
+    .permit-fee-amount{font-weight:600;color:var(--accent)}
+    .permit-portal-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--accent);color:var(--black);border:none;border-radius:5px;font-size:.76rem;font-weight:700;padding:.4rem .9rem;cursor:pointer;text-decoration:none;margin-top:.75rem}
+    .permit-portal-btn:hover{background:var(--accent2)}
+
+    /* INSPECTION SEQUENCE */
+    .inspection-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+    .inspection-steps{display:flex;flex-direction:column;gap:.75rem;margin-top:.85rem}
+    .insp-step{display:flex;align-items:flex-start;gap:1rem}
+    .insp-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:var(--black);font-size:.8rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.05rem}
+    .insp-info{flex:1}
+    .insp-name{font-size:.9rem;font-weight:600;color:var(--white)}
+    .insp-desc{font-size:.78rem;color:var(--mid);margin-top:.15rem;line-height:1.5}
+
+    /* CHECKLIST */
+    .checklist-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem}
+    .checklist-items{display:flex;flex-direction:column;gap:.45rem;margin-top:.85rem}
+    .cl-item{display:flex;align-items:center;gap:.75rem;background:var(--surface);border-radius:7px;padding:.65rem .9rem;font-size:.84rem;color:var(--light)}
+    .cl-item input{width:16px;height:16px;accent-color:var(--accent);cursor:pointer;flex-shrink:0}
+    .cl-item.checked-item{background:rgba(110,200,122,.06);color:var(--green);text-decoration:line-through;opacity:.7}
+
+    /* PRINT / SAVE */
+    .action-row{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:2rem}
+    .action-btn{background:var(--surface);border:1px solid var(--border);color:var(--light);font-size:.8rem;font-weight:600;padding:.55rem 1.1rem;border-radius:6px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:.4rem}
+    .action-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* LOADING */
+    #loadingSection{display:none;text-align:center;padding:3rem 2rem}
+    .loading-icon{font-size:3rem;animation:spin2 2s linear infinite;display:inline-block;margin-bottom:1rem}
+    @keyframes spin2{to{transform:rotate(360deg)}}
+    .loading-text{font-size:.9rem;color:var(--mid);margin-top:.5rem}
+    .loading-steps{display:flex;flex-direction:column;gap:.4rem;margin-top:1.25rem;text-align:left;max-width:360px;margin-left:auto;margin-right:auto}
+    .loading-step{font-size:.8rem;color:var(--mid);display:flex;align-items:center;gap:.5rem}
+    .loading-step.done{color:var(--green)}
+    .loading-step.active{color:var(--accent)}
+
+    .empty-state{text-align:center;padding:3rem 2rem;color:var(--mid);font-size:.88rem}
+
+    @media print{
+      .header,.analyze-btn,.action-row,.back-link{display:none!important}
+      .body{padding:1rem}
+      .permit-body{display:block!important}
+    }
+    @media(max-width:680px){
+      .grid2,.grid3,.scope-grid{grid-template-columns:1fr 1fr}
+      .body{padding:1.25rem .85rem}
+    }
+    @media(max-width:440px){
+      .scope-grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">ASC</div>
+  <div><div class="header-brand">Ali Signature Construction</div><div class="header-sub">Permit Agent</div></div>
+  <div class="header-right">
+    <a href="admin.html" class="back-link">← Dashboard</a>
+    <a href="portal.html" class="back-link">Portal →</a>
+  </div>
+</div>
+
+<div class="body">
+  <div class="page-title">🏛️ Permit Agent</div>
+  <p class="page-sub">Enter the project address and scope of work. The agent will automatically identify the correct jurisdiction, list every permit required, show the applicable codes (NEC, IMC, UPC), estimate fees, and give you the direct link to apply.</p>
+
+  <!-- INPUT FORM -->
+  <div class="input-card">
+    <div class="card-label">Project Information</div>
+    <div class="grid2">
+      <div class="fg"><label>Property Address *</label><input type="text" id="projAddress" placeholder="836 KrikWood St, Wilmington, DE 19801" /></div>
+      <div class="fg"><label>Property Type</label>
+        <select id="propType">
+          <option value="residential_single">Residential — Single Family</option>
+          <option value="residential_multi">Residential — Multi Family</option>
+          <option value="commercial">Commercial</option>
+          <option value="mixed">Mixed Use</option>
+        </select>
+      </div>
+      <div class="fg"><label>Contract Value ($)</label><input type="number" id="contractValue" placeholder="15000" min="0" /></div>
+      <div class="fg"><label>Project Name (optional)</label><input type="text" id="projName" placeholder="Johnson Kitchen Renovation" /></div>
+    </div>
+    <div class="fg"><label>Scope of Work Description (optional — helps AI be more accurate)</label>
+      <textarea id="scopeDesc" placeholder="e.g. Full kitchen renovation including removing wall between kitchen and living room, new electrical panel upgrade to 200A, new HVAC unit, all new plumbing fixtures..."></textarea>
+    </div>
+  </div>
+
+  <div class="input-card">
+    <div class="card-label">Scope of Work — Check all that apply</div>
+    <div class="scope-grid" id="scopeGrid">
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="structural"> Structural / Framing</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="demolition"> Demolition</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="addition"> Addition / New Space</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="roofing"> Roofing</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="electrical"> Electrical Work</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="electrical_panel"> Electrical Panel Upgrade</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="plumbing"> Plumbing Work</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="plumbing_new"> New Plumbing Fixtures</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="hvac"> HVAC / Mechanical</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="hvac_new_unit"> New HVAC Unit</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="gas"> Gas Line Work</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="kitchen"> Kitchen Remodel</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="bathroom"> Bathroom Remodel</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="drywall"> Drywall / Insulation</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="windows_doors"> Windows / Doors</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="siding"> Siding / Exterior</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="deck"> Deck / Porch</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="fence"> Fence</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="accessory_structure"> Shed / Garage / ADU</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="foundation"> Foundation Work</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="flooring"> Flooring Only</label>
+      <label class="scope-check" onclick="toggleScope(this)"><input type="checkbox" value="painting"> Painting Only</label>
+    </div>
+    <button class="analyze-btn" id="analyzeBtn" onclick="runPermitAgent()">
+      <span id="analyzeBtnText">🔍 Analyze Project & Generate Permit Report</span>
+    </button>
+  </div>
+
+  <!-- LOADING -->
+  <div id="loadingSection">
+    <div class="loading-icon">⚙️</div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em">Analyzing Your Project</div>
+    <div class="loading-text">This takes about 15 seconds</div>
+    <div class="loading-steps">
+      <div class="loading-step" id="step1">📍 Identifying jurisdiction from address...</div>
+      <div class="loading-step" id="step2">📋 Determining required permits...</div>
+      <div class="loading-step" id="step3">⚡ Loading electrical codes (NEC 2023)...</div>
+      <div class="loading-step" id="step4">🔧 Loading HVAC codes (IMC 2021)...</div>
+      <div class="loading-step" id="step5">💧 Loading plumbing codes (UPC/Delaware)...</div>
+      <div class="loading-step" id="step6">💰 Calculating permit fees...</div>
+      <div class="loading-step" id="step7">🔗 Finding direct application links...</div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="resultsSection">
+
+    <!-- Jurisdiction Banner -->
+    <div class="jurisdiction-banner" id="jurisdictionBanner"></div>
+
+    <!-- Action Buttons -->
+    <div class="action-row">
+      <button class="action-btn" onclick="window.print()">🖨️ Print Report</button>
+      <button class="action-btn" onclick="saveToProject()">💾 Save to Project</button>
+      <button class="action-btn" onclick="resetForm()">↺ New Analysis</button>
+    </div>
+
+    <!-- Permit Cards -->
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;margin-bottom:1rem;color:var(--white)">Required Permits</div>
+    <div class="permits-grid" id="permitsGrid"></div>
+
+    <!-- Inspection Sequence -->
+    <div class="inspection-card" id="inspectionCard">
+      <div class="card-label">Inspection Sequence</div>
+      <div class="inspection-steps" id="inspectionSteps"></div>
+    </div>
+
+    <!-- Document Checklist -->
+    <div class="checklist-card">
+      <div class="card-label">Documents & Requirements Checklist</div>
+      <div class="checklist-items" id="docsChecklist"></div>
+    </div>
+
+    <!-- AI Notes -->
+    <div id="aiNotes" style="background:rgba(200,169,110,.06);border:1px solid rgba(200,169,110,.2);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:1.5rem">
+      <div class="card-label">Agent Notes</div>
+      <div id="aiNotesText" style="font-size:.85rem;color:var(--light);line-height:1.8"></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+// ── JURISDICTION DATABASE ─────────────────────────────────────────────
+const JURISDICTIONS = {
+  wilmington: {
+    name:       "City of Wilmington",
+    state:      "Delaware",
+    keywords:   ["wilmington"],
+    phone:      "(302) 576-3060",
+    address:    "Louis L. Redding City/County Building, 800 N French St, Wilmington DE 19801",
+    portal:     "https://www.wilmingtonde.gov/government/city-departments/licenses-inspections",
+    applyUrl:   "https://www.wilmingtonde.gov/government/city-departments/department-of-licenses-and-inspections",
+    electrical: "State of Delaware — NOT City (contact DPR: dpr.delaware.gov)",
+    elecUrl:    "https://dpr.delaware.gov/boards/electrician/homeowner-permit/",
+    fees: {
+      building:  "Based on valuation — min $75. Typically $8–$15 per $1,000 of construction value",
+      electrical:"$20 flat fee (State of Delaware permit)",
+      plumbing:  "$20 flat fee",
+      hvac:      "$20 flat fee (mechanical permit)",
+      roofing:   "$75 minimum or valuation-based",
+    },
+    notes: "City of Wilmington does NOT issue electrical permits — those go through State of Delaware DPR. HVAC and plumbing permits are issued by the city.",
+  },
+  newcastle_county: {
+    name:       "New Castle County",
+    state:      "Delaware",
+    keywords:   ["new castle","newark","bear","hockessin","middletown","glasgow","elsmere","claymont","pike creek","brookside","edgemoor","st. georges","delaware city"],
+    phone:      "(302) 395-5400",
+    address:    "Department of Land Use, 87 Reads Way, New Castle, DE 19720",
+    portal:     "https://www.newcastlede.gov/2503/Permits-Inspections",
+    applyUrl:   "https://www.newcastlede.gov/186/Online-Services---Land-Use",
+    electrical: "State of Delaware — NCC does NOT issue electrical permits (dpr.delaware.gov)",
+    elecUrl:    "https://dpr.delaware.gov/boards/electrician/homeowner-permit/",
+    fees: {
+      building:  "Based on construction valuation. Approx $8–$12 per $1,000",
+      electrical:"State of Delaware — separate fee ~$50–$150 depending on scope",
+      plumbing:  "Online utility permit — escrow or credit card",
+      hvac:      "Online utility permit — HVACR residential permit via Dynamic Portal",
+      roofing:   "Valuation-based — same as building permit schedule",
+    },
+    notes: "NCC offers online ePlans submission and eApply for building permits. HVACR and plumbing permits available online via Dynamic Portal. Electrical is handled by State of Delaware.",
+  },
+  kent_county: {
+    name:       "Kent County / City of Dover",
+    state:      "Delaware",
+    keywords:   ["dover","kent","smyrna","camden","harrington","milford","felton","magnolia","wyoming","clayton"],
+    phone:      "(302) 744-2450",
+    address:    "Kent County Levy Court, 555 Bay Rd, Dover, DE 19901",
+    portal:     "https://www.co.kent.de.us/government/departments/planning-services/building-inspections.aspx",
+    applyUrl:   "https://www.co.kent.de.us/government/departments/planning-services/building-inspections.aspx",
+    electrical: "State of Delaware DPR",
+    elecUrl:    "https://dpr.delaware.gov/boards/electrician/homeowner-permit/",
+    fees: {
+      building:  "Minimum $100 or 2.5% of construction value, whichever is higher",
+      electrical:"State of Delaware — separate",
+      plumbing:  "Subcode permit — contact Kent County",
+      hvac:      "Mechanical subcode permit — contact Kent County",
+      roofing:   "Valuation-based",
+    },
+    notes: "Kent County follows the 2018 Delaware Construction Codes. Dover city limits may have separate requirements — always confirm jurisdiction.",
+  },
+  sussex_county: {
+    name:       "Sussex County",
+    state:      "Delaware",
+    keywords:   ["lewes","rehoboth","seaford","bridgeville","laurel","milton","selbyville","fenwick","ocean view","bethany","dewey","millsboro","georgetown"],
+    phone:      "(302) 855-7860",
+    address:    "Sussex County, 2 The Circle, Georgetown, DE 19947",
+    portal:     "https://www.sussexcountyde.gov/building-permits-inspections",
+    applyUrl:   "https://www.sussexcountyde.gov/building-permits-inspections",
+    electrical: "State of Delaware DPR",
+    elecUrl:    "https://dpr.delaware.gov/boards/electrician/homeowner-permit/",
+    fees: {
+      building:  "Based on construction valuation — contact Sussex County for schedule",
+      electrical:"State of Delaware — separate",
+      plumbing:  "Plumbing subcode permit required",
+      hvac:      "Mechanical permit required",
+      roofing:   "Valuation-based",
+    },
+    notes: "Sussex County has experienced rapid growth. Coastal and flood zone properties may have additional DNREC requirements. Always verify flood zone status.",
+  },
+};
+
+// ── PERMIT DEFINITIONS ────────────────────────────────────────────────
+const PERMIT_TYPES = {
+  building: {
+    icon:      "🏗️",
+    name:      "Building Permit",
+    scopeTriggers: ["structural","demolition","addition","kitchen","bathroom","drywall","windows_doors","siding","deck","fence","accessory_structure","foundation","roofing"],
+    required:  "required",
+    codes:     ["IBC 2018","IRC 2018","Delaware Construction Codes 2018"],
+    what:      ["Any structural changes or additions","Removing or adding walls","New construction or additions","Decks, porches, sheds over 200 sq ft","Window/door size changes","Foundation work"],
+    notNeeded: ["Cosmetic work — painting, flooring, carpet","Drywall repair under 100 sq ft","Direct replacement of same-size windows/doors (some jurisdictions)"],
+    docs:      ["Completed building permit application","Site plan showing property lines and setbacks","Construction drawings (floor plan, elevations)","Contractor license number","Property owner information","Zoning compliance confirmation"],
+    inspections:["Footing/Foundation inspection (before pouring)","Rough framing inspection","Insulation inspection","Final inspection / Certificate of Occupancy"],
+  },
+  electrical: {
+    icon:      "⚡",
+    name:      "Electrical Permit",
+    scopeTriggers: ["electrical","electrical_panel","kitchen","bathroom","addition"],
+    required:  "required",
+    codes:     ["NEC 2023 (National Electrical Code)","Delaware Title 24 Chapter 13","14 Del. Admin Code § 3900"],
+    what:      ["New circuit installations","Panel upgrades or replacements","Rewiring any portion of home","Adding outlets, switches, or fixtures","EV charger installation","New service entrance"],
+    notNeeded: ["Direct fixture replacement (same location, no new wiring)","Replacing outlets/switches (like for like)"],
+    keyCodeSections: [
+      "NEC 210.8 — GFCI protection required in kitchens, bathrooms, outdoors, garages",
+      "NEC 210.11(C)(1) — Dedicated 20A circuit required for kitchen small appliances",
+      "NEC 210.11(C)(2) — Dedicated 20A circuit required for bathroom",
+      "NEC 230.79 — Service entrance minimum 100A residential (200A recommended for renovations)",
+      "NEC 406.4 — Tamper-resistant receptacles required in all new/renovated residential",
+      "NEC 210.12 — AFCI protection required for bedroom circuits and all new branch circuits",
+      "NEC 250 — Grounding and bonding requirements",
+    ],
+    docs:      ["State of Delaware electrical permit application (dpr.delaware.gov)","Licensed electrician information (E-1 or E-2 license required)","Load calculation if panel upgrade","Single line diagram for service changes"],
+    inspections:["Rough electrical inspection (before drywall)","Service entrance inspection","Final electrical inspection"],
+    specialNote:"⚠️ IMPORTANT: Electrical permits in ALL Delaware jurisdictions are issued by the STATE OF DELAWARE — NOT the county or city. Apply at dpr.delaware.gov",
+  },
+  plumbing: {
+    icon:      "💧",
+    name:      "Plumbing Permit",
+    scopeTriggers: ["plumbing","plumbing_new","kitchen","bathroom","addition"],
+    required:  "required",
+    codes:     ["Delaware Plumbing Code (4455 Delaware Regulations)","IPC 2018 as adopted by Delaware","Delaware Division of Public Health"],
+    what:      ["New plumbing rough-in","Relocating drain lines or supply lines","Adding new fixtures","Water heater replacement","Sewer line work","Gas line work (separate permit may be needed)"],
+    notNeeded: ["Direct replacement of faucets or toilets (same location)","Minor repairs to existing fixtures"],
+    keyCodeSections: [
+      "Delaware Plumbing Code § 701 — Sanitary drainage system requirements",
+      "Delaware Plumbing Code § 302 — Materials standards for supply piping",
+      "Delaware Plumbing Code § 405 — Minimum fixture clearances (bathroom layout)",
+      "Delaware Plumbing Code § 606 — Shutoff valve required on each fixture",
+      "Delaware Plumbing Code § 504 — Water heater requirements and TPR valve",
+      "IPC 708 — Cleanout requirements for drainage systems",
+    ],
+    docs:      ["Plumbing permit application","Licensed plumber information (Delaware P-1 or P-2 license)","Isometric drawing for complex systems","Fixture count and types"],
+    inspections:["Rough plumbing inspection (before walls closed)","Water supply pressure test","Drain, waste, and vent test","Final plumbing inspection"],
+  },
+  hvac: {
+    icon:      "🌡️",
+    name:      "HVAC / Mechanical Permit",
+    scopeTriggers: ["hvac","hvac_new_unit","addition","kitchen"],
+    required:  "required",
+    codes:     ["IMC 2021 (International Mechanical Code)","IFGC 2021 (International Fuel Gas Code)","ASHRAE 62.2 — Ventilation","Delaware Construction Codes 2018"],
+    what:      ["Installing new HVAC system","Replacing furnace or AC unit","New ductwork installation","Boiler installation or replacement","Ventilation systems","Kitchen exhaust hoods (commercial-grade)"],
+    notNeeded: ["Direct replacement of same-capacity unit (some jurisdictions — verify)","Filter changes, thermostat replacement"],
+    keyCodeSections: [
+      "IMC 302 — Equipment and appliance installation",
+      "IMC 603 — Duct construction and installation standards",
+      "IMC 504 — Clothes dryer exhaust requirements",
+      "IMC 505 — Domestic kitchen exhaust equipment",
+      "IMC 401 — Ventilation — minimum outdoor air rates",
+      "IFGC 404 — Gas piping installation requirements",
+      "IFGC 503 — Venting of appliances",
+      "Manual J — Required load calculation for equipment sizing",
+    ],
+    docs:      ["Mechanical/HVAC permit application","Licensed HVAC contractor information (Delaware HVAC-R license)","Manual J load calculation","Equipment specifications and AHRI certificate","Duct layout plan for new installations"],
+    inspections:["Rough mechanical inspection (before insulation)","Gas pressure test (if gas work involved)","Final mechanical inspection","Operational test"],
+  },
+  gas: {
+    icon:      "🔥",
+    name:      "Gas Permit",
+    scopeTriggers: ["gas","hvac_new_unit"],
+    required:  "required",
+    codes:     ["IFGC 2021 (International Fuel Gas Code)","Delaware Construction Codes","Delmarva Power/South Jersey Industries requirements"],
+    what:      ["New gas line installation","Gas line extension or modification","New gas appliance connection","Gas range, dryer, or fireplace installation","Generator gas connection"],
+    keyCodeSections: [
+      "IFGC 402 — Pipe sizing calculations",
+      "IFGC 404 — Prohibited locations for gas piping",
+      "IFGC 406 — Pressure testing requirements (min 3 PSI for 15 minutes)",
+      "IFGC 503 — Venting requirements for gas appliances",
+      "IFGC 621 — Prohibited locations for appliances",
+    ],
+    docs:      ["Gas permit application (may be combined with mechanical)","Licensed gas contractor","Pressure test documentation","Gas utility company notification"],
+    inspections:["Gas pressure test inspection","Final gas inspection"],
+  },
+  roofing: {
+    icon:      "🏠",
+    name:      "Roofing Permit",
+    scopeTriggers: ["roofing"],
+    required:  "required",
+    codes:     ["IRC R905 — Requirements for roof coverings","IRC R907 — Reroofing","ASTM D3161 — Shingle testing standard"],
+    what:      ["Full roof replacement","Adding new roof layers (max 2 layers per IRC)","Structural deck replacement","Skylight installation"],
+    notNeeded: ["Patching less than 25% of roof area (verify by jurisdiction)"],
+    keyCodeSections: [
+      "IRC R905.2 — Asphalt shingle installation requirements",
+      "IRC R905.2.6 — Underlayment requirements",
+      "IRC R905.2.8.2 — Ice barrier membrane in cold climates",
+      "IRC R907 — Reroofing — no more than 2 layers of shingles",
+      "ASCE 7 — Wind load requirements for roof (Delaware is moderate wind zone)",
+    ],
+    docs:      ["Building/roofing permit application","Contractor license","Product specifications for shingles","Ice and water shield compliance documentation"],
+    inspections:["Sheathing inspection (if decking replaced)","Underlayment inspection","Final roofing inspection"],
+  },
+  demolition: {
+    icon:      "🔨",
+    name:      "Demolition Permit",
+    scopeTriggers: ["demolition"],
+    required:  "required",
+    codes:     ["IBC Chapter 33 — Safeguards during construction","EPA RRP Rule — Lead paint (pre-1978 homes)","NESHAP — Asbestos notification"],
+    what:      ["Interior demolition affecting structural elements","Full or partial building demolition","Load-bearing wall removal"],
+    keyCodeSections: [
+      "EPA RRP Rule — Homes built before 1978 require lead paint testing or certified RRP contractor",
+      "NESHAP 40 CFR Part 61 — Asbestos notification required for renovation of structures",
+      "IBC 3303 — Demolition requirements and site protection",
+    ],
+    docs:      ["Demolition permit application","Asbestos survey (if pre-1978 building)","Lead paint test or RRP contractor certification","Utility disconnect confirmation","Debris disposal plan"],
+    inspections:["Pre-demolition utility disconnect inspection","Final site inspection"],
+  },
+};
+
+// ── HELPERS ─────────────────────────────────────────────────────────
+function toggleScope(label) {
+  const cb = label.querySelector('input');
+  setTimeout(() => { label.classList.toggle('checked', cb.checked); }, 0);
+}
+
+function getSelectedScope() {
+  return [...document.querySelectorAll('.scope-check input:checked')].map(cb => cb.value);
+}
+
+function detectJurisdiction(address) {
+  const addr = address.toLowerCase();
+  for (const [key, jur] of Object.entries(JURISDICTIONS)) {
+    for (const kw of jur.keywords) {
+      if (addr.includes(kw)) return { key, ...jur };
+    }
+  }
+  // Default to New Castle County for DE addresses
+  if (addr.includes('de') || addr.includes('delaware')) {
+    return { key: 'newcastle_county', ...JURISDICTIONS.newcastle_county };
+  }
+  return { key: 'newcastle_county', ...JURISDICTIONS.newcastle_county };
+}
+
+function calcFee(jur, scope, contractValue) {
+  const val = parseFloat(contractValue) || 0;
+  let total = 0, breakdown = [];
+
+  if (scope.some(s => ['structural','demolition','addition','kitchen','bathroom','roofing','windows_doors','siding','deck','accessory_structure','foundation'].includes(s))) {
+    let fee = 0;
+    if (jur.key === 'wilmington')        fee = Math.max(75,  val * 0.010);
+    if (jur.key === 'newcastle_county')  fee = Math.max(50,  val * 0.009);
+    if (jur.key === 'kent_county')       fee = Math.max(100, val * 0.025);
+    if (jur.key === 'sussex_county')     fee = Math.max(75,  val * 0.010);
+    breakdown.push({ name:'Building Permit', fee });
+    total += fee;
+  }
+  if (scope.some(s => ['electrical','electrical_panel'].includes(s))) {
+    const fee = jur.key === 'wilmington' ? 20 : 75;
+    breakdown.push({ name:'Electrical Permit (State of DE)', fee });
+    total += fee;
+  }
+  if (scope.some(s => ['plumbing','plumbing_new'].includes(s))) {
+    const fee = jur.key === 'wilmington' ? 20 : 60;
+    breakdown.push({ name:'Plumbing Permit', fee });
+    total += fee;
+  }
+  if (scope.some(s => ['hvac','hvac_new_unit'].includes(s))) {
+    const fee = jur.key === 'wilmington' ? 20 : 60;
+    breakdown.push({ name:'HVAC/Mechanical Permit', fee });
+    total += fee;
+  }
+  if (scope.includes('gas')) {
+    breakdown.push({ name:'Gas Permit', fee: 50 });
+    total += 50;
+  }
+  return { total, breakdown };
+}
+
+function getInspections(scope) {
+  const steps = [];
+  if (scope.some(s => ['structural','addition','foundation'].includes(s)))
+    steps.push({ name:'Footing / Foundation Inspection', desc:'Required before pouring any concrete. Inspector verifies depth, size, and reinforcement.' });
+  if (scope.includes('demolition'))
+    steps.push({ name:'Pre-Demolition Utility Disconnect', desc:'All utilities must be confirmed disconnected before demolition begins.' });
+  if (scope.some(s => ['structural','addition','roofing'].includes(s)))
+    steps.push({ name:'Rough Framing Inspection', desc:'All framing, blocking, and sheathing must be visible. Do not cover with insulation or drywall.' });
+  if (scope.some(s => ['electrical','electrical_panel'].includes(s)))
+    steps.push({ name:'Rough Electrical Inspection', desc:'All wiring, boxes, and conduit installed but before drywall. Inspector checks wire gauge, AFCI/GFCI placement.' });
+  if (scope.some(s => ['plumbing','plumbing_new'].includes(s)))
+    steps.push({ name:'Rough Plumbing Inspection', desc:'All DWV and supply piping installed and pressure tested before walls are closed.' });
+  if (scope.some(s => ['hvac','hvac_new_unit'].includes(s)))
+    steps.push({ name:'Rough Mechanical / Ductwork Inspection', desc:'All ductwork, venting, and equipment rough-in before insulation.' });
+  if (scope.includes('gas'))
+    steps.push({ name:'Gas Pressure Test', desc:'System pressurized to minimum 3 PSI for 15 minutes with no loss. Required before gas is turned on.' });
+  if (scope.some(s => ['drywall','insulation'].includes(s)))
+    steps.push({ name:'Insulation Inspection', desc:'Before drywall is installed. Verifies R-value compliance and air sealing.' });
+  if (scope.includes('roofing'))
+    steps.push({ name:'Roofing / Underlayment Inspection', desc:'After underlayment installed, before shingles. Verifies ice and water shield, drip edge.' });
+  steps.push({ name:'Final Inspection / Certificate of Occupancy', desc:'All work complete. Inspector verifies everything matches approved plans. CO issued upon passing.' });
+  return steps;
+}
+
+function getRequiredDocs(scope, jur) {
+  const docs = new Set([
+    'Completed permit application form',
+    'Valid Delaware contractor license (provide your license number)',
+    'Property address and owner information',
+    'Description of scope of work',
+  ]);
+  if (scope.some(s => ['structural','addition','demolition'].includes(s))) {
+    docs.add('Construction drawings — floor plan and elevations (signed and dated)');
+    docs.add('Site plan showing property lines, setbacks, and existing structures');
+  }
+  if (parseFloat(document.getElementById('contractValue').value) > 50000) {
+    docs.add('Stamped architectural/engineering drawings (required for projects over $50,000)');
+  }
+  if (scope.some(s => ['electrical','electrical_panel'].includes(s))) {
+    docs.add('Electrical permit application — file separately with State of Delaware DPR');
+    docs.add('Load calculation if upgrading electrical service');
+  }
+  if (scope.some(s => ['hvac','hvac_new_unit'].includes(s))) {
+    docs.add('Manual J load calculation for new HVAC equipment sizing');
+    docs.add('HVAC equipment specifications and AHRI certificate');
+  }
+  if (scope.some(s => ['plumbing','plumbing_new'].includes(s))) {
+    docs.add('Plumbing fixture schedule');
+  }
+  docs.add('Payment of permit fees (credit card or check)');
+  docs.add('Your Delaware contractor license number and insurance certificate');
+  return [...docs];
+}
+
+// ── MAIN AGENT FUNCTION ─────────────────────────────────────────────
+async function runPermitAgent() {
+  const address = document.getElementById('projAddress').value.trim();
+  if (!address) { alert('Please enter the property address.'); return; }
+
+  const scope         = getSelectedScope();
+  const propType      = document.getElementById('propType').value;
+  const contractValue = document.getElementById('contractValue').value;
+  const scopeDesc     = document.getElementById('scopeDesc').value.trim();
+
+  // Show loading
+  document.getElementById('loadingSection').style.display = 'block';
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('analyzeBtn').disabled = true;
+
+  // Animate loading steps
+  const stepDelay = [0,1500,2500,3500,4200,5000,5800];
+  const steps     = ['step1','step2','step3','step4','step5','step6','step7'];
+  steps.forEach((id,i) => {
+    setTimeout(() => {
+      if (i > 0) document.getElementById(steps[i-1]).classList.add('done');
+      document.getElementById(id).classList.add('active');
+    }, stepDelay[i]);
+  });
+
+  await new Promise(r => setTimeout(r, 6500));
+
+  // ── DETERMINE JURISDICTION ──
+  const jur = detectJurisdiction(address);
+
+  // ── DETERMINE PERMITS NEEDED ──
+  const permitsNeeded = [];
+  for (const [key, permit] of Object.entries(PERMIT_TYPES)) {
+    if (permit.scopeTriggers.some(t => scope.includes(t))) {
+      permitsNeeded.push({ key, ...permit });
+    }
+  }
+
+  // Special rule: flooring and painting alone = no permit
+  if (scope.length > 0 && scope.every(s => ['flooring','painting'].includes(s))) {
+    showNoPermitNeeded(jur, address);
+    return;
+  }
+
+  // ── CALCULATE FEES ──
+  const fees = calcFee(jur, scope, contractValue);
+
+  // ── GET INSPECTIONS ──
+  const inspections = getInspections(scope);
+
+  // ── GET DOCS ──
+  const docs = getRequiredDocs(scope, jur);
+
+  // ── USE GEMINI FOR NOTES IF AVAILABLE ──
+  let aiNotes = generateAINotes(jur, scope, propType, address, contractValue, scopeDesc);
+
+  // Hide loading, show results
+  document.getElementById('loadingSection').style.display = 'none';
+  document.getElementById('resultsSection').style.display = 'block';
+  document.getElementById('analyzeBtn').disabled = false;
+  document.getElementById('analyzeBtnText').textContent = '🔍 Analyze Project & Generate Permit Report';
+
+  // ── RENDER RESULTS ──
+  renderJurisdiction(jur, address, fees);
+  renderPermits(permitsNeeded, jur, fees);
+  renderInspections(inspections);
+  renderDocs(docs);
+  document.getElementById('aiNotesText').innerHTML = aiNotes;
+
+  document.getElementById('resultsSection').scrollIntoView({ behavior:'smooth' });
+}
+
+function generateAINotes(jur, scope, propType, address, contractValue, scopeDesc) {
+  const val = parseFloat(contractValue) || 0;
+  let notes = [];
+
+  notes.push(`<strong>Jurisdiction Confirmed:</strong> Based on the address "${address}", this project falls under <strong>${jur.name}</strong> jurisdiction. All permits must be pulled through their department.`);
+
+  if (jur.key !== 'wilmington' && scope.includes('electrical')) {
+    notes.push(`<strong>⚠️ Electrical Permit Exception:</strong> ${jur.name} does NOT issue electrical permits. You must apply separately through the <strong>State of Delaware Division of Professional Regulation (DPR)</strong> at <a href="https://dpr.delaware.gov" target="_blank" style="color:var(--accent)">dpr.delaware.gov</a>. Your electrician must hold a Delaware E-1 or E-2 license.`);
+  }
+
+  if (scope.includes('demolition')) {
+    notes.push(`<strong>⚠️ Pre-1978 Buildings — Lead & Asbestos:</strong> If this property was built before 1978, you are required to follow EPA RRP (Renovation, Repair, and Painting) rules for lead paint. Asbestos testing may also be required before demolition. You must use an EPA-certified RRP contractor or get materials tested.`);
+  }
+
+  if (scope.some(s => ['structural','addition'].includes(s)) && val > 50000) {
+    notes.push(`<strong>Stamped Drawings Required:</strong> Projects over $50,000 or involving structural changes typically require drawings stamped by a licensed Delaware architect or structural engineer.`);
+  }
+
+  if (scope.some(s => ['hvac','hvac_new_unit'].includes(s))) {
+    notes.push(`<strong>HVAC Sizing — Manual J Required:</strong> Delaware code requires a Manual J load calculation to properly size new HVAC equipment. Oversized or undersized systems will fail inspection. Your HVAC contractor must provide this documentation.`);
+  }
+
+  if (scope.includes('kitchen')) {
+    notes.push(`<strong>Kitchen Renovation Notes:</strong> Kitchen remodels typically require building, electrical, plumbing, and mechanical permits. Key electrical requirements: dedicated 20A circuit for refrigerator (NEC 210.52(B)), two 20A small appliance circuits (NEC 210.11(C)(1)), GFCI protection within 6 feet of sink (NEC 210.8(A)(6)).`);
+  }
+
+  if (scope.includes('bathroom')) {
+    notes.push(`<strong>Bathroom Renovation Notes:</strong> GFCI protection required for all receptacles within 6 feet of sink or tub (NEC 210.8(A)(1)). Exhaust fan required minimum 50 CFM or window per IMC 1203. Minimum fixture clearances: 15" from center of toilet to side wall, 21" clearance in front (IRC R307).`);
+  }
+
+  if (jur.key === 'sussex_county') {
+    notes.push(`<strong>Coastal / Flood Zone:</strong> Sussex County properties near the coast may be in a FEMA flood zone. Check your flood zone status at <a href="https://msc.fema.gov" target="_blank" style="color:var(--accent)">msc.fema.gov</a>. Flood zone properties have additional elevation and construction requirements.`);
+  }
+
+  notes.push(`<strong>Timeline Estimate:</strong> Simple permits (roofing, HVAC replacement) typically take 1–5 business days. Structural or addition permits requiring plan review typically take 2–4 weeks. Apply early — do not start work without a posted permit.`);
+
+  notes.push(`<strong>Your Contractor License:</strong> Your Delaware contractor license must be active and listed on all permit applications. Verify your license status at <a href="https://dpr.delaware.gov" target="_blank" style="color:var(--accent)">dpr.delaware.gov</a>.`);
+
+  return notes.map(n => `<p style="margin-bottom:.75rem">• ${n}</p>`).join('');
+}
+
+function renderJurisdiction(jur, address, fees) {
+  const banner = document.getElementById('jurisdictionBanner');
+  banner.innerHTML = `
+    <div class="jb-icon">🏛️</div>
+    <div>
+      <div class="jb-title">${jur.name}</div>
+      <div class="jb-sub">${jur.address}<br>📞 ${jur.phone}</div>
+    </div>
+    <div style="margin-left:auto;text-align:right">
+      <div style="font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem">Estimated Total Fees</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--accent)">~$${fees.total.toFixed(0)}</div>
+      <div style="font-size:.72rem;color:var(--mid)">across all permits</div>
+    </div>
+    <a href="${jur.applyUrl}" target="_blank" class="jb-link">Apply Online →</a>`;
+}
+
+function renderPermits(permits, jur, fees) {
+  const grid = document.getElementById('permitsGrid');
+  grid.innerHTML = '';
+  if (!permits.length) {
+    grid.innerHTML = '<div class="empty-state">Based on your scope selection, no permits are required. Cosmetic work like painting and flooring typically does not require permits in Delaware.</div>';
+    return;
+  }
+  permits.forEach((permit,i) => {
+    const feeInfo = fees.breakdown.find(f => f.name.toLowerCase().includes(permit.key)) || null;
+    const card = document.createElement('div'); card.className = 'permit-card';
+    // Special note for electrical
+    const isElec = permit.key === 'electrical';
+    const authority = isElec ? jur.electrical : jur.name;
+    const applyLink = isElec ? jur.elecUrl : jur.applyUrl;
+
+    card.innerHTML = `
+      <div class="permit-header" onclick="togglePermit(${i})">
+        <div class="permit-icon">${permit.icon}</div>
+        <div class="permit-info">
+          <div class="permit-name">${permit.name}</div>
+          <div class="permit-authority">Issued by: ${authority}</div>
+        </div>
+        <span class="permit-required pr-required">Required</span>
+        <span class="permit-expand" id="expand-${i}">▼</span>
+      </div>
+      <div class="permit-body" id="body-${i}">
+        ${permit.specialNote ? `<div style="background:rgba(209,79,79,.08);border:1px solid rgba(209,79,79,.3);border-radius:7px;padding:.75rem 1rem;margin-bottom:1rem;font-size:.83rem;color:#e08080">${permit.specialNote}</div>` : ''}
+        <div class="permit-section">
+          <div class="permit-section-title">Applicable Codes</div>
+          <div style="display:flex;gap:.4rem;flex-wrap:wrap">
+            ${(permit.codes||[]).map(c=>`<span class="code-tag">${c}</span>`).join('')}
+          </div>
+        </div>
+        ${permit.keyCodeSections ? `
+        <div class="permit-section">
+          <div class="permit-section-title">Key Code Sections</div>
+          <ul>${permit.keyCodeSections.map(s=>`<li>${s}</li>`).join('')}</ul>
+        </div>` : ''}
+        <div class="permit-section">
+          <div class="permit-section-title">When Required</div>
+          <ul>${(permit.what||[]).map(w=>`<li>${w}</li>`).join('')}</ul>
+        </div>
+        <div class="permit-section">
+          <div class="permit-section-title">Required Documents</div>
+          <ul>${(permit.docs||[]).map(d=>`<li>${d}</li>`).join('')}</ul>
+        </div>
+        <div class="permit-fee">
+          <span>Estimated Fee</span>
+          <span class="permit-fee-amount">${feeInfo ? '~$' + feeInfo.fee.toFixed(0) : (PERMIT_TYPES[permit.key]?.fees?.[jur.key] || 'Contact jurisdiction')}</span>
+        </div>
+        <a href="${applyLink}" target="_blank" class="permit-portal-btn">Apply for ${permit.name} →</a>
+      </div>`;
+    grid.appendChild(card);
+    // Auto-open first card
+    if (i === 0) { card.querySelector('.permit-body').classList.add('open'); }
+  });
+}
+
+function togglePermit(i) {
+  const body = document.getElementById('body-'+i);
+  const exp  = document.getElementById('expand-'+i);
+  body.classList.toggle('open');
+  exp.textContent = body.classList.contains('open') ? '▲' : '▼';
+}
+
+function renderInspections(inspections) {
+  const steps = document.getElementById('inspectionSteps');
+  steps.innerHTML = inspections.map((insp,i) => `
+    <div class="insp-step">
+      <div class="insp-num">${i+1}</div>
+      <div class="insp-info">
+        <div class="insp-name">${insp.name}</div>
+        <div class="insp-desc">${insp.desc}</div>
+      </div>
+    </div>`).join('');
+}
+
+function renderDocs(docs) {
+  const list = document.getElementById('docsChecklist');
+  list.innerHTML = docs.map((doc,i) => `
+    <div class="cl-item" id="docItem-${i}">
+      <input type="checkbox" onchange="toggleDoc(${i})" />
+      <span>${doc}</span>
+    </div>`).join('');
+}
+
+function toggleDoc(i) {
+  document.getElementById('docItem-'+i).classList.toggle('checked-item');
+}
+
+function showNoPermitNeeded(jur, address) {
+  document.getElementById('loadingSection').style.display = 'none';
+  document.getElementById('resultsSection').style.display = 'block';
+  document.getElementById('analyzeBtn').disabled = false;
+  document.getElementById('permitsGrid').innerHTML = '<div class="empty-state" style="background:rgba(110,200,122,.06);border:1px solid rgba(110,200,122,.3);border-radius:10px;color:var(--green);padding:1.5rem"><strong>✅ No permits required</strong><br><br>Flooring replacement and painting are considered cosmetic work and do not require permits in Delaware. However, always verify with your local jurisdiction for any special circumstances.</div>';
+  document.getElementById('inspectionSteps').innerHTML = '';
+  document.getElementById('docsChecklist').innerHTML = '';
+  document.getElementById('aiNotesText').innerHTML = '<p>No permits are required for this scope of work in ' + jur.name + '. Cosmetic improvements such as painting and flooring replacement do not require permits. If any structural, electrical, plumbing, or mechanical work is involved, additional permits will be required.</p>';
+  renderJurisdiction(jur, address, {total:0, breakdown:[]});
+}
+
+function resetForm() {
+  document.getElementById('resultsSection').style.display = 'none';
+  document.querySelectorAll('.scope-check input').forEach(cb => { cb.checked=false; });
+  document.querySelectorAll('.scope-check').forEach(l => l.classList.remove('checked'));
+  document.getElementById('projAddress').value = '';
+  document.getElementById('contractValue').value = '';
+  document.getElementById('scopeDesc').value = '';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function saveToProject() {
+  const addr = document.getElementById('projAddress').value;
+  alert('Feature coming soon! This will save the permit report to the project in your portal for: ' + addr);
+}
+</script>
+</body>
+</html>
