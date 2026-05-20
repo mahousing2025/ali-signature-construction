@@ -1185,6 +1185,9 @@ function addMsg(role, text) {
   return div;
 }
 
+let lastChatCall = 0;
+let chatQueue = Promise.resolve();
+
 window.sendChat = async () => {
   const input = document.getElementById('chatInput');
   const text  = input.value.trim();
@@ -1192,38 +1195,70 @@ window.sendChat = async () => {
   input.value = ''; input.style.height = 'auto';
   addMsg('user', text);
   chatHistory.push({ role:'user', parts:[{text}] });
-  const btn     = document.getElementById('chatSendBtn');
-  btn.disabled  = true;
-  const thinking = addMsg('thinking','Checking codes...');
-  try {
-    const res  = await fetch(GEMINI_URL + '?key=' + GEMINI_KEY, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        system_instruction:{parts:[{text:CHAT_SYS}]},
-        contents: chatHistory,
-        generationConfig:{temperature:0.4,maxOutputTokens:512},
-      }),
-    });
-    const data  = await res.json();
-    if (!res.ok) {
-      const errDetail = data.error?.message || 'API error ' + res.status;
-      if (res.status === 400) throw new Error('Invalid request: ' + errDetail);
-      if (res.status === 403) throw new Error('API key invalid or quota exceeded. Check your Gemini key.');
-      if (res.status === 429) throw new Error('Rate limit hit. Wait 1 minute and try again.');
-      throw new Error(errDetail);
+  const btn = document.getElementById('chatSendBtn');
+  btn.disabled = true;
+  const thinking = addMsg('thinking', 'Checking codes...');
+
+  // Queue requests with 4-second gap to avoid rate limits (free tier = 15/min)
+  chatQueue = chatQueue.then(async () => {
+    const now     = Date.now();
+    const elapsed = now - lastChatCall;
+    const wait    = elapsed < 4000 ? 4000 - elapsed : 0;
+    if (wait > 0) {
+      thinking.innerHTML = 'Waiting ' + Math.ceil(wait/1000) + 's to avoid rate limit...';
+      await new Promise(r => setTimeout(r, wait));
     }
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.';
-    chatHistory.push({role:'model',parts:[{text:reply}]});
-    thinking.remove();
-    addMsg('ai', reply);
-  } catch(e) {
-    thinking.remove();
-    let errMsg = 'Connection error: ' + e.message;
-    if (e.message.includes('fetch')) errMsg = 'Network error — check your internet connection and try again.';
-    addMsg('ai', errMsg);
-  }
-  btn.disabled = false;
+    lastChatCall = Date.now();
+    thinking.innerHTML = 'Checking codes...';
+
+    try {
+      const res = await fetch(GEMINI_URL + '?key=' + GEMINI_KEY, {
+        method:  'POST',
+        headers: {'Content-Type':'application/json'},
+        body: JSON.stringify({
+          system_instruction: {parts:[{text:CHAT_SYS}]},
+          contents: chatHistory,
+          generationConfig: {temperature:0.4, maxOutputTokens:512},
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        const err = data.error?.message || 'API error ' + res.status;
+        if (res.status === 429) {
+          // Auto-retry after 10 seconds
+          thinking.innerHTML = 'Rate limit — retrying in 10s...';
+          await new Promise(r => setTimeout(r, 10000));
+          lastChatCall = Date.now();
+          const res2  = await fetch(GEMINI_URL + '?key=' + GEMINI_KEY, {
+            method:  'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+              system_instruction: {parts:[{text:CHAT_SYS}]},
+              contents: chatHistory,
+              generationConfig: {temperature:0.4, maxOutputTokens:512},
+            }),
+          });
+          const data2 = await res2.json();
+          if (!res2.ok) throw new Error('Still rate limited. Wait 1 minute and try again.');
+          const reply2 = data2.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.';
+          chatHistory.push({role:'model', parts:[{text:reply2}]});
+          thinking.remove();
+          addMsg('ai', reply2);
+          return;
+        }
+        throw new Error(err);
+      }
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.';
+      chatHistory.push({role:'model', parts:[{text:reply}]});
+      thinking.remove();
+      addMsg('ai', reply);
+    } catch(e) {
+      thinking.remove();
+      addMsg('ai', '⚠️ ' + e.message);
+    } finally {
+      btn.disabled = false;
+    }
+  });
 };
 
 document.addEventListener('DOMContentLoaded', () => {
