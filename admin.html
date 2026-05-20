@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin Dashboard • Ali Signature Construction LLC</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--black:#0a0a0a;--dark:#111;--surface:#161616;--card:#1c1c1c;--border:#2a2a2a;--mid:#6b6b6b;--light:#b0b0b0;--white:#f4f2ee;--accent:#c8a96e;--accent2:#e8c887;--green:#6ec87a;--red:#d14f4f;--blue:#5b9bd5;--orange:#e8944a}
+    html,body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+
+    /* HEADER */
+    .header{height:64px;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 2rem;gap:1rem;position:sticky;top:0;z-index:100}
+    .header-logo{width:40px;height:40px;background:var(--accent);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;color:var(--black);flex-shrink:0}
+    .header-brand{font-size:.95rem;font-weight:600;line-height:1.3}
+    .header-sub{font-size:.72rem;color:var(--mid)}
+    .header-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+    .live-indicator{display:flex;align-items:center;gap:.4rem;font-size:.76rem;color:var(--green);font-weight:600}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .header-time{font-size:.82rem;color:var(--mid);font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-size:1rem}
+
+    /* BODY */
+    .body{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+
+    /* WELCOME */
+    .welcome{margin-bottom:2rem}
+    .welcome h1{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.04em;color:var(--white)}
+    .welcome p{font-size:.9rem;color:var(--mid);margin-top:.3rem}
+
+    /* WEATHER */
+    .weather-bar{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:.85rem 1.25rem;margin-bottom:2rem;display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap}
+    .weather-temp{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--accent);letter-spacing:.02em;line-height:1}
+    .weather-desc{font-size:.82rem;color:var(--light);margin-top:.1rem}
+    .weather-detail{font-size:.76rem;color:var(--mid)}
+    .weather-alert{background:rgba(232,148,74,.1);border:1px solid rgba(232,148,74,.3);border-radius:6px;padding:.4rem .8rem;font-size:.76rem;color:var(--orange);margin-left:auto}
+
+    /* STATS ROW */
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:2rem}
+    .stat-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;cursor:pointer;transition:all .2s;text-decoration:none;display:block}
+    .stat-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+    .stat-label{font-size:.7rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid);margin-bottom:.5rem}
+    .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:.02em;line-height:1}
+    .stat-sub{font-size:.74rem;color:var(--mid);margin-top:.3rem}
+    .sv-accent{color:var(--accent)}.sv-green{color:var(--green)}.sv-blue{color:var(--blue)}.sv-orange{color:var(--orange)}.sv-red{color:var(--red)}
+
+    /* DASHBOARD GRID */
+    .dash-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-bottom:2rem}
+    .dash-card{background:var(--dark);border:1px solid var(--border);border-radius:14px;padding:1.75rem;cursor:pointer;transition:all .2s;text-decoration:none;display:flex;flex-direction:column;gap:.75rem;position:relative;overflow:hidden}
+    .dash-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:var(--accent);opacity:0;transition:opacity .2s}
+    .dash-card:hover{border-color:var(--accent);transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+    .dash-card:hover::before{opacity:1}
+    .dash-card-icon{font-size:2.2rem;line-height:1}
+    .dash-card-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;color:var(--white)}
+    .dash-card-desc{font-size:.82rem;color:var(--mid);line-height:1.6}
+    .dash-card-arrow{font-size:.85rem;color:var(--accent);margin-top:auto;font-weight:600}
+    .dash-card-badge{position:absolute;top:1.1rem;right:1.1rem;background:var(--red);color:#fff;font-size:.65rem;font-weight:700;padding:.2rem .55rem;border-radius:99px;min-width:20px;text-align:center}
+    .dash-card-badge.green{background:var(--green);color:#000}
+    .dash-card-badge.blue{background:var(--blue)}
+
+    /* COLOR VARIANTS */
+    .card-blue::before{background:var(--blue)!important}
+    .card-blue:hover{border-color:var(--blue)!important}
+    .card-green::before{background:var(--green)!important}
+    .card-green:hover{border-color:var(--green)!important}
+    .card-orange::before{background:var(--orange)!important}
+    .card-orange:hover{border-color:var(--orange)!important}
+    .card-red::before{background:var(--red)!important}
+    .card-red:hover{border-color:var(--red)!important}
+
+    /* RECENT ACTIVITY */
+    .section-title{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.04em;margin-bottom:1rem;color:var(--white)}
+    .activity-list{background:var(--dark);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+    .activity-item{display:flex;align-items:center;gap:1rem;padding:.9rem 1.25rem;border-bottom:1px solid var(--border);transition:background .15s}
+    .activity-item:last-child{border-bottom:none}
+    .activity-item:hover{background:var(--surface)}
+    .activity-icon{font-size:1.2rem;flex-shrink:0}
+    .activity-info{flex:1;min-width:0}
+    .activity-title{font-size:.88rem;font-weight:600;color:var(--white)}
+    .activity-sub{font-size:.74rem;color:var(--mid);margin-top:.1rem}
+    .activity-time{font-size:.72rem;color:var(--mid);flex-shrink:0}
+    .activity-badge{font-size:.65rem;font-weight:600;text-transform:uppercase;padding:.15rem .55rem;border-radius:99px}
+    .ab-new{background:rgba(200,169,110,.15);color:var(--accent);border:1px solid rgba(200,169,110,.3)}
+    .ab-active{background:rgba(110,200,122,.15);color:var(--green);border:1px solid rgba(110,200,122,.3)}
+
+    /* SERVER STATUS */
+    .server-panel{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;margin-bottom:2rem}
+    .server-row{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+    .server-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--mid)}
+    .server-url-row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.65rem}
+    .server-url-input{flex:1;min-width:260px;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:.84rem;padding:.5rem .85rem;transition:border-color .2s}
+    .server-url-input:focus{outline:none;border-color:var(--accent)}
+    .server-save-btn{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.78rem;font-weight:700;padding:.5rem 1.1rem;cursor:pointer}
+    .status-pill{font-size:.72rem;font-weight:600;padding:.25rem .75rem;border-radius:99px}
+    .sp-online{background:rgba(110,200,122,.15);color:var(--green);border:1px solid rgba(110,200,122,.3)}
+    .sp-offline{background:rgba(209,79,79,.15);color:var(--red);border:1px solid rgba(209,79,79,.3)}
+    .sp-checking{background:rgba(200,169,110,.15);color:var(--accent);border:1px solid rgba(200,169,110,.3)}
+    .service-dots{display:flex;gap:1rem;flex-wrap:wrap}
+    .service-dot{display:flex;align-items:center;gap:.35rem;font-size:.76rem;color:var(--mid)}
+    .sdot{width:7px;height:7px;border-radius:50%;background:var(--muted)}
+    .sdot.on{background:var(--green)}
+    .sdot.off{background:var(--red)}
+
+    .empty-txt{font-size:.82rem;color:var(--mid);padding:1.5rem;text-align:center}
+    .spin-wrap{display:flex;align-items:center;gap:.5rem;padding:1rem;font-size:.82rem;color:var(--mid);justify-content:center}
+    .spinner{width:14px;height:14px;border:2px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin .6s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    @media(max-width:900px){
+      .dash-grid{grid-template-columns:1fr 1fr}
+      .stats-row{grid-template-columns:1fr 1fr}
+    }
+    @media(max-width:580px){
+      .dash-grid{grid-template-columns:1fr}
+      .stats-row{grid-template-columns:1fr 1fr}
+      .body{padding:1.25rem .85rem}
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">ASC</div>
+  <div>
+    <div class="header-brand">Ali Signature Construction LLC</div>
+    <div class="header-sub">Admin Command Center</div>
+  </div>
+  <div class="header-right">
+    <div class="live-indicator"><div class="live-dot"></div>Live</div>
+    <div class="header-time" id="headerTime"></div>
+  </div>
+</div>
+
+<div class="body">
+
+  <!-- WELCOME -->
+  <div class="welcome">
+    <h1 id="welcomeMsg">Good Morning, Mohamed</h1>
+    <p id="welcomeSub">Here is your business overview for today.</p>
+  </div>
+
+  <!-- WEATHER -->
+  <div class="weather-bar" id="weatherBar">
+    <div style="font-size:.82rem;color:var(--mid)">Loading weather...</div>
+  </div>
+
+  <!-- SERVER STATUS -->
+  <div class="server-panel">
+    <div class="server-row">
+      <div>
+        <div class="server-label">AI Phone Server</div>
+        <div class="service-dots" id="serviceDots" style="margin-top:.4rem">
+          <div class="service-dot"><div class="sdot" id="dotTwilio"></div>Twilio</div>
+          <div class="service-dot"><div class="sdot" id="dotGemini"></div>Gemini AI</div>
+          <div class="service-dot"><div class="sdot" id="dotFirebase"></div>Firebase</div>
+          <div class="service-dot"><div class="sdot" id="dotVoice"></div>Voice</div>
+        </div>
+      </div>
+      <span class="status-pill sp-checking" id="serverStatus">Checking...</span>
+    </div>
+    <div class="server-url-row">
+      <input class="server-url-input" type="text" id="serverUrlInput" placeholder="https://your-ngrok-url.ngrok-free.dev" />
+      <button class="server-save-btn" onclick="saveServerUrl()">Save & Check</button>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <a class="stat-card" href="leads-dashboard.html">
+      <div class="stat-label">Phone Leads</div>
+      <div class="stat-value sv-accent" id="statLeads">—</div>
+      <div class="stat-sub">total captured</div>
+    </a>
+    <a class="stat-card" href="portal.html">
+      <div class="stat-label">Active Projects</div>
+      <div class="stat-value sv-green" id="statProjects">—</div>
+      <div class="stat-sub">in progress</div>
+    </a>
+    <a class="stat-card" href="crew.html">
+      <div class="stat-label">Crew Clocked In</div>
+      <div class="stat-value sv-blue" id="statCrew">—</div>
+      <div class="stat-sub">working right now</div>
+    </a>
+    <a class="stat-card" href="leads-dashboard.html">
+      <div class="stat-label">New Leads Today</div>
+      <div class="stat-value sv-orange" id="statNewLeads">—</div>
+      <div class="stat-sub">need follow-up</div>
+    </a>
+  </div>
+
+  <!-- DASHBOARD CARDS -->
+  <div class="dash-grid">
+
+    <a class="dash-card card-orange" href="leads-dashboard.html">
+      <div class="dash-card-icon">📞</div>
+      <div class="dash-card-title">Phone Leads</div>
+      <div class="dash-card-desc">View all AI-captured phone leads. Full transcripts, AI summaries, caller info, and follow-up status.</div>
+      <div class="dash-card-arrow">Open Leads Dashboard →</div>
+      <div class="dash-card-badge" id="newLeadsBadge" style="display:none">0</div>
+    </a>
+
+    <a class="dash-card" href="portal.html">
+      <div class="dash-card-icon">🏗️</div>
+      <div class="dash-card-title">Project Portal</div>
+      <div class="dash-card-desc">Manage all projects. Update checklists, track progress, add expenses, upload photos. Auto-texts clients.</div>
+      <div class="dash-card-arrow">Open Project Portal →</div>
+    </a>
+
+    <a class="dash-card card-green" href="crew.html">
+      <div class="dash-card-icon">👷</div>
+      <div class="dash-card-title">Crew Management</div>
+      <div class="dash-card-desc">GPS time clock, task assignments, clock-out reports with photos. See who is on site right now.</div>
+      <div class="dash-card-arrow">Open Crew Portal →</div>
+      <div class="dash-card-badge green" id="crewBadge" style="display:none">0</div>
+    </a>
+
+    <a class="dash-card card-blue" href="portal.html#clients">
+      <div class="dash-card-icon">👤</div>
+      <div class="dash-card-title">Client Accounts</div>
+      <div class="dash-card-desc">View all client accounts. Assign projects to new clients. Manage access and project visibility.</div>
+      <div class="dash-card-arrow">Open Clients →</div>
+    </a>
+
+    <a class="dash-card card-red" href="tel:+13022022204">
+      <div class="dash-card-icon">🤖</div>
+      <div class="dash-card-title">AI Phone Assistant</div>
+      <div class="dash-card-desc">Your AI answers (302) 202-2204 in real time. Asks 7 questions, saves leads automatically to Firebase.</div>
+      <div class="dash-card-arrow">Test Call (302) 202-2204 →</div>
+      <div class="dash-card-badge blue" id="serverBadge">OFF</div>
+    </a>
+
+    <a class="dash-card card-orange" href="contact.html">
+      <div class="dash-card-icon">🌐</div>
+      <div class="dash-card-title">Public Website</div>
+      <div class="dash-card-desc">Your live public website at alisignatureconstruction.com — home, services, projects, contact form.</div>
+      <div class="dash-card-arrow">View Website →</div>
+    </a>
+
+  </div>
+
+  <!-- RECENT LEADS -->
+  <div style="margin-bottom:2rem">
+    <div class="section-title">Recent Phone Leads</div>
+    <div class="activity-list" id="recentLeads">
+      <div class="spin-wrap"><div class="spinner"></div> Loading leads...</div>
+    </div>
+  </div>
+
+  <!-- QUICK LINKS -->
+  <div style="margin-bottom:2rem">
+    <div class="section-title">Quick Links</div>
+    <div style="display:flex;gap:.75rem;flex-wrap:wrap">
+      <a href="portal.html"          style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🏗️ Projects</a>
+      <a href="crew.html"            style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">👷 Crew</a>
+      <a href="leads-dashboard.html" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📞 Leads</a>
+      <a href="index.html"           style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🌐 Website</a>
+      <a href="contact.html"         style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📧 Contact Form</a>
+      <a href="https://console.firebase.google.com" target="_blank" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🔥 Firebase</a>
+      <a href="https://twilio.com"   target="_blank" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">📱 Twilio</a>
+      <a href="https://dashboard.ngrok.com" target="_blank" style="background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1.1rem;font-size:.82rem;color:var(--light);text-decoration:none;transition:all .15s" onmouseover="this.style.borderColor='var(--accent)'" onmouseout="this.style.borderColor='var(--border)'">🔗 ngrok</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ── TIME & WELCOME ── */
+function updateTime() {
+  const now  = new Date();
+  const h    = now.getHours();
+  const time = now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  const date = now.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric'});
+  document.getElementById('headerTime').textContent = time;
+  document.getElementById('welcomeSub').textContent = date;
+  const greet = h < 12 ? 'Good Morning' : h < 17 ? 'Good Afternoon' : 'Good Evening';
+  document.getElementById('welcomeMsg').textContent = greet + ', Mohamed';
+}
+updateTime();
+setInterval(updateTime, 1000);
+
+/* ── WEATHER ── */
+const W_ICON = {0:'☀️',1:'☀️',2:'⛅',3:'☁️',45:'🌫️',51:'🌦️',53:'🌦️',55:'🌧️',61:'🌧️',63:'🌧️',65:'🌧️',71:'🌨️',73:'🌨️',75:'❄️',80:'🌦️',82:'⛈️',95:'⛈️'};
+const W_DESC = {0:'Clear sky',1:'Mainly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',71:'Light snow',73:'Snow',80:'Showers',82:'Heavy showers',95:'Thunderstorm'};
+
+async function loadWeather() {
+  const bar = document.getElementById('weatherBar');
+  try {
+    const pos  = await new Promise((res,rej) => navigator.geolocation.getCurrentPosition(res,rej,{timeout:8000}));
+    const r    = await fetch('https://api.open-meteo.com/v1/forecast?latitude='+pos.coords.latitude+'&longitude='+pos.coords.longitude+'&current=temperature_2m,apparent_temperature,precipitation,weather_code,wind_speed_10m,wind_gusts_10m&temperature_unit=fahrenheit&wind_speed_unit=mph&precipitation_unit=inch');
+    const d    = await r.json(); const c = d.current;
+    const temp = Math.round(c.temperature_2m);
+    const feel = Math.round(c.apparent_temperature);
+    const wind = Math.round(c.wind_speed_10m);
+    const gust = Math.round(c.wind_gusts_10m);
+    const code = c.weather_code;
+    let alert  = '';
+    if (wind>25||gust>35) alert = '<div class="weather-alert">⚠️ High winds — roofing caution</div>';
+    if (c.precipitation>0.1) alert = '<div class="weather-alert">⚠️ Rain today — plan work accordingly</div>';
+    if (temp<32) alert = '<div class="weather-alert">⚠️ Freezing — protect materials</div>';
+    bar.innerHTML = '<div style="font-size:2rem">'+(W_ICON[code]||'🌤️')+'</div>'+
+      '<div><div class="weather-temp">'+temp+'°F</div><div class="weather-desc">'+(W_DESC[code]||'')+'&nbsp;·&nbsp;Feels like '+feel+'°F</div></div>'+
+      '<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-left:auto"><div class="weather-detail">💨 '+wind+' mph</div><div class="weather-detail">🌪️ '+gust+' mph gusts</div></div>'+alert;
+  } catch { bar.innerHTML = '<div style="font-size:.82rem;color:var(--mid)">📍 Allow location for weather</div>'; }
+}
+loadWeather();
+
+/* ── SERVER STATUS ── */
+let SERVER_URL = localStorage.getItem('asc_phone_server') || '';
+document.getElementById('serverUrlInput').value = SERVER_URL;
+
+function saveServerUrl() {
+  SERVER_URL = document.getElementById('serverUrlInput').value.trim().replace(/\/api\/leads.*$/,'').replace(/\/$/,'');
+  localStorage.setItem('asc_phone_server', SERVER_URL);
+  checkServer();
+  loadRecentLeads();
+}
+
+async function checkServer() {
+  const pill = document.getElementById('serverStatus');
+  const badge = document.getElementById('serverBadge');
+  if (!SERVER_URL) {
+    pill.className = 'status-pill sp-offline'; pill.textContent = 'Not configured';
+    badge.textContent = 'OFF'; badge.style.background = 'var(--red)';
+    return;
+  }
+  pill.className = 'status-pill sp-checking'; pill.textContent = 'Checking...';
+  try {
+    const res  = await fetch(SERVER_URL+'/health', {headers:{'ngrok-skip-browser-warning':'true'}});
+    const data = await res.json();
+    pill.className = 'status-pill sp-online'; pill.textContent = 'Online';
+    badge.textContent = 'ON'; badge.style.background = 'var(--green)'; badge.style.color = '#000';
+    // Update service dots
+    document.getElementById('dotTwilio').className   = 'sdot '+(data.twilio   ?'on':'off');
+    document.getElementById('dotGemini').className   = 'sdot '+(data.gemini   ?'on':'off');
+    document.getElementById('dotFirebase').className = 'sdot '+(data.firebase ?'on':'off');
+    document.getElementById('dotVoice').className    = 'sdot on';
+  } catch {
+    pill.className = 'status-pill sp-offline'; pill.textContent = 'Offline — start server';
+    badge.textContent = 'OFF'; badge.style.background = 'var(--red)'; badge.style.color = '#fff';
+  }
+}
+
+/* ── RECENT LEADS ── */
+async function loadRecentLeads() {
+  const list = document.getElementById('recentLeads');
+  if (!SERVER_URL) {
+    list.innerHTML = '<div class="empty-txt">Enter your server URL above to see leads.</div>';
+    return;
+  }
+  try {
+    const res  = await fetch(SERVER_URL+'/api/leads', {headers:{'ngrok-skip-browser-warning':'true','Content-Type':'application/json'}});
+    const data = await res.json();
+    const leads = data.leads || [];
+    document.getElementById('statLeads').textContent = leads.length;
+    const today    = new Date().toLocaleDateString('en-CA');
+    const newToday = leads.filter(l => l.createdAt && l.createdAt.startsWith(today) && l.status==='new').length;
+    document.getElementById('statNewLeads').textContent = newToday;
+    if (newToday > 0) {
+      document.getElementById('newLeadsBadge').style.display = 'block';
+      document.getElementById('newLeadsBadge').textContent   = newToday;
+    }
+    list.innerHTML = '';
+    if (!leads.length) { list.innerHTML = '<div class="empty-txt">No leads yet. Call (302) 202-2204 to test.</div>'; return; }
+    leads.slice(0,5).forEach(lead => {
+      const time = lead.createdAt ? new Date(lead.createdAt).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'}) : '';
+      const div = document.createElement('div'); div.className = 'activity-item';
+      div.innerHTML =
+        '<div class="activity-icon">📞</div>'+
+        '<div class="activity-info">'+
+          '<div class="activity-title">'+(lead.callerName||'Unknown')+'&nbsp;&nbsp;<span style="font-weight:400;color:var(--mid);font-size:.76rem">'+(lead.caller||'')+'</span></div>'+
+          '<div class="activity-sub">'+( lead.serviceType||'Unknown service')+' &nbsp;·&nbsp; '+(lead.address||'No address')+'</div>'+
+        '</div>'+
+        '<div style="display:flex;align-items:center;gap:.6rem;flex-shrink:0">'+
+          '<span class="activity-badge ab-'+(lead.status==='new'?'new':'active')+'">'+(lead.status||'new')+'</span>'+
+          '<span class="activity-time">'+time+'</span>'+
+        '</div>';
+      div.onclick = () => window.location.href = 'leads-dashboard.html';
+      div.style.cursor = 'pointer';
+      list.appendChild(div);
+    });
+  } catch(e) {
+    list.innerHTML = '<div class="empty-txt">Could not load leads. Make sure your server is running.</div>';
+  }
+}
+
+/* ── FIREBASE STATS ── */
+async function loadFirebaseStats() {
+  try {
+    const { initializeApp }   = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js');
+    const { getFirestore, collection, getDocs, query, where } = await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js');
+    const app = initializeApp({
+      apiKey:            "AIzaSyD5TrqFQQo-FyIQ8u7CZf01zgXokS5W130",
+      authDomain:        "ali-signature-construction.firebaseapp.com",
+      projectId:         "ali-signature-construction",
+      storageBucket:     "ali-signature-construction.firebasestorage.app",
+      messagingSenderId: "1042515859712",
+      appId:             "1:1042515859712:web:9178f6fe04c46d08357be5",
+    }, 'admin-dash');
+    const db = getFirestore(app);
+    // Active projects
+    const projSnap = await getDocs(collection(db,'projects'));
+    let active = 0;
+    projSnap.forEach(ds => { if ((ds.data().status||'active') === 'active') active++; });
+    document.getElementById('statProjects').textContent = active;
+    // Clocked in crew
+    const crewSnap = await getDocs(collection(db,'timeLogs'));
+    let clocked = 0;
+    crewSnap.forEach(ds => { if (ds.data().status === 'active') clocked++; });
+    document.getElementById('statCrew').textContent = clocked;
+    if (clocked > 0) {
+      document.getElementById('crewBadge').style.display = 'block';
+      document.getElementById('crewBadge').textContent   = clocked + ' on site';
+    }
+  } catch(e) { console.log('Firebase stats:', e.message); }
+}
+
+/* ── INIT ── */
+if (SERVER_URL) { checkServer(); loadRecentLeads(); }
+else {
+  document.getElementById('recentLeads').innerHTML = '<div class="empty-txt">Enter your ngrok server URL above to see phone leads.</div>';
+  document.getElementById('serverStatus').className = 'status-pill sp-offline';
+  document.getElementById('serverStatus').textContent = 'Not configured';
+}
+loadFirebaseStats();
+setInterval(() => { if(SERVER_URL) { checkServer(); loadRecentLeads(); loadFirebaseStats(); } }, 30000);
+</script>
+</body>
+</html>
