@@ -1155,7 +1155,8 @@ async function exportPDF() {
 /* CHATBOT */
 let chatOpen = false;
 let chatHistory = [];
-const GEMINI_KEY = 'AIzaSyDf_FzblrxmPK-2zBno4uOYjNJ8AYHC3c8';
+// Load key from localStorage or use default
+const GEMINI_KEY = localStorage.getItem('asc_gemini_key') || 'AIzaSyDf_FzblrxmPK-2zBno4uOYjNJ8AYHC3c8';
 const GEMINI_URL = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 const CHAT_SYS   = 'You are an expert permit and building code assistant for Ali Signature Construction LLC in Delaware. You know NEC 2023, IMC 2021, Delaware Plumbing Code, IBC 2018, IRC 2018, Delaware Construction Codes 2018. Be concise and cite specific code sections. Note that electrical permits in all Delaware jurisdictions go through State of Delaware DPR, not the county.';
 
@@ -1205,11 +1206,23 @@ window.sendChat = async () => {
       }),
     });
     const data  = await res.json();
-    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Could not get answer. Try again.';
+    if (!res.ok) {
+      const errDetail = data.error?.message || 'API error ' + res.status;
+      if (res.status === 400) throw new Error('Invalid request: ' + errDetail);
+      if (res.status === 403) throw new Error('API key invalid or quota exceeded. Check your Gemini key.');
+      if (res.status === 429) throw new Error('Rate limit hit. Wait 1 minute and try again.');
+      throw new Error(errDetail);
+    }
+    const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response from AI.';
     chatHistory.push({role:'model',parts:[{text:reply}]});
     thinking.remove();
     addMsg('ai', reply);
-  } catch(e) { thinking.remove(); addMsg('ai','Error: ' + e.message); }
+  } catch(e) {
+    thinking.remove();
+    let errMsg = 'Connection error: ' + e.message;
+    if (e.message.includes('fetch')) errMsg = 'Network error — check your internet connection and try again.';
+    addMsg('ai', errMsg);
+  }
   btn.disabled = false;
 };
 
