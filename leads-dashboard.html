@@ -224,7 +224,13 @@ async function loadLeads() {
   if (!SERVER_URL) { document.getElementById('configBanner').style.display = 'block'; return; }
   document.getElementById('configBanner').style.display = 'none';
   try {
-    const res = await fetch(SERVER_URL + '/api/leads');
+    const res = await fetch(SERVER_URL + '/api/leads', {
+      method: 'GET',
+      headers: {
+        'ngrok-skip-browser-warning': 'true',
+        'Content-Type': 'application/json',
+      },
+    });
     if (!res.ok) throw new Error('Server error: ' + res.status);
     const data = await res.json();
     allLeads = data.leads || [];
@@ -363,7 +369,10 @@ async function updateStatus(id, status) {
   try {
     await fetch(SERVER_URL + '/api/leads/' + id + '/status', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
       body: JSON.stringify({ status }),
     });
     const lead = allLeads.find(l => l.id === id);
@@ -378,7 +387,10 @@ async function addNote(id) {
   try {
     await fetch(SERVER_URL + '/api/leads/' + id + '/note', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true',
+      },
       body: JSON.stringify({ note }),
     });
     input.value = '';
