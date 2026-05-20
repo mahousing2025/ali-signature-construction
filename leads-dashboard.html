@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Phone Leads Dashboard • Ali Signature Construction</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --black:#0a0a0a;--dark:#111;--surface:#161616;--card:#1c1c1c;
+      --border:#2a2a2a;--mid:#6b6b6b;--light:#b0b0b0;--white:#f4f2ee;
+      --accent:#c8a96e;--accent2:#e8c887;--green:#6ec87a;--red:#d14f4f;
+      --blue:#5b9bd5;--orange:#e8944a;
+    }
+    html,body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--white);min-height:100vh;-webkit-font-smoothing:antialiased}
+    input,select,textarea,button{font-family:inherit}
+
+    /* HEADER */
+    .header{height:60px;background:rgba(10,10,10,.97);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 1.5rem;gap:1rem;position:sticky;top:0;z-index:100}
+    .header-logo{width:36px;height:36px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;color:var(--black);flex-shrink:0}
+    .header-brand{font-size:.85rem;font-weight:600;line-height:1.3}
+    .header-sub{font-size:.7rem;color:var(--mid)}
+    .header-right{margin-left:auto;display:flex;align-items:center;gap:.75rem}
+    .live-dot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:pulse 1.5s infinite}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .live-label{font-size:.76rem;color:var(--green);font-weight:600}
+    .refresh-btn{background:none;border:1px solid var(--border);color:var(--light);font-size:.76rem;padding:.32rem .85rem;border-radius:5px;cursor:pointer;transition:all .15s}
+    .refresh-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* BODY */
+    .body{max-width:1200px;margin:0 auto;padding:2rem 1.5rem}
+
+    /* STATS */
+    .stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem;margin-bottom:2rem}
+    .stat-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;padding:1.1rem 1.25rem}
+    .stat-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.35rem}
+    .stat-value{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:.02em;line-height:1}
+    .sv-accent{color:var(--accent)}.sv-green{color:var(--green)}.sv-orange{color:var(--orange)}.sv-blue{color:var(--blue)}.sv-red{color:var(--red)}
+    .stat-sub{font-size:.72rem;color:var(--mid);margin-top:.2rem}
+
+    /* FILTERS */
+    .filters-bar{display:flex;gap:.75rem;flex-wrap:wrap;margin-bottom:1.5rem;align-items:center}
+    .filter-select{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:.82rem;padding:.45rem .85rem;cursor:pointer}
+    .filter-select:focus{outline:none;border-color:var(--accent)}
+    .search-input{background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:.82rem;padding:.45rem .85rem;width:220px;transition:border-color .2s}
+    .search-input:focus{outline:none;border-color:var(--accent)}
+    .search-input::placeholder{color:var(--mid)}
+
+    /* LEAD CARDS */
+    .leads-grid{display:flex;flex-direction:column;gap:.75rem}
+    .lead-card{background:var(--dark);border:1px solid var(--border);border-radius:12px;overflow:hidden;transition:border-color .2s}
+    .lead-card:hover{border-color:var(--mid)}
+    .lead-card.priority-high{border-left:3px solid var(--red)}
+    .lead-card.priority-medium{border-left:3px solid var(--orange)}
+    .lead-card.priority-low{border-left:3px solid var(--green)}
+    .lead-header{display:flex;align-items:center;gap:1rem;padding:1rem 1.25rem;cursor:pointer}
+    .lead-avatar{width:42px;height:42px;border-radius:50%;background:var(--surface);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+    .lead-info{flex:1;min-width:0}
+    .lead-name{font-size:.98rem;font-weight:600}
+    .lead-meta{font-size:.76rem;color:var(--mid);margin-top:.15rem}
+    .lead-right{display:flex;align-items:center;gap:.6rem;flex-shrink:0;flex-wrap:wrap}
+    .priority-pill{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;padding:.16rem .6rem;border-radius:99px}
+    .pp-high{background:rgba(209,79,79,.15);color:var(--red);border:1px solid rgba(209,79,79,.3)}
+    .pp-medium{background:rgba(232,148,74,.15);color:var(--orange);border:1px solid rgba(232,148,74,.3)}
+    .pp-low{background:rgba(110,200,122,.15);color:var(--green);border:1px solid rgba(110,200,122,.3)}
+    .status-select{background:var(--surface);border:1px solid var(--border);border-radius:5px;color:var(--white);font-size:.72rem;padding:.2rem .5rem;cursor:pointer}
+    .expand-btn{background:none;border:1px solid var(--border);color:var(--mid);font-size:.72rem;padding:.22rem .6rem;border-radius:4px;cursor:pointer;transition:all .15s}
+    .expand-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+    /* LEAD DETAIL */
+    .lead-detail{display:none;border-top:1px solid var(--border);padding:1.25rem}
+    .lead-detail.open{display:block}
+    .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.25rem}
+    .detail-field{background:var(--surface);border-radius:8px;padding:.75rem 1rem}
+    .detail-field-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.25rem}
+    .detail-field-value{font-size:.88rem;color:var(--white)}
+    .ai-summary{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:1rem;margin-bottom:1.25rem;border-left:3px solid var(--accent)}
+    .ai-summary-label{font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent);margin-bottom:.5rem;display:flex;align-items:center;gap:.4rem}
+    .ai-summary-text{font-size:.86rem;color:var(--light);line-height:1.7}
+    .transcript-section{margin-bottom:1.25rem}
+    .transcript-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.65rem}
+    .transcript-item{display:flex;gap:.75rem;margin-bottom:.65rem}
+    .t-q{font-size:.78rem;color:var(--mid);flex-shrink:0;width:40%}
+    .t-a{font-size:.82rem;color:var(--white);font-weight:500}
+    .notes-section{margin-top:1.25rem}
+    .notes-label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);margin-bottom:.65rem}
+    .note-item{background:var(--surface);border-radius:6px;padding:.6rem .85rem;margin-bottom:.4rem;font-size:.82rem;color:var(--light)}
+    .note-time{font-size:.7rem;color:var(--mid);margin-top:.15rem}
+    .note-input-row{display:flex;gap:.6rem;margin-top:.6rem}
+    .note-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:.82rem;padding:.55rem .85rem;transition:border-color .2s}
+    .note-input:focus{outline:none;border-color:var(--accent)}
+    .note-btn{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.76rem;font-weight:700;padding:.55rem 1rem;cursor:pointer;white-space:nowrap}
+    .note-btn:hover{background:var(--accent2)}
+    .call-btn{display:inline-flex;align-items:center;gap:.4rem;background:var(--green);color:#000;border:none;border-radius:6px;font-size:.76rem;font-weight:700;padding:.45rem 1rem;cursor:pointer;text-decoration:none;margin-right:.5rem}
+    .call-btn:hover{opacity:.9}
+
+    /* EMPTY */
+    .empty{text-align:center;padding:4rem 2rem;color:var(--mid)}
+    .empty-icon{font-size:3rem;margin-bottom:1rem}
+    .empty-text{font-size:.9rem}
+
+    /* CONFIG BANNER */
+    #configBanner{background:rgba(200,169,110,.08);border:1px solid rgba(200,169,110,.3);border-radius:10px;padding:1rem 1.25rem;margin-bottom:1.5rem;font-size:.84rem;color:var(--light);line-height:1.7;display:none}
+    #configBanner strong{color:var(--accent)}
+    #configBanner code{background:var(--surface);padding:.1rem .4rem;border-radius:3px;font-size:.78rem}
+
+    /* SERVER URL INPUT */
+    .server-config{background:var(--dark);border:1px solid var(--border);border-radius:10px;padding:1.25rem;margin-bottom:1.5rem}
+    .server-config label{font-size:.72rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--mid);display:block;margin-bottom:.4rem}
+    .server-config-row{display:flex;gap:.6rem}
+    .server-url-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;color:var(--white);font-size:.86rem;padding:.6rem .9rem;transition:border-color .2s}
+    .server-url-input:focus{outline:none;border-color:var(--accent)}
+    .server-url-btn{background:var(--accent);color:var(--black);border:none;border-radius:6px;font-size:.78rem;font-weight:700;padding:.6rem 1.2rem;cursor:pointer}
+
+    @media(max-width:768px){
+      .stats-row{grid-template-columns:1fr 1fr}
+      .detail-grid{grid-template-columns:1fr}
+      .body{padding:1.25rem .85rem}
+    }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">ASC</div>
+  <div>
+    <div class="header-brand">Ali Signature Construction</div>
+    <div class="header-sub">AI Phone Leads Dashboard</div>
+  </div>
+  <div class="header-right">
+    <div class="live-dot"></div>
+    <span class="live-label">Live</span>
+    <button class="refresh-btn" onclick="loadLeads()">↻ Refresh</button>
+    <a href="portal.html" style="font-size:.76rem;color:var(--accent)">Project Portal →</a>
+  </div>
+</div>
+
+<div class="body">
+
+  <!-- Server config -->
+  <div class="server-config">
+    <label>AI Phone Server URL (your Railway deployment URL)</label>
+    <div class="server-config-row">
+      <input type="text" class="server-url-input" id="serverUrl"
+        placeholder="https://your-app.railway.app"
+        value="" />
+      <button class="server-url-btn" onclick="saveServerUrl()">Save & Connect</button>
+    </div>
+    <p style="font-size:.74rem;color:var(--mid);margin-top:.4rem">Enter your Railway server URL to load live leads. This is saved in your browser.</p>
+  </div>
+
+  <!-- Config banner -->
+  <div id="configBanner">
+    <strong>Setup Required:</strong> Your server is not yet configured. 
+    Enter your Railway URL above. Make sure your server has these environment variables set:<br>
+    <code>TWILIO_ACCOUNT_SID</code> · <code>TWILIO_AUTH_TOKEN</code> · <code>TWILIO_PHONE_NUMBER</code> · 
+    <code>ELEVENLABS_API_KEY</code> · <code>ELEVENLABS_VOICE_ID</code> · 
+    <code>GEMINI_API_KEY</code> · <code>FIREBASE_CREDENTIALS</code> · <code>SERVER_URL</code>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total Leads</div><div class="stat-value sv-accent" id="statTotal">0</div><div class="stat-sub">all time</div></div>
+    <div class="stat-card"><div class="stat-label">New Today</div><div class="stat-value sv-green" id="statToday">0</div><div class="stat-sub">not yet contacted</div></div>
+    <div class="stat-card"><div class="stat-label">High Priority</div><div class="stat-value sv-red" id="statHigh">0</div><div class="stat-sub">needs attention</div></div>
+    <div class="stat-card"><div class="stat-label">Scheduled</div><div class="stat-value sv-blue" id="statScheduled">0</div><div class="stat-sub">estimate set</div></div>
+    <div class="stat-card"><div class="stat-label">Closed</div><div class="stat-value sv-orange" id="statClosed">0</div><div class="stat-sub">won this month</div></div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters-bar">
+    <input type="text" class="search-input" id="searchInput" placeholder="🔍 Search by name, address, service..." oninput="renderLeads()" />
+    <select class="filter-select" id="filterPriority" onchange="renderLeads()">
+      <option value="">All Priorities</option>
+      <option value="high">🔴 High Priority</option>
+      <option value="medium">🟠 Medium Priority</option>
+      <option value="low">🟢 Low Priority</option>
+    </select>
+    <select class="filter-select" id="filterStatus" onchange="renderLeads()">
+      <option value="">All Statuses</option>
+      <option value="new">New</option>
+      <option value="contacted">Contacted</option>
+      <option value="scheduled">Scheduled</option>
+      <option value="closed">Closed</option>
+      <option value="lost">Lost</option>
+    </select>
+    <select class="filter-select" id="filterService" onchange="renderLeads()">
+      <option value="">All Services</option>
+      <option value="roof">Roofing</option>
+      <option value="kitchen">Kitchen</option>
+      <option value="bathroom">Bathroom</option>
+      <option value="renovation">Renovation</option>
+      <option value="floor">Flooring</option>
+      <option value="sell">Wants to Sell</option>
+    </select>
+  </div>
+
+  <!-- Leads -->
+  <div class="leads-grid" id="leadsGrid">
+    <div class="empty">
+      <div class="empty-icon">📞</div>
+      <div class="empty-text">Enter your server URL above and click Save & Connect to load leads.</div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let allLeads = [];
+let SERVER_URL = localStorage.getItem('asc_phone_server') || '';
+
+// Init
+document.getElementById('serverUrl').value = SERVER_URL;
+if (SERVER_URL) loadLeads();
+
+function saveServerUrl() {
+  SERVER_URL = document.getElementById('serverUrl').value.trim().replace(/\/$/, '');
+  localStorage.setItem('asc_phone_server', SERVER_URL);
+  loadLeads();
+}
+
+async function loadLeads() {
+  if (!SERVER_URL) { document.getElementById('configBanner').style.display = 'block'; return; }
+  document.getElementById('configBanner').style.display = 'none';
+  try {
+    const res = await fetch(SERVER_URL + '/api/leads');
+    if (!res.ok) throw new Error('Server error: ' + res.status);
+    const data = await res.json();
+    allLeads = data.leads || [];
+    updateStats();
+    renderLeads();
+  } catch(e) {
+    document.getElementById('leadsGrid').innerHTML =
+      '<div class="empty"><div class="empty-icon">❌</div><div class="empty-text">Could not connect to server: ' + e.message + '<br><br>Make sure your Railway server is running and the URL is correct.</div></div>';
+  }
+}
+
+function updateStats() {
+  const today = new Date().toLocaleDateString('en-CA');
+  document.getElementById('statTotal').textContent     = allLeads.length;
+  document.getElementById('statToday').textContent     = allLeads.filter(l => l.createdAt?.startsWith(today) && l.status === 'new').length;
+  document.getElementById('statHigh').textContent      = allLeads.filter(l => l.priority === 'high' && l.status === 'new').length;
+  document.getElementById('statScheduled').textContent = allLeads.filter(l => l.status === 'scheduled').length;
+  document.getElementById('statClosed').textContent    = allLeads.filter(l => l.status === 'closed').length;
+}
+
+function renderLeads() {
+  const search   = document.getElementById('searchInput').value.toLowerCase();
+  const priority = document.getElementById('filterPriority').value;
+  const status   = document.getElementById('filterStatus').value;
+  const service  = document.getElementById('filterService').value;
+
+  let filtered = allLeads.filter(l => {
+    const searchable = [l.callerName, l.address, l.serviceType, l.caller, l.aiSummary].join(' ').toLowerCase();
+    if (search && !searchable.includes(search)) return false;
+    if (priority && l.priority !== priority) return false;
+    if (status && l.status !== status) return false;
+    if (service && !l.serviceType?.toLowerCase().includes(service)) return false;
+    return true;
+  });
+
+  const grid = document.getElementById('leadsGrid');
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty"><div class="empty-icon">📭</div><div class="empty-text">No leads match your filters.</div></div>';
+    return;
+  }
+
+  grid.innerHTML = '';
+  filtered.forEach(lead => grid.appendChild(buildLeadCard(lead)));
+}
+
+function buildLeadCard(lead) {
+  const card = document.createElement('div');
+  card.className = 'lead-card priority-' + (lead.priority || 'medium');
+  card.id = 'card-' + lead.id;
+
+  const calledAt = lead.calledAt ? new Date(lead.calledAt).toLocaleString('en-US', {
+    month:'short', day:'numeric', hour:'2-digit', minute:'2-digit'
+  }) : '';
+
+  const statusColors = {
+    new:       '#c8a96e',
+    contacted: '#5b9bd5',
+    scheduled: '#6ec87a',
+    closed:    '#6ec87a',
+    lost:      '#6b6b6b',
+  };
+
+  card.innerHTML = `
+    <div class="lead-header" onclick="toggleDetail('${lead.id}')">
+      <div class="lead-avatar">👤</div>
+      <div class="lead-info">
+        <div class="lead-name">${lead.callerName || 'Unknown'} <span style="font-size:.76rem;color:var(--mid);font-weight:400">${lead.caller || ''}</span></div>
+        <div class="lead-meta">📍 ${lead.address || 'No address'} &nbsp;·&nbsp; 🔨 ${lead.serviceType || 'Unknown'} &nbsp;·&nbsp; 🕐 ${calledAt}</div>
+      </div>
+      <div class="lead-right">
+        <span class="priority-pill pp-${lead.priority || 'medium'}">${lead.priority || 'medium'}</span>
+        <select class="status-select" onchange="updateStatus('${lead.id}', this.value)" onclick="event.stopPropagation()">
+          <option value="new"       ${lead.status==='new'       ?'selected':''}>New</option>
+          <option value="contacted" ${lead.status==='contacted' ?'selected':''}>Contacted</option>
+          <option value="scheduled" ${lead.status==='scheduled' ?'selected':''}>Scheduled</option>
+          <option value="closed"    ${lead.status==='closed'    ?'selected':''}>Closed ✓</option>
+          <option value="lost"      ${lead.status==='lost'      ?'selected':''}>Lost</option>
+        </select>
+        <button class="expand-btn">▼ Details</button>
+      </div>
+    </div>
+    <div class="lead-detail" id="detail-${lead.id}">
+      ${lead.aiSummary ? `
+        <div class="ai-summary">
+          <div class="ai-summary-label">🤖 AI Summary</div>
+          <div class="ai-summary-text">${lead.aiSummary}</div>
+        </div>` : ''}
+
+      <div class="detail-grid">
+        <div class="detail-field"><div class="detail-field-label">Caller Name</div><div class="detail-field-value">${lead.callerName || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Phone Number</div><div class="detail-field-value">${lead.caller || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Service Needed</div><div class="detail-field-value">${lead.serviceType || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Property Address</div><div class="detail-field-value">${lead.address || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Is Homeowner?</div><div class="detail-field-value">${lead.isHomeowner || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Timeline</div><div class="detail-field-value">${lead.timeline || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Budget</div><div class="detail-field-value">${lead.budget || '—'}</div></div>
+        <div class="detail-field"><div class="detail-field-label">Wants to Sell?</div><div class="detail-field-value">${lead.wantToSell || '—'}</div></div>
+      </div>
+
+      ${lead.transcript && lead.transcript.length ? `
+        <div class="transcript-section">
+          <div class="transcript-label">📝 Full Call Transcript</div>
+          ${lead.transcript.map(t => `
+            <div class="transcript-item">
+              <div class="t-q">Q: ${t.question}</div>
+              <div class="t-a">A: ${t.answer}</div>
+            </div>`).join('')}
+        </div>` : ''}
+
+      <div style="margin-bottom:1rem">
+        <a class="call-btn" href="tel:${lead.caller}">📞 Call Back</a>
+        <a class="call-btn" style="background:var(--blue)" href="sms:${lead.caller}">💬 Text</a>
+      </div>
+
+      <div class="notes-section">
+        <div class="notes-label">Notes</div>
+        ${(lead.notes || []).map(n => `
+          <div class="note-item">${n.text}<div class="note-time">${new Date(n.at).toLocaleString()}</div></div>`).join('')}
+        <div class="note-input-row">
+          <input type="text" class="note-input" id="note-${lead.id}" placeholder="Add a note..." onkeydown="if(event.key==='Enter') addNote('${lead.id}')" />
+          <button class="note-btn" onclick="addNote('${lead.id}')">Add Note</button>
+        </div>
+      </div>
+    </div>`;
+
+  return card;
+}
+
+function toggleDetail(id) {
+  const detail = document.getElementById('detail-' + id);
+  if (detail) detail.classList.toggle('open');
+}
+
+async function updateStatus(id, status) {
+  if (!SERVER_URL) return;
+  try {
+    await fetch(SERVER_URL + '/api/leads/' + id + '/status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status }),
+    });
+    const lead = allLeads.find(l => l.id === id);
+    if (lead) { lead.status = status; updateStats(); }
+  } catch(e) { alert('Error updating status: ' + e.message); }
+}
+
+async function addNote(id) {
+  const input = document.getElementById('note-' + id);
+  const note  = input?.value.trim();
+  if (!note || !SERVER_URL) return;
+  try {
+    await fetch(SERVER_URL + '/api/leads/' + id + '/note', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note }),
+    });
+    input.value = '';
+    await loadLeads();
+    toggleDetail(id);
+  } catch(e) { alert('Error adding note: ' + e.message); }
+}
+
+// Auto-refresh every 30 seconds
+setInterval(() => { if (SERVER_URL) loadLeads(); }, 30000);
+</script>
+</body>
+</html>
